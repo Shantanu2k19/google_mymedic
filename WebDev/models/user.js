@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema(
         name: { type: String, required: true },
         email: { type: String, required: true },
         password: { type: String, required: false },
-        image: { type: String, required: false, default:"/assets/logodark.svg" },
+        image: { type: String, required: false, default:"/assets/user.svg" },
         isgooglelogin: { type:Boolean, require:true, default:false }, 
     }, 
     { timestamps: true }

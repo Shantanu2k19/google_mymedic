@@ -12,7 +12,7 @@ function Topbar () {
   const router = useRouter()
 
   const [name, setName] = useState('');
-  const [image, setImage] = useState('/assets/icon.png');
+  const [image, setImage] = useState('/assets/default-user.png');
 
   useEffect(() => {
     if (status === 'loading') {
