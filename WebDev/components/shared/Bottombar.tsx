@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation'
 
 function Bottombar () {
     const pathname = usePathname()
-    console.log('current pathname-', pathname)
+    // console.log('current pathname-', pathname)
     
     return (
         <section className="bottombar">
@@ -18,7 +18,7 @@ function Bottombar () {
                 const isActive =
                 (pathname.includes(link.route) && link.route.length > 1) ||
                 pathname === link.route
-                console.log(link.route, isActive);
+                // console.log(link.route, isActive);
                 return (
                 <Link
                     href={link.route}

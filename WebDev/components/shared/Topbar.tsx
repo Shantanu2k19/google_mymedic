@@ -3,11 +3,37 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { useSession } from "next-auth/react";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation'
+import { useState } from "react";
 
 function Topbar () {
+  const { data: session, status } = useSession();
+  const router = useRouter()
 
-  const { data: session } = useSession();
+  const [name, setName] = useState('');
+  const [image, setImage] = useState('/assets/icon.png');
 
+  useEffect(() => {
+    if (status === 'loading') {
+        console.log('loading...');
+        return;
+      }
+  
+    if (status === 'authenticated') {
+    console.log('session', session);
+        if (session.user) {
+            setName(session.user.name || '');
+            setImage(session.user.image || '');
+        }
+    }
+
+    if (status === 'unauthenticated') {
+      console.log("redirecting to home")
+      router.push('/');
+    }
+  }, [status, router]);
+  
   return (
     <nav className="topbar">
         <Link href='/' className="flex item-center gap-4">
@@ -23,7 +49,7 @@ function Topbar () {
                     {session?.user?.name && <Link 
                         href={'/settings'} 
                         className="flex items-center text-white bg-white bg-opacity-10 rounded-full p-2 px-4" >
-                        <Image src="/assets/user.svg"
+                        <Image src={image}
                             alt="logout"
                             width={20}
                             height={20}

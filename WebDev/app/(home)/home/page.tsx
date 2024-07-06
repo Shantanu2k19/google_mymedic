@@ -15,25 +15,25 @@ const Hello = () => {
     const [uploadStatus, setUploadStatus] = useState<string>('');
     const [csrfToken, setCsrfToken] = useState<string>('');
   
-    useEffect(() => {
-      const fetchCsrfToken = async () => {
-        console.log("fetching csrf token");
-        try {
-          const response = await axios.get('http://localhost:8000/csrf/',{
-            withCredentials: true,
-            params: {
-              username: 'your_username_here',
-            },
-          });
-          console.log("got token");
-          setCsrfToken(response.data.csrfToken);
-        } catch (error) {
-          console.error('Error fetching CSRF token:', error);
-        }
-      };
+    // useEffect(() => {
+    //   const fetchCsrfToken = async () => {
+    //     console.log("fetching csrf token");
+    //     try {
+    //       const response = await axios.get('http://localhost:8000/csrf/',{
+    //         withCredentials: true,
+    //         params: {
+    //           username: 'your_username_here',
+    //         },
+    //       });
+    //       console.log("got token");
+    //       setCsrfToken(response.data.csrfToken);
+    //     } catch (error) {
+    //       console.error('Error fetching CSRF token:', error);
+    //     }
+    //   };
   
-      fetchCsrfToken();
-    }, []);
+    //   fetchCsrfToken();
+    // }, [false]);
   
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.files && event.target.files.length > 0) {

@@ -44,10 +44,7 @@ export const authOptions = {
           if (!passMatch){
             throw new Error("Incorrect Password");
           }
-
-          const user = { ...usr }; // Assuming you retrieve user data
-          user.isEmailLogin = true;
-          return user;
+          return usr;
 
         } catch (error) {
           console.log("error: " + error);
