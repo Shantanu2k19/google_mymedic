@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"],
+      "@/auth/*": ["./app/api/auth/[...nextauth]/*"]
+    }
+  },
+  // "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx",".next/types/**/*.ts", "app/(pdp)/layout.js", "app/(pdp)/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts","**/*.ts", "**/*.tsx",".next/types/**/*.ts", "app/(pdp)/layout.js", "app/(pdp)/page.jsx", "types/*", "app/(home)/*", "app/api/**/*.js", "app/api/**/*.ts", "app/api/**/*.js","app/api/auth/*"],
+  "exclude": ["node_modules"]
+}
