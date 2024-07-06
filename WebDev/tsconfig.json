@@ -19,7 +19,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@/auth/*": ["app/api/auth/[...nextauth]/*"]
+      "@/auth/*": ["/app/api/auth/[...nextauth]/*"]
     }
   },
   // "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx",".next/types/**/*.ts", "app/(pdp)/layout.js", "app/(pdp)/page.jsx"],
