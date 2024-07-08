@@ -31,7 +31,7 @@
     "app/(pdp)/layout.js", 
     "app/(pdp)/page.jsx", 
     "types/*", "app/(home)/*",
-    "app/api/**/*",
+    "app/api/**/*", "app/(home)/history/sampleHistroy.js",
   ],
   "exclude": ["node_modules"]
 }

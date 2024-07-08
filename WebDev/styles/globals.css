@@ -3,9 +3,7 @@
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
-input {
-  @apply w-[400px] border-gray-600 py-2 px-6 bg-zinc-100/50;
-}
+
 @layer components {
   /* main */
   .main-container {
