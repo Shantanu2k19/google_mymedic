@@ -133,10 +133,10 @@ module.exports = {
         },
       ],
       "body-normal": [
-        "18px",
+        "17px",
         {
-          lineHeight: "140%",
-          fontWeight: "400",
+          lineHeight: "80%",
+          fontWeight: "500",
         },
       ],
       "body1-bold": [
@@ -232,6 +232,7 @@ module.exports = {
         'screen-15': '30vh',
         'screen-25': '45vh',
         'screen-50': '55vh',
+        'screen-60': '70vh',
         'screen-75': '75vh',
       },
       padding: {
@@ -244,6 +245,7 @@ module.exports = {
       colors: {
         "primary-500": "#877EFF",
         "prim-hov": '#6862C0',
+        "prim-dark": "#6D62FF",
         "secondary-500": "#FFB620",
         "blue-1": "#0095F6",
         "logout-btn": "#FF5A5A",
