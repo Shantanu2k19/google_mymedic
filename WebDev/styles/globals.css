@@ -161,3 +161,8 @@
 .comment-form_btn {
   @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
 }
+
+.shadow-up {
+  box-shadow: 0 -10px 15px -3px rgba(0, 0, 0, 0.01), 
+              0 -4px 6px -2px rgba(0, 0, 0, 0.05);
+}
