@@ -3,10 +3,14 @@ import React from "react";
 import Upload from "@/components/home/upload"
 
 const Home = () => {
-  console.log("home")
+
+  const [isUploaded, setIsUploaded] = React.useState(false);
+
   return (
       <>
-        <Upload />
+        <div>
+          {isUploaded? <></> : <Upload />}
+        </div>
       </>
   )
 }
