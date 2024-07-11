@@ -228,6 +228,12 @@ module.exports = {
       screens: {
         xs: "400px", // Ensure the custom 'xs' screen is defined
       },
+      height: {
+        'screen-15': '30vh',
+        'screen-25': '45vh',
+        'screen-50': '55vh',
+        'screen-75': '75vh',
+      },
       padding: {
         '7': '1.75rem', // Adding custom padding value
       },
@@ -237,6 +243,7 @@ module.exports = {
       },
       colors: {
         "primary-500": "#877EFF",
+        "prim-hov": '#6862C0',
         "secondary-500": "#FFB620",
         "blue-1": "#0095F6",
         "logout-btn": "#FF5A5A",

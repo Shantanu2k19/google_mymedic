@@ -7,13 +7,12 @@ import axios from 'axios';
 
 const Home = () => {
 
-  const [isUploaded, setIsUploaded] = React.useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [data, setData] = React.useState(null);
 
   return (
       <>
         <div>
-          {isUploaded? <></> : <Upload onFileUpload={setSelectedFile}/>}
+          {data ? <> </> : <Upload setData={setData}/>}
         </div>
       </>
   )

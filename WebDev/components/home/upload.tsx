@@ -1,21 +1,17 @@
-import { useState,useEffect } from 'react'
-import { MdCloudUpload, MdDelete } from 'react-icons/md'
-import { AiFillFileImage } from 'react-icons/ai'
+import { useState, useEffect, useRef, FormEvent } from 'react'
+import { MdCloudUpload, MdDelete, MdFileUpload } from 'react-icons/md'
 import axios from 'axios';
-import '@/styles/upload.css'
 import Image from 'next/image'
 
 interface UploadComponentProps {
     onFileUpload: (file: File) => void;
-    // setUploadStatus: React.Dispatch<React.SetStateAction<string>>;
   }
 
 const Upload: React.FC<UploadComponentProps> = ({ onFileUpload }) => {
-    const [image, setImage] = useState(null)
-    const [fileName, setFileName] = useState("No selected file")
+    const [image, setImage] = useState<string | null>(null)
     const [selectedFileLocal, setSelectedFileLocal] = useState<File | null>(null);
     const [csrfToken, setCsrfToken] = useState<string>('');
-    const [uploadStatus, setUploadStatus] = useState<string>('');
+    const [uploadStatus, setUploadStatus] = useState<string>('No files selected');
 
     useEffect(() => {
         const fetchCsrfToken = async () => {
@@ -36,19 +32,42 @@ const Upload: React.FC<UploadComponentProps> = ({ onFileUpload }) => {
     
         fetchCsrfToken();
     }, []);
+    
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const formRef = useRef<HTMLFormElement>(null);
+
+    const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      if (formRef.current) {
+        formRef.current.dispatchEvent(
+          new Event('submit', { cancelable: true, bubbles: true })
+        );
+      }
+    };
+
+    const handleFormClick = () => {
+      if (fileInputRef.current) {
+        fileInputRef.current.click();
+      }
+    };
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const uploadedFile = event.target.files && event.target.files[0];
-        
         if (event.target.files && event.target.files.length > 0) {
-            setFileName(event.target.files[0].name);
+            setUploadStatus(event.target.files[0].name+" selected");
             onFileUpload(event.target.files[0]);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              setImage(reader.result as string);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+
             setSelectedFileLocal(event.target.files[0])
         }
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        console.log("trying to submit ")
         if (!selectedFileLocal) {
           setUploadStatus('No file selected.');
           return;
@@ -83,51 +102,74 @@ const Upload: React.FC<UploadComponentProps> = ({ onFileUpload }) => {
         }
     };
 
+    // mobile: default
+    // sm:split screne Laptop
+    // md: full screnn Laptop
+    // lg:
+    // sm:text-dark-1 md:text-white lg:text-primary-500 
+
     return (
       <div className='flex flex-col justify-between items-center'>
         <form
-            className="flex flex-col justify-center items-center border-2 border-dashed border-primary-500 h-screens w-full cursor-pointer rounded-lg p-5 text-white"
+            onClick={handleFormClick} 
+            className={`flex flex-col justify-center items-center border-2 border-dashed border-primary-500 w-full cursor-pointer 
+            rounded-lg p-5 text-white h-screen-50 max-h-screen-50 sm:h-screen-25 md:h-screen-50 sm:max-h-screen-25 md:max-h-screen-50 relative ${image && 'bg-dark-4'}`}
+            ref={formRef}
             onSubmit={handleSubmit}
         >
-          <input type="file" className='input-field' hidden
+          <input 
+            type="file" 
+            className='input-field' 
+            hidden
             onChange={handleFileChange} 
+            ref={fileInputRef}
            />
 
           {image ?
-           <Image
-            src={image}
-            alt={fileName}
-            width={150}
-            height={150}
-            className='bg-black border rounded-md'
-            />
-          : 
-          <>
-          <MdCloudUpload className="text-primary-500 w-20 h-20" />
-          <p>Upload a prescription to get started</p>
-          </>
-        }
+            <Image
+              src={image}
+              alt={uploadStatus}
+              layout="fill" 
+              objectFit="contain"
+              />
+            : 
+            <>
+            <MdCloudUpload className="text-primary-500 w-20 h-20" />
+            <p>Upload a prescription to get started</p>
+            </>
+          }
   
         </form>
-  
-        <section className="m-4 flex justify-between items-center p-4 rounded-lg bg-light-2">
-        {fileName} &nbsp;
-          { image ? 
-            <MdDelete
-                className="text-primary-500 w-5 h-5" 
-                onClick={() => {
-                setFileName("No selected File")
-                setImage(null)
-                }}
-            />
-            :
-            <AiFillFileImage  className="text-primary-500 w-5 h-5" />
-          }
-        </section>
 
-        {uploadStatus && <div className="bg-white text-black border border-gray-300 px-4 py-2 text-lg cursor-pointer">{uploadStatus}</div>}
+        <div className="mt-4 flex justify-between items-center p-4 rounded-lg text-base font-medium text-white "> 
+        {uploadStatus} 
+        </div>
 
-  
+        <div className="w-full flex flex-col sm:flex-row justify-evenly items-center gap-4 p-4 m-4"> 
+          
+            <button 
+              disabled = { image? false:true }
+              type="button"
+              className={`flex flex-row rounded-lg bg-primary-500 px-9 py-4 text-base font-medium text-white shadow-submit duration-300 
+                hover:bg-prim-hov dark:shadow-submit-dark ${image ? '' : 'opacity-50 pointer-events-none bg-prim-hov'} `}
+                onClick={handleButtonClick}
+            >
+                <MdFileUpload className="text-white w-5 h-5" />Upload
+            </button>
+
+            <button 
+                disabled = { image? false:true }
+                className={`flex flex-row rounded-lg bg-primary-500 px-9 py-4 text-base font-medium text-white shadow-submit duration-300 
+                  hover:bg-prim-hov dark:shadow-submit-dark ${image ? '' : 'opacity-50 pointer-events-none bg-prim-hov'}`}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setUploadStatus("No selected File")
+                    setImage(null)
+                    }}
+              >
+                  <MdDelete className="text-white w-5 h-5" />Delete
+            </button>
+        </div> 
       </div>
     )
 }
