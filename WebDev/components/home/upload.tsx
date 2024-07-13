@@ -4,6 +4,7 @@ import axios from 'axios';
 import Image from 'next/image'
 import React from "react";
 import { PrescriptionsData, Prescription } from "@/types/medicine";
+import { DNA } from 'react-loader-spinner'
 
 interface UploadComponentProps {
     setData: React.Dispatch<React.SetStateAction<PrescriptionsData | null>>;
@@ -14,6 +15,9 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     const [selectedFileLocal, setSelectedFileLocal] = useState<File | null>(null);
     const [csrfToken, setCsrfToken] = useState<string>('');
     const [uploadStatus, setUploadStatus] = useState<string>('No files selected');
+
+    const [isFetching, setIsFetching] = useState(false);
+    const [fetchStage, setFetchStage] = useState("Uploading...");
 
     useEffect(() => {
         const fetchCsrfToken = async () => {
@@ -70,6 +74,10 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         console.log("trying to submit ")
+
+        setIsFetching(true);
+        setFetchStage('Uploading image...');
+
         if (!selectedFileLocal) {
           setUploadStatus('No file selected.');
           return;
@@ -96,9 +104,18 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
           };
           
           console.log("after upload,",dataReceived);
+
+          if(!dataReceived)
+          {
+            setUploadStatus('Error uploading file...');
+            return;
+          }
+
           setData(dataReceived)
 
+          setIsFetching(false);
         } catch (error: any) {
+          setIsFetching(false);
           if (error.response) {
             console.error('Error response data:', error.response.data);
             console.error('Error response status:', error.response.status);
@@ -115,6 +132,9 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
 
 
   const hahahahha = async (event: React.FormEvent) => {
+
+    setIsFetching(true);
+    return;
     event.preventDefault();
     try {
       const response = await axios.get('http://localhost:8000/sampleData/', {
@@ -143,45 +163,62 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
       } 
       console.error('Error message:', error.message);
     }
-
-
-
 };
-
 
     return (
       <div className='flex flex-col justify-between items-center'>
-        <button onClick={hahahahha} className='p-4 m-5 text-white border border-white'>          getdata
-          </button>
+        {/* <button onClick={hahahahha} className='p-4 m-5 text-white border border-white'>
+          getdata
+        </button> */}
+
         <form
             onClick={handleFormClick} 
             className={`flex flex-col justify-center items-center border-2 border-dashed border-primary-500 w-full cursor-pointer 
-            rounded-lg p-5 text-white h-screen-50 max-h-screen-50 sm:h-screen-25 md:h-screen-50 sm:max-h-screen-25 md:max-h-screen-50 relative ${image && 'bg-dark-4'}`}
+            rounded-lg p-5 text-white h-screen-50 max-h-screen-50 sm:h-screen-25 md:h-screen-50 sm:max-h-screen-25 md:max-h-screen-50 relative 
+            ${image && 'bg-dark-4'} ${isFetching ? 'pointer-events-none' : ''}`}
             ref={formRef}
             onSubmit={handleSubmit}
         >
-          <input 
-            type="file" 
-            className='input-field' 
-            hidden
-            onChange={handleFileChange} 
-            ref={fileInputRef}
-           />
-
-          {image ?
-            <Image
-              src={image}
-              alt={uploadStatus}
-              layout="fill" 
-              objectFit="contain"
+          {isFetching ? 
+            <div>
+              <DNA
+                visible={true}
+                height="200"
+                width="200"
+                ariaLabel="dna-loading"
+                wrapperStyle={{}}
+                wrapperClass="dna-wrapper"
               />
-            : 
-            <>
-            <MdCloudUpload className="text-primary-500 w-20 h-20" />
-            <p>Upload a prescription to get started</p>
-            </>
+
+              <div className='text-base-medium text-center'>
+                {fetchStage}
+              </div>
+            </div>
+          :
+          <div className='flex flex-col justify-between items-center' >
+            <input 
+              type="file" 
+              className='input-field'
+              hidden
+              onChange={handleFileChange} 
+              ref={fileInputRef}
+            />
+
+            {image ?
+              <Image
+                src={image}
+                alt={uploadStatus}
+                layout="fill" 
+                objectFit="contain"
+                />
+              : 
+              <>
+              <MdCloudUpload className="text-primary-500 w-20 h-20" />
+              <p>Upload a prescription to get started</p>
+              </>
+            }
+            </div>
           }
-  
         </form>
 
         <div className="mt-4 flex justify-between items-center p-4 rounded-lg text-base font-medium text-white "> 

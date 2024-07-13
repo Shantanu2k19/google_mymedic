@@ -1,3 +1,6 @@
+-text from gemini validation for json
+
+
     // mobile: default
     // sm:split screne Laptop
     // md: full screnn Laptop
