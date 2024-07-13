@@ -233,7 +233,7 @@ module.exports = {
         'screen-25': '45vh',
         'screen-50': '55vh',
         'screen-60': '70vh',
-        'screen-75': '75vh',
+        'screen-80': '80vh',
       },
       padding: {
         '7': '1.75rem', // Adding custom padding value
@@ -262,6 +262,7 @@ module.exports = {
         "gray-1": "#697C89",
         "gray-2": "#363636",
         glassmorphism: "rgba(16, 16, 18, 0.60)",
+        glassmorphism2: "rgba(255, 255, 255, 0.85)",
         current: "currentColor",
         transparent: "transparent",
         white: "#FFFFFF",

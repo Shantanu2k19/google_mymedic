@@ -2,12 +2,14 @@ import { useState, useEffect, useRef, FormEvent } from 'react'
 import { MdCloudUpload, MdDelete, MdFileUpload } from 'react-icons/md'
 import axios from 'axios';
 import Image from 'next/image'
+import React from "react";
+import { PrescriptionsData, Prescription } from "@/types/medicine";
 
 interface UploadComponentProps {
-    onFileUpload: (file: File) => void;
+    setData: React.Dispatch<React.SetStateAction<PrescriptionsData | null>>;
   }
 
-const Upload: React.FC<UploadComponentProps> = ({ onFileUpload }) => {
+const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     const [image, setImage] = useState<string | null>(null)
     const [selectedFileLocal, setSelectedFileLocal] = useState<File | null>(null);
     const [csrfToken, setCsrfToken] = useState<string>('');
@@ -54,7 +56,7 @@ const Upload: React.FC<UploadComponentProps> = ({ onFileUpload }) => {
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
             setUploadStatus(event.target.files[0].name+" selected");
-            onFileUpload(event.target.files[0]);
+            // onFileUpload(event.target.files[0]);
             const reader = new FileReader();
             reader.onloadend = () => {
               setImage(reader.result as string);
@@ -88,6 +90,14 @@ const Upload: React.FC<UploadComponentProps> = ({ onFileUpload }) => {
           });
           console.log('Response:', response.data);
           setUploadStatus('File uploaded successfully!');
+          
+          const dataReceived: PrescriptionsData = {
+            prescriptions: response.data.ret.data.medData.prescriptions
+          };
+          
+          console.log("after upload,",dataReceived);
+          setData(dataReceived)
+
         } catch (error: any) {
           if (error.response) {
             console.error('Error response data:', error.response.data);
@@ -102,14 +112,47 @@ const Upload: React.FC<UploadComponentProps> = ({ onFileUpload }) => {
         }
     };
 
-    // mobile: default
-    // sm:split screne Laptop
-    // md: full screnn Laptop
-    // lg:
-    // sm:text-dark-1 md:text-white lg:text-primary-500 
+
+
+  const hahahahha = async (event: React.FormEvent) => {
+    event.preventDefault();
+    try {
+      const response = await axios.get('http://localhost:8000/sampleData/', {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'X-APIKEY': 'api_key',
+          'X-username': 'user123'
+        },
+        withCredentials: true,
+      });
+    //   console.log('Response:', response.data.ret.data.medData);
+        const lol: PrescriptionsData = {
+            prescriptions: response.data.ret.data.medData
+        };
+
+      console.log('Type of data:', typeof lol);
+      setData(lol)
+
+    } catch (error: any) {
+      if (error.response) {
+        console.error('Error response data:', error.response.data);
+        console.error('Error response status:', error.response.status);
+        console.error('Error response headers:', error.response.headers);
+      } else if (error.request) {
+        console.error('Error request data:', error.request);
+      } 
+      console.error('Error message:', error.message);
+    }
+
+
+
+};
+
 
     return (
       <div className='flex flex-col justify-between items-center'>
+        <button onClick={hahahahha} className='p-4 m-5 text-white border border-white'>          getdata
+          </button>
         <form
             onClick={handleFormClick} 
             className={`flex flex-col justify-center items-center border-2 border-dashed border-primary-500 w-full cursor-pointer 
