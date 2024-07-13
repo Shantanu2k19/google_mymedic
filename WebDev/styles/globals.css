@@ -166,3 +166,19 @@
   box-shadow: 0 -10px 15px -3px rgba(0, 0, 0, 0.01), 
               0 -4px 6px -2px rgba(0, 0, 0, 0.05);
 }
+
+.setTit{
+  @apply text-body-semibold
+}
+
+.setInp{
+  @apply rounded-md py-2 pl-3 mt-3 mb-4 text-base-regular 
+}
+
+.button-custom{
+  @apply text-white font-bold cursor-pointer px-6 py-3 rounded-md hover:bg-prim-hov m-4 bg-primary-500
+}
+
+.button-custom2{
+  @apply text-white font-bold cursor-pointer px-6 py-3 rounded-md hover:bg-prim-hov m-4
+}

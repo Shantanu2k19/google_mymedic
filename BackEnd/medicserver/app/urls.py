@@ -14,6 +14,9 @@ urlpatterns = [
     #for files 
     path('upload/', upload_image, name='upload_image'),
     path('csrf/', get_csrf_token, name='get_csrf_token'),
+
+    path("sampleData/",views.sampleData,name="sampleData"),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
