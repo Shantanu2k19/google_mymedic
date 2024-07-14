@@ -7,12 +7,14 @@ from datetime import datetime
 
 from app.utils.extractTextData import extractImageTextData, extractPdfTextData
 from app.utils.extractMedicine import getMedicineInfo
+from app.utils.text_processing import processJson
 
 from django.core.files import File
 
 import cv2
 import numpy as np
 import tempfile
+import json
 
 def processFile(uploaded_image_file, username, ret):
     print("processing file")
@@ -51,6 +53,26 @@ def processFile(uploaded_image_file, username, ret):
         print("status not zero")
         return
     
+    ret["data"] = processJson(ret['data'])
+
+    print('\n\n\n\n\n__________________\n\n\n\n\n')
+    print("after-")
+    print(ret["data"])
+    print(type(ret["data"]))
+
+    try:
+        json_data = json.dumps(ret["data"])
+    except (TypeError, ValueError, json.JSONDecodeError) as e:
+        print(f"######\nJSON conversion failed\n{e}\n######### ")
+        ret["status"] = 401
+        ret["mssg"] = "JSON conversion failed for data from LLM"
+    except Exception as e:
+        print(f"######\nAn unexpected error occurred\n{e}\n######### ")
+        ret["status"] = 500
+        ret["mssg"] = "An unexpected error occurred"
+    
+
+
     print("extraction success, saving file")
 
     new_np_image = cv2.cvtColor(new_np_image, cv2.COLOR_BGR2RGB)
@@ -78,7 +100,7 @@ def processFile(uploaded_image_file, username, ret):
     
     try:
         user_files, _ = UserDetails.objects.get_or_create(username=username)
-        user_files.files_list.append(str(file_url))
+        user_files.files_list.append(str(fileName))
         user_files.save()
         
         FileDetails.objects.create(

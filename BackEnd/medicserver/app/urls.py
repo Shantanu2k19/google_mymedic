@@ -17,6 +17,9 @@ urlpatterns = [
 
     path("sampleData/",views.sampleData,name="sampleData"),
 
+    #for history
+    path("get_history/",views.get_history,name="get_history"),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

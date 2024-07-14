@@ -14,6 +14,7 @@ from dotenv import load_dotenv
 from django.middleware.csrf import get_token
 import json
 
+from app.models import UserDetails, FileDetails
 
 #utility functions
 from .utils.file_processing import processFile
@@ -57,20 +58,8 @@ def upload_image(request):
             return JsonResponse({'error': ret["mssg"]}, status=ret["status"])
 
         print("done")
+        print(type(ret['data']))
 
-        print(ret['data'])
-
-        print('\n\n\n---------------------\n\n\n')
-
-        try:
-            json_data = processJsonText(ret['data'])
-        except Exception as e:
-            print(f"error: {e}")
-            json_data = ret['data']
-
-        print(json_data)
-        ret['data'] = json_data
-        print(type(json_data))
         return JsonResponse({'message': 'File uploaded successfully', 'ret': ret})
     return JsonResponse({'message': 'No file found'}, status=400)
 
@@ -78,16 +67,6 @@ def upload_image(request):
 def index(request):
     logging.info("index____")
     return render(request, "app/index.html")
-
-def processJsonText(data_string):
-    data_string = data_string[7:]
-    
-    data_string = data_string[:-3]
-    
-    transformed_string = '{ "medData": ' + data_string + ' }'
-    
-    return json.loads(transformed_string)
-
 
 data = """```json
 [
@@ -155,6 +134,58 @@ def sampleData(request):
         }
     return JsonResponse({'message': 'File uploaded successfully', 'ret': ret})
 
+
+def get_history(request):
+  print("get shotory...")
+  api_key = request.headers.get('APIKEY')
+  load_dotenv()
+  SECRET_KEY = os.getenv('SECRET_KEY')
+  if api_key != SECRET_KEY:
+      return JsonResponse({'error': 'Invalid API Key'}, status=401)
+
+  username = request.headers.get('username')
+  if not username:
+      return JsonResponse({'error': 'Username not found'}, status=401)
+
+  print("request from :"+username)
+        
+
+  print(username)
+  print(api_key)
+  
+  try:
+    user = UserDetails.objects.get(username=username)
+
+    data = []
+
+    for file_entry in user.files_list:
+      print(file_entry)
+      file_info = {}
+      try:
+        file = FileDetails.objects.get(file_name=file_entry)
+        
+        file_info["json_data"] = file.json_image_data
+        file_info["img_url"] = file.file_url
+
+        data.append(file_info)
+
+      except Exception as e:
+        print(f"file for {file_entry} not found!\n[[{e}]")
+  except Exception as e:
+    print(f"user not found [{e}]")
+    return JsonResponse({'message': 'User not found'}, status=401)
+
+  print(data)
+  try:
+    data = json.dumps(data)
+  except (TypeError, ValueError, json.JSONDecodeError) as e:
+    print(f"######\nJSON conversion failed\n{e}\n######### ")
+    return JsonResponse({'message': 'JSON conversion failed'}, status=401)
+  except Exception as e:
+    print(f"######\nAn unexpected error occurred\n{e}\n######### ")
+    return JsonResponse({'message': 'JSON conversion failed'}, status=401)
+
+  return JsonResponse({'message': 'History get success', 'ret': data}, status=200)
 
 # logging.debug("This is a debug message")
 # logging.info("This is an info message")

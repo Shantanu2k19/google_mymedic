@@ -3,16 +3,49 @@ import { useCollapse } from 'react-collapsed'
 import Image from 'next/image'
 import { FaCaretDown,FaCaretUp } from "react-icons/fa";
 import sampleHistory from "./sampleHistory";
-import { useState } from 'react';
 import { history } from "@/types/history";
+import { useState, useEffect, useRef, FormEvent } from 'react'
 
-const CollapsibleList = () => {
-  
+import { fetchHistory } from '@/lib/actions/historyAction';
+
+
+const CollapsibleList  = () => {
+  console.error('fetch1');
+
+// useEffect(() => {
+  console.error('fetch2');
+
+  const fetchData = async () => {
+  console.error('fetch3');
+
+    try {
+      const response = await fetchHistory('user123');
+      console.log(response);
+    } 
+  catch (error: any) {
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+      console.error('Error response status:', error.response.status);
+      console.error('Error response headers:', error.response.headers);
+    } else if (error.request) {
+      console.error('Error request data:', error.request);
+    } 
+    console.error('Error message:', error.message);
+  }
+
+};
+
+  fetchData();
+  console.error('fetch4');
+
+// }, []); 
+
+
   return (
     <>
-      {sampleHistory.map(item=>(
+      {/* {sampleHistory.map(item=>(
         <CollapseData key={item.id} prop={item} />
-      ))}
+      ))} */}
     </>
   );
 };

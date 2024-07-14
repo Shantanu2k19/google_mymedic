@@ -9,7 +9,7 @@ export default function hello(){
                 visible={true}
                 height="200"
                 width="200"
-                color="#4fa94d"
+                color="#877EFF"
                 ariaLabel="triangle-loading"
                 wrapperStyle={{}}
                 wrapperClass=""
