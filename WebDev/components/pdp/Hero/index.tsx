@@ -1,7 +1,86 @@
-import Link from "next/link";
+"use client";
 import Image from 'next/image'
+import { signIn } from "next-auth/react";
+import React from "react";
+
+import { useTheme } from "next-themes"; 
+import { toast } from 'react-toastify';
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+
+  const { theme, setTheme } = useTheme();
+  const router = useRouter();
+
+  function showAlert(mssg: string, mode:number) { console.log(theme)
+    console.log("toast-", mssg)
+    toast.dismiss();
+    if (mode == 1) {
+      toast.success(mssg, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme
+      });
+    } else if (mode == 2) {
+      toast.info(mssg, {
+        position: "top-center",
+        autoClose: 20000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+    } else {
+      toast.error(mssg, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+    }
+    }
+
+  const demoLogin = async () => {
+    showAlert("Signing in!",2);
+    try {
+      const res = await signIn("credentials", {
+        email:"123@gmail.com",
+        password:"123",
+        redirect: false,
+      });
+      console.log(res);
+
+      if (!res) {
+        showAlert("Sign in failed",3);
+        return;
+      }
+
+      if (res.error) {
+        console.log(res.error);
+        showAlert("Sign in failed",3);
+        return;
+      }
+
+      showAlert("Login success",1);
+      console.log(res); 
+
+      router.replace("/home");
+    } catch (error) {
+      showAlert("Sign in failed",3);
+      console.log(error+"");
+    }
+  }
 
   return (
     <>
@@ -30,6 +109,7 @@ const Hero = () => {
               <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                 <div
                   className="rounded-sm bg-primary px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80 cursor-pointer"
+                  onClick={demoLogin}
                 >
                   Try Demo 🔥
                 </div>
