@@ -100,7 +100,9 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
           setUploadStatus('File uploaded successfully!');
           
           const dataReceived: PrescriptionsData = {
-            prescriptions: response.data.ret.data.medData.prescriptions
+            prescriptions: response.data.ret.data.medData.prescriptions,
+            extra_info: response.data.ret.data.medData.extra_info,
+            image_url: response.data.ret.data.file_url,
           };
           
           console.log("after upload,",dataReceived);
@@ -133,8 +135,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
 
   const hahahahha = async (event: React.FormEvent) => {
 
-    setIsFetching(true);
-    return;
+    // setIsFetching(true);
     event.preventDefault();
     try {
       const response = await axios.get('http://localhost:8000/sampleData/', {
@@ -145,12 +146,14 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         },
         withCredentials: true,
       });
-    //   console.log('Response:', response.data.ret.data.medData);
+      console.log('Response Init:', response.data);
         const lol: PrescriptionsData = {
-            prescriptions: response.data.ret.data.medData
+            prescriptions: response.data.ret.data.medData,
+            extra_info: response.data.ret.data.extraInfo,
+            image_url: response.data.ret.file_url,
         };
 
-      console.log('Type of data:', typeof lol);
+      console.log('Total data:', response.data);
       setData(lol)
 
     } catch (error: any) {

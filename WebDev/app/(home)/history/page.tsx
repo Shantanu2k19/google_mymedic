@@ -7,51 +7,55 @@ import { history } from "@/types/history";
 import { useState, useEffect, useRef, FormEvent } from 'react'
 
 import { fetchHistory } from '@/lib/actions/historyAction';
-
+import { PrescriptionsData, Prescription } from "@/types/medicine";
+import { ApiResponse } from "@/types/history";
+import Show from "@/components/home/show"
 
 const CollapsibleList  = () => {
-  console.error('fetch1');
 
-// useEffect(() => {
-  console.error('fetch2');
+  const [data, setData] = useState<PrescriptionsData[]>([]);
 
-  const fetchData = async () => {
-  console.error('fetch3');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetchHistory('user123');
+        console.log(response);
 
-    try {
-      const response = await fetchHistory('user123');
-      console.log(response);
-    } 
-  catch (error: any) {
-    if (error.response) {
-      console.error('Error response data:', error.response.data);
-      console.error('Error response status:', error.response.status);
-      console.error('Error response headers:', error.response.headers);
-    } else if (error.request) {
-      console.error('Error request data:', error.request);
-    } 
-    console.error('Error message:', error.message);
-  }
+        const responseJson = JSON.parse(response.ret);
+        console.log('response-->', responseJson);
 
-};
+        let tempData: PrescriptionsData[] = responseJson.map((item: ApiResponse) => ({
+          prescriptions: item.data_from_llm.medData.prescriptions,
+          extra_info: item.data_from_llm.medData.extra_info,
+          image_url: item.img_url,
+        }));
 
-  fetchData();
-  console.error('fetch4');
+        setData(tempData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-// }, []); 
+    fetchData();
+  }, []);
 
+  console.log('data-->', data);
 
   return (
     <>
-      {/* {sampleHistory.map(item=>(
-        <CollapseData key={item.id} prop={item} />
-      ))} */}
+      {data && data.map((item) => (
+        <>
+          <CollapseData prop={item}/>
+        </>
+      ))}
     </>
   );
+  
 };
 
-const CollapseData = ({prop}: {prop:history}) => {
-  const { id, desc, image} = prop;
+
+const CollapseData = ({prop}: {prop:PrescriptionsData}) => {
+  const [medsdata, setData ] = useState<PrescriptionsData | null>(null);
 
   const config = {
     duration: 300,
@@ -60,7 +64,7 @@ const CollapseData = ({prop}: {prop:history}) => {
   const { getCollapseProps, getToggleProps, isExpanded} = useCollapse(config);
 
   return (
-    <div className='bg-gray-200 mb-1 border rounded-md'>
+    <div className='bg-gray-200 mb-2 border rounded-md'>
       <div 
         className={`header flex justify-between items-center p-4 bg-gray-200 text-base1-semibold text-black-1 select-none border-dark-1 shadow-up rounded-md`}
         {...getToggleProps()}
@@ -73,20 +77,7 @@ const CollapseData = ({prop}: {prop:history}) => {
         {...getCollapseProps()}
       >
         <div className='content border rounded-md'>
-          <div className="border border-red-300 flex flex-col lg:flex-row justify-between items-center p-2 bg-gray-100"> 
-            <div className="flex items-center justify-center w-full lg:w-1/2 p-2 mb-4 lg:mb-0">
-              <Image
-                src={image}
-                alt="logout"
-                width={50}
-                height={50}
-                className='bg-black border rounded-md'
-              />
-            </div>
-            <div className="border border-red-300 w-full lg:w-1/2 p-2 bg-white text-black-1 rounded-md">
-              <span>{desc}</span>
-            </div>
-          </div> 
+          <Show medsData={prop} setData={setData} isHistory={true}/>
         </div>
       </div>
 

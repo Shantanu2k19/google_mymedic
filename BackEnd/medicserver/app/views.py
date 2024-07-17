@@ -19,6 +19,8 @@ from app.models import UserDetails, FileDetails
 #utility functions
 from .utils.file_processing import processFile
 
+from app.utils.text_processing import processJson
+
 #get csrf token
 def get_csrf_token(request):
     logging.info("get_csrf_token____")
@@ -124,26 +126,26 @@ data = """```json
 
 def sampleData(request):
     logging.info("sample_____")
-    x = processJsonText(data)
+    x = processJson(data)
     print(x)
     ret = {
             "status": 200,
             "mssg": "success",
             "data": x,
-            "file_url": ""
+            "file_url": "http://127.0.0.1:8000/media/user1_max.j_17_07_2024_14_03_02.jpg"
         }
     return JsonResponse({'message': 'File uploaded successfully', 'ret': ret})
 
 
 def get_history(request):
   print("get shotory...")
-  api_key = request.headers.get('APIKEY')
+  api_key = request.headers.get('X-APIKEY')
   load_dotenv()
   SECRET_KEY = os.getenv('SECRET_KEY')
   if api_key != SECRET_KEY:
       return JsonResponse({'error': 'Invalid API Key'}, status=401)
 
-  username = request.headers.get('username')
+  username = request.headers.get('X-USERNAME')
   if not username:
       return JsonResponse({'error': 'Username not found'}, status=401)
 
@@ -164,8 +166,8 @@ def get_history(request):
       try:
         file = FileDetails.objects.get(file_name=file_entry)
         
-        file_info["json_data"] = file.json_image_data
-        file_info["img_url"] = file.file_url
+        file_info["data_from_llm"] = file.data_from_llm
+        file_info["img_url"] = "http://127.0.0.1:8000/"+file.file_url
 
         data.append(file_info)
 

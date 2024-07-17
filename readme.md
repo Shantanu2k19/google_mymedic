@@ -1,5 +1,5 @@
 -text from gemini validation for json
-
+- add date and name instead of expand collapse in history 
 
     // mobile: default
     // sm:split screne Laptop

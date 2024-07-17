@@ -8,8 +8,6 @@ import axios from 'axios';
 import { PrescriptionsData, Prescription } from "@/types/medicine";
 
 const Home = () => {
-
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [medsdata, setData ] = React.useState<PrescriptionsData | null>(null);
 
   return (
@@ -18,6 +16,7 @@ const Home = () => {
           {
             medsdata? 
               <Show
+                isHistory={false}
                 medsData={medsdata}
                 setData={setData}
               />

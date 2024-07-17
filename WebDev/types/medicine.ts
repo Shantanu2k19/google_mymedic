@@ -8,4 +8,10 @@ export type Prescription = {
 
 export type PrescriptionsData = {
   prescriptions: Prescription[];
+  extra_info: ExtraInfoProps;
+  image_url: string,
+}
+
+export interface ExtraInfoProps {
+  extraInfo: { [key: string]: string | number };
 }
