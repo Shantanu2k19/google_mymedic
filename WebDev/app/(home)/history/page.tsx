@@ -10,6 +10,7 @@ import { fetchHistory } from '@/lib/actions/historyAction';
 import { PrescriptionsData, Prescription } from "@/types/medicine";
 import { ApiResponse } from "@/types/history";
 import Show from "@/components/home/show"
+import { PiRectangleFill } from "react-icons/pi";
 
 const CollapsibleList  = () => {
 
@@ -28,6 +29,11 @@ const CollapsibleList  = () => {
           prescriptions: item.data_from_llm.medData.prescriptions,
           extra_info: item.data_from_llm.medData.extra_info,
           image_url: item.img_url,
+          upload_date: item.upload_date,
+          verification: item.verification,
+          verification_doc_name: item.verification_doc_name,
+          verification_date: item.verification_date,
+          verification_comment: item.verification_comment,
         }));
 
         setData(tempData);
@@ -69,7 +75,8 @@ const CollapseData = ({prop}: {prop:PrescriptionsData}) => {
         className={`header flex justify-between items-center p-4 bg-gray-200 text-base1-semibold text-black-1 select-none border-dark-1 shadow-up rounded-md`}
         {...getToggleProps()}
       >
-        <span>{isExpanded ? 'Collapse' : 'Expand'}</span> 
+        {/* <span>{isExpanded ? 'Collapse' : 'Expand'}</span>  */}
+        <div className='flex flex-row items-center'>Extract-{prop.upload_date} &nbsp; <PiRectangleFill className={`${prop.verification===0? "text-yellow-cs": prop.verification===1? "text-green-cs":"text-red-cs"}`} /></div> 
         {isExpanded ? <FaCaretUp className="w-6 h-6 text-primary-500" /> : <FaCaretDown className="w-6 h-6 text-primary-500" />}
       </div>
 

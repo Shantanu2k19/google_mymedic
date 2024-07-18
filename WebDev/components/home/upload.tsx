@@ -103,6 +103,11 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
             prescriptions: response.data.ret.data.medData.prescriptions,
             extra_info: response.data.ret.data.medData.extra_info,
             image_url: response.data.ret.data.file_url,
+            upload_date: response.data.ret.data.upload_date,
+            verification: response.data.ret.data.verification,
+            verification_doc_name: response.data.ret.data.verification_doc_name,
+            verification_date: response.data.ret.data.verification_date,
+            verification_comment: response.data.ret.data.verification_comment,
           };
           
           console.log("after upload,",dataReceived);
@@ -151,6 +156,11 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
             prescriptions: response.data.ret.data.medData,
             extra_info: response.data.ret.data.extraInfo,
             image_url: response.data.ret.file_url,
+            upload_date: response.data.ret.upload_date,
+            verification: response.data.ret.verification,
+            verification_doc_name: response.data.ret.verification_doc_name,
+            verification_date: response.data.ret.verification_date,
+            verification_comment: response.data.ret.verification_comment,
         };
 
       console.log('Total data:', response.data);

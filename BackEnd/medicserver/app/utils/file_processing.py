@@ -103,14 +103,20 @@ def processFile(uploaded_image_file, username, ret):
         user_files.files_list.append(str(fileName))
         user_files.save()
         
-        FileDetails.objects.create(
+        file_details_obj = FileDetails.objects.create(
             file_name = fileName,
             json_image_data = extracted_image_data["json_image_data"],
             str_image_text = extracted_image_data["str_image_text"],
             data_from_llm = ret["data"],
             file_url = file_url,
         )
+
         ret["file_url"] = file_url
+        ret["upload_date"] = file_details_obj.upload_date.strftime('%d/%m/%Y (%H:%M)')
+        ret["verification"] = 0
+        ret["verification_doc_name"] = ""
+        ret["verification_date"] = ""
+        ret["verification_comment"] = ""
         
     except Exception as e:
         print("exception occured")

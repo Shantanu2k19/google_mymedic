@@ -13,7 +13,7 @@ import os
 from dotenv import load_dotenv
 from django.middleware.csrf import get_token
 import json
-
+from django.utils import timezone
 from app.models import UserDetails, FileDetails
 
 #utility functions
@@ -51,7 +51,12 @@ def upload_image(request):
             "status": 200,
             "mssg": "success",
             "data": {},
-            "file_url": ""
+            "file_url": "",
+            "upload_date": "",
+            "verification": 0,
+            "verification_doc_name": "",
+            "verification_date": "",
+            "verification_comment": "",
         }
         processFile(uploaded_image_file, username, ret)
         print("processing done")
@@ -61,6 +66,7 @@ def upload_image(request):
 
         print("done")
         print(type(ret['data']))
+        ret['file_url'] = "http://127.0.0.1:8000/media/"+ret['file_url']
 
         return JsonResponse({'message': 'File uploaded successfully', 'ret': ret})
     return JsonResponse({'message': 'No file found'}, status=400)
@@ -132,7 +138,12 @@ def sampleData(request):
             "status": 200,
             "mssg": "success",
             "data": x,
-            "file_url": "http://127.0.0.1:8000/media/user1_max.j_17_07_2024_14_03_02.jpg"
+            "file_url": "http://127.0.0.1:8000/media/user1_max.j_17_07_2024_14_03_02.jpg",
+            "upload_date": "21/04/2001(21:21)",
+            "verification": 0,
+            "verification_doc_name": "abhishek kumar",
+            "verification_date": "22/01/2023",
+            "verification_comment": "lololol",
         }
     return JsonResponse({'message': 'File uploaded successfully', 'ret': ret})
 
@@ -168,6 +179,17 @@ def get_history(request):
         
         file_info["data_from_llm"] = file.data_from_llm
         file_info["img_url"] = "http://127.0.0.1:8000/"+file.file_url
+        file_info['upload_date'] = file.upload_date.strftime('%d/%m/%Y (%H:%M)')
+        
+
+        file_info['verification'] = file.isVerified
+        if file.verification_doc:
+          file_info['verification_doc_name'] = file.verification_doc.doc_name
+        else:
+          file_info['verification_doc_name'] = "unverified"
+
+        file_info['verification_date'] = file.verification_date.strftime('%d/%m/%Y (%H:%M)')
+        file_info['verification_comment'] = file.verification_comment
 
         data.append(file_info)
 
