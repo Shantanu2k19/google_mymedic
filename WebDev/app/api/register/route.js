@@ -2,6 +2,7 @@ import { connectMongodb } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import User from "@/models/user";
+import generateUniqueUsername from "@/lib/utils"
 
 export async function POST(req) {
     console.log("POST register");
@@ -12,8 +13,10 @@ export async function POST(req) {
 
         const hashedPass = await bcrypt.hash(password, 10)
         console.log("creating user")
+        let username = generateUniqueUsername(email);
+
         try {
-            await User.create({ name, email, password: hashedPass, isgooglelogin:false })
+            await User.create({ name, username, email, password: hashedPass, isgooglelogin:false })
         }
         catch (error) {
             console.log("error:" + error)

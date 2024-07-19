@@ -45,8 +45,7 @@ export default function LoginForm({ toggleComponent }: ChildProps) {
       }
 
       setError("Login success");
-      console.log(res); //test
-      //redirect
+      console.log(res);
 
       router.replace("/home");
     } catch (error) {

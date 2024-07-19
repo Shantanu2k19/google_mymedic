@@ -10,7 +10,7 @@ export const sidebarLinks = [
     label: 'Consultation'
   },
   {
-    imgURL: '/assets/heart.svg',
+    imgURL: '/assets/history2.png',
     route: '/history',
     label: 'History'
   },

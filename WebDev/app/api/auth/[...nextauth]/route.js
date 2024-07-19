@@ -4,6 +4,7 @@ import User from "@/models/user";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import GoogleProvider from "next-auth/providers/google";
+import generateUniqueUsername from "@/lib/utils"
 
 const authOptions = {
   providers: [
@@ -109,10 +110,12 @@ const authOptions = {
           console.log("User found");
           return true;
         }
-        
+
         console.log("need to signup")
+
+        let username = generateUniqueUsername(usrEmail);
         try {
-            await User.create({ name: usrName,  email: usrEmail, image: usrImage, isgooglelogin:true })
+            await User.create({ name: usrName,  username, email: usrEmail, image: usrImage, isgooglelogin:true })
         }
         catch (error) {
             console.log("error:" + error)

@@ -1,9 +1,4 @@
 import React from "react";
-import LoginForm from "@/components/auth/LoginForm";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-// import { authOptions } from "../../api/auth/route";
-import Link from "next/link";
 
 import AboutSectionTwo from "@/components/pdp/About/AboutSectionTwo";
 import Technologies from "@/components/pdp/Technologies";

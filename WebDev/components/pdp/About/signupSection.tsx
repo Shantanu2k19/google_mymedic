@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -19,14 +18,13 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent }) => {
 
   const inputChangeHandler = (e:any, setItem:any) => {
     error && setError("");
-    console.log(e.target.vlaue)
     setItem(e.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log("hekllo")
+    console.log("form submit")
 
     try {
       const resUserExist = await fetch("api/userExists", {
@@ -38,7 +36,7 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent }) => {
       });
       const { user } = await resUserExist.json();
       if (user) {
-        setError("User already exist");
+        setError("User already exist with this email, Please sign in!");
         return;
       }
 
