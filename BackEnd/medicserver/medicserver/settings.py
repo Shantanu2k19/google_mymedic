@@ -27,6 +27,9 @@ class SUPPORTED_MODELS(Enum):
 
 MODEL=SUPPORTED_MODELS.GEMINI
 
+BASE_URL="http://127.0.0.1:8000/media/"
+
+
 # LOGGING = {
 #     "version": 1,
 #     "disable_existing_loggers": False,

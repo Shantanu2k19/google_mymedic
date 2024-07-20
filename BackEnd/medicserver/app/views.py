@@ -15,6 +15,7 @@ from django.middleware.csrf import get_token
 import json
 from django.utils import timezone
 from app.models import UserDetails, FileDetails
+from django.conf import settings
 
 #utility functions
 from .utils.file_processing import processFile
@@ -66,7 +67,8 @@ def upload_image(request):
 
         print("done")
         print(type(ret['data']))
-        ret['file_url'] = "http://127.0.0.1:8000/media/"+ret['file_url']
+        base_url = settings.BASE_URL
+        ret['file_url'] = base_url+ret['file_url']
 
         return JsonResponse({'message': 'File uploaded successfully', 'ret': ret})
     return JsonResponse({'message': 'No file found'}, status=400)
@@ -138,7 +140,7 @@ def sampleData(request):
             "status": 200,
             "mssg": "success",
             "data": x,
-            "file_url": "http://127.0.0.1:8000/media/user1_max.j_17_07_2024_14_03_02.jpg",
+            "file_url": settings.BASE_URL+"user1_max.j_17_07_2024_14_03_02.jpg",
             "upload_date": "21/04/2001(21:21)",
             "verification": 0,
             "verification_doc_name": "abhishek kumar",
@@ -178,7 +180,7 @@ def get_history(request):
         file = FileDetails.objects.get(file_name=file_entry)
         
         file_info["data_from_llm"] = file.data_from_llm
-        file_info["img_url"] = "http://127.0.0.1:8000/"+file.file_url
+        file_info["img_url"] = settings.BASE_URL+file.file_url
         file_info['upload_date'] = file.upload_date.strftime('%d/%m/%Y (%H:%M)')
         
 
