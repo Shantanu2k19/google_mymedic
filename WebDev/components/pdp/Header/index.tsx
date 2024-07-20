@@ -71,7 +71,20 @@ const Header = () => {
                 />
               </Link>
             </div>
-            <div className="flex w-full items-center justify-between px-4">
+
+            <div className="flex w-full items-center justify-end md:justify-between px-4">
+            <ScrollLink
+              to="sectionSignupLogin"
+              spy={true}
+              smooth={true}
+              offset={-70} 
+              duration={500}
+            >
+              <div className="cursor-pointer ease-in-up shadow-btn hover:shadow-btn-hover rounded-sm 
+              bg-primary p-4 py-3 mx-4 text-base font-medium text-white transition duration-300 hover:bg-opacity-90 md:hidden">
+                LogIn/SignUp
+              </div>
+            </ScrollLink> 
               <div>
                 <button
                   onClick={navbarToggleHandler}

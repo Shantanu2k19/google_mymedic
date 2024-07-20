@@ -11,8 +11,8 @@ const Quote = () => {
       <div className="container">
         <SectionTitle
           title="Empowering Patients with Medication Knowledge"
-          paragraph="Patients are 50% more likely to take their medications punctually when they understand their purpose and benefits. 
-          Clear information builds trust and encourages adherence to treatment.Studies"
+          paragraph="Studies suggest, Patients are 50% more likely to take their medications punctually when they understand their purpose and benefits. 
+          Clear information builds trust and encourages adherence to treatment."
           center
           mb="80px"
         />
