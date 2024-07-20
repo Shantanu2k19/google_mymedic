@@ -6,11 +6,13 @@ import { User_info } from "@/types/user"
 interface Props {
   prop: User_info;
   setEdit: React.Dispatch<React.SetStateAction<boolean>>;
+  edit: boolean;
 }
 
 function ProfileHeader({
   prop,
   setEdit,
+  edit,
 }: Props) {
   return (
     <div className='flex flex-col justify-start w-full md:w-2/3'>
@@ -34,7 +36,7 @@ function ProfileHeader({
           </div>
         </div>
 
-        <div className='flex cursor-pointer gap-3 rounded-lg bg-dark-3 px-4 py-2 border border-primary-500'
+        <div className={`flex cursor-pointer gap-3 rounded-lg px-4 py-2 border border-primary-500 ${edit ? "bg-dark-4": "bg-dark-3"}`}
         onClick={()=> setEdit(prevState => !prevState)}
         >
           <Image
@@ -49,10 +51,10 @@ function ProfileHeader({
       </div>
 
       <div>
-        <p className='text-base-medium text-gray-1 m-2'>User Created on: {prop.created}</p>
+        <p className='text-base-medium text-gray-1 mt-2'>User Created on: {prop.created}</p>
       </div>
 
-      <div className='mt-12 h-0.5 w-full bg-dark-3' />
+      <div className='mt-8 h-0.5 w-full bg-dark-3' />
     </div>
   );
 }

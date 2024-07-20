@@ -4,7 +4,7 @@ import { Triangle } from 'react-loader-spinner'
 export default function hello(){
 
     return (
-        <div className='flex flex-col justify-center items-center text-white text-'>
+        <div className='flex flex-col justify-center items-center text-white'>
             <Triangle
                 visible={true}
                 height="200"

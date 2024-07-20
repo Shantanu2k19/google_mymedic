@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 import LeftSidebar from '@/components/shared/Lefisidebar'
-import Rightsidebar from '@/components/shared/Rightsidebar'
+//import Rightsidebar from '@/components/shared/Rightsidebar'
 import Topbar from '@/components/shared/Topbar'
 import Bottombar from '@/components/shared/Bottombar'
 import { AuthProvider } from "../_app";

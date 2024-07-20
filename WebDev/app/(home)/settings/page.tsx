@@ -37,6 +37,7 @@ const Settings = () => {
           <ProfileHeader
             prop = {user_info}
             setEdit = {setEdit}
+            edit = {edit}
           />
 
           <SettingsEditor
