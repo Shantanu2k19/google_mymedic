@@ -261,6 +261,7 @@ module.exports = {
         "light-5": "#E8E8E8",
         "gray-1": "#697C89",
         "gray-2": "#363636",
+        "gray-3": "#6F6F6F",
         "red-cs": "#ff3300",
         "green-cs": "#009900",
         "yellow-cs":"#ffff00",

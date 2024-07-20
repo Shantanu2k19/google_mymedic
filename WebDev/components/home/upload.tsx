@@ -138,7 +138,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
 
 
 
-  const hahahahha = async (event: React.FormEvent) => {
+  const getSampleData = async (event: React.FormEvent) => {
 
     // setIsFetching(true);
     event.preventDefault();
@@ -180,9 +180,9 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
 
     return (
       <div className='flex flex-col justify-between items-center'>
-        <button onClick={hahahahha} className='p-4 m-5 text-white border border-white'>
+        {/* <button onClick={getSampleData} className='p-4 m-5 text-white border border-white'>
           getdata
-        </button>
+        </button> */}
 
         <form
             onClick={handleFormClick} 

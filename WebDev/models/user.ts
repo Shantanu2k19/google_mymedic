@@ -13,6 +13,13 @@ export interface IUser extends Document {
   isgooglelogin: boolean;
 }
 
+export interface UserUpdate {
+  name?: string;
+  username?: string;
+  age?: Number;
+  gender?: string;
+}
+
 const userSchema = new mongoose.Schema<IUser>(
   {
     name: { type: String, required: true },

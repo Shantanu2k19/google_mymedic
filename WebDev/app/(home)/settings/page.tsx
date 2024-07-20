@@ -82,6 +82,8 @@ const Settings = () => {
           <SettingsEditor
             prop = {user_info}
             edit = {edit}
+            setEdit = {setEdit}
+            showAlert = {showAlert}
           />
         </>
 

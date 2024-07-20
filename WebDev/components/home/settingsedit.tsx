@@ -1,32 +1,73 @@
 import { User_info } from '@/types/user';
 import React from 'react';
 import Modal from "@/components/shared/modal"
+import { useEffect } from 'react';
+import { updateUserDetails } from "@/app/api/actions/userSettingAction"
+import { UserUpdate } from "@/models/user";
 
 interface Props {
     prop: User_info;
-    edit: boolean;
+    edit: boolean;  
+    setEdit: React.Dispatch<React.SetStateAction<boolean>>;
+    showAlert: (mssg: string, mode: number) => void;
 }
 
-function SettingsEditor({ prop, edit }: Props) {
+function SettingsEditor({ prop, edit, setEdit, showAlert }: Props) {
    
     const { name, username, email, image, age, gender, created} = prop;
 
     const [newname, setNewname] = React.useState(name);
     const [newusernm, setNewusrnm] = React.useState(username);
     const [newgender, setNewgender] = React.useState(gender);
-    const [neage, setNewage] = React.useState<number | undefined>(undefined);
+    const [newage, setNewage] = React.useState<Number>();
 
+    const updateFormValues = (m_name:string, m_usrname:string, m_gender:string, m_age:Number) =>{
+        setNewname(m_name);
+        setNewusrnm(m_usrname);
+        setNewgender(m_gender);
+        setNewage(m_age);
+    }
 
     const [isModalOpen, setIsModalOpen] = React.useState(false);
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    const [yesSelected, setYesSelected] = React.useState(false);
-
     const handleDeleteAccount = () => {
         console.log("yes selected")
+        showAlert("Coming soon", 2);
         setIsModalOpen(false);
     }
+
+    const cancelUpdate = () => {
+        setEdit(prevState => !prevState);
+        updateFormValues(name, username, gender, age);
+    }
+
+    const updateDetails = async () => {
+        try {
+          const newData: UserUpdate = {
+            name: newname,
+            username: newusernm,
+            age: newage,
+            gender: newgender,
+          };
+      
+          const updatedUser = await updateUserDetails(email, newData);
+          console.log('User updated successfully:', updatedUser);
+          setEdit(false);
+          showAlert("Details Updated",1);
+        } catch (error) {
+          console.error('Error updating user:', error);
+          alert('There was an error updating the user. Please try again.');
+          setEdit(false);
+        }
+      };
+      
+
+    useEffect(() => {
+        updateFormValues(name, username, gender, age);
+    }, [])
+
     return (
         <>
             <Modal isOpen={isModalOpen} onClose={closeModal}>
@@ -38,7 +79,7 @@ function SettingsEditor({ prop, edit }: Props) {
                     <div className='flex flex-row'>
                         <button 
                             className="button-custom w-32"
-                            onClick={handleDeleteAccount}>Yes
+                            onClick={handleDeleteAccount}>Confirm
                         </button>
                         <button 
                             className="button-custom w-32"
@@ -56,10 +97,11 @@ function SettingsEditor({ prop, edit }: Props) {
 
                         <input
                         type="text"
-                        placeholder= {name}
-                        className={`setInp border ${edit ? "border-light-5 bg-dark-4" : "border-gray-2 bg-dark-2"}`}
+                        placeholder= {newname}
+                        className={`setInp border ${edit ? "border-light-5 bg-dark-4 text-white" : "border-gray-2 bg-dark-2 text-gray-3"}`}
                         disabled = {!edit}
                         onChange={(e) => setNewname(e.target.value)}
+                        value={newname}
                         />
                     </div>
 
@@ -68,10 +110,11 @@ function SettingsEditor({ prop, edit }: Props) {
 
                         <input
                         type="text"
-                        placeholder= {username}
-                        className={`setInp border ${edit ? "border-light-5 bg-dark-4" : "border-gray-2 bg-dark-2"}`}
+                        placeholder= {newusernm}
+                        className={`setInp border ${edit ? "border-light-5 bg-dark-4 text-white" : "border-gray-2 bg-dark-2 text-gray-3"}`}
                         disabled = {!edit}
                         onChange={(e) => setNewusrnm(e.target.value)}
+                        value={newusernm}
                         />
                     </div>
                 </div>
@@ -82,7 +125,7 @@ function SettingsEditor({ prop, edit }: Props) {
                     <input
                     type="text"
                     placeholder= {email}
-                    className={`setInp border border-gray-2 bg-dark-2`}
+                    className={`setInp border border-gray-2 bg-dark-2 text-gray-3`}
                     disabled
                     />
                 </>
@@ -93,13 +136,14 @@ function SettingsEditor({ prop, edit }: Props) {
 
                         <input
                         type="number"
-                        placeholder= {age !== undefined ? age.toString() : ''}
-                        className={`setInp border ${edit ? "border-light-5 bg-dark-4" : "border-gray-2 bg-dark-2"}`}
+                        placeholder= {newage !== undefined ? newage.toString() : ''}
+                        className={`setInp border ${edit ? "border-light-5 bg-dark-4 text-white" : "border-gray-2 bg-dark-2 text-gray-3"}`}
                         disabled = {!edit}
                         onChange={(e) => {
                             const value = e.target.value ? Number(e.target.value) : undefined;
                             setNewage(value);
                         }}
+                        value={newage !== undefined ? newage.toString() : ''}
                         />
                     </div>
                     
@@ -108,28 +152,33 @@ function SettingsEditor({ prop, edit }: Props) {
                         <p className="setTit">Gender</p>
 
                         <select
-                        className={`setInp border ${edit ? "border-light-5 bg-dark-4" : "border-gray-2 bg-dark-2"}`}
+                        className={`setInp border ${edit ? "border-light-5 bg-dark-4 text-white" : "border-gray-2 bg-dark-2 text-gray-3"}`}
                         disabled = {!edit}
                         onChange={(e) => setNewgender(e.target.value)}
                         value={newgender}
                         >
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
+                            <option value="Female">Others</option>
                         </select>
                     </div>
                 </div>
 
                 <div className='flex flex-row w-full justify-around items-center'>
                     <button 
+                        // type="button"
                         className={`button-custom2 w-32 font-bold text-light-3 ${ edit ? "bg-primary-500 text-white" : "bg-prim-hov pointer-events-none" }`}
                         disabled = {!edit}
+                        onClick={updateDetails}
                     >
-                        Save
+                        Update
                     </button>
 
                     <button 
+                        type="button"
                         className={`button-custom2 w-32 font-bold text-light-3 ${ edit ? "bg-primary-500 text-white" : "bg-prim-hov pointer-events-none" }`}
-                    >
+                        onClick={cancelUpdate}
+                        >
                         Cancel
                     </button>
                 </div>
