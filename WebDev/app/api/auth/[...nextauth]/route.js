@@ -1,10 +1,10 @@
-import { connectMongodb } from "@/lib/mongodb";
+import { connectMongodb } from "@/app/api/mongodb";
 import NextAuth from "next-auth/next";
 import User from "@/models/user";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import GoogleProvider from "next-auth/providers/google";
-import { generateUniqueUsername } from "@/lib/utils"
+import { generateUniqueUsername } from "@/app/api/utils"
 
 const authOptions = {
   providers: [

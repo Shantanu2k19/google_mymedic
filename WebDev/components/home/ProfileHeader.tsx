@@ -7,12 +7,14 @@ interface Props {
   prop: User_info;
   setEdit: React.Dispatch<React.SetStateAction<boolean>>;
   edit: boolean;
+  showAlert: (mssg: string, mode: number) => void;
 }
 
 function ProfileHeader({
   prop,
   setEdit,
   edit,
+  showAlert,
 }: Props) {
   return (
     <div className='flex flex-col justify-start w-full md:w-2/3'>
@@ -24,7 +26,8 @@ function ProfileHeader({
               src={prop.image}
               alt='image'
               fill
-              className='rounded-full object-cover shadow-2xl border-2 border-primary-500 p-2'
+              className='rounded-full object-cover shadow-2xl border-2 border-primary-500 p-2 cursor-pointer'
+              onClick={() => showAlert("Cannot edit currently.", 2)}
             />
           </div>
 

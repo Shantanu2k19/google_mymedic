@@ -3,7 +3,7 @@ import { useCollapse } from 'react-collapsed'
 import { FaCaretDown,FaCaretUp } from "react-icons/fa";
 import { useState, useEffect, useRef, FormEvent } from 'react'
 
-import { fetchHistory } from '@/lib/actions/historyAction';
+import { fetchHistory } from '@/app/api/actions/historyAction';
 import { PrescriptionsData } from "@/types/medicine";
 import { ApiResponse } from "@/types/history";
 import Show from "@/components/home/show"

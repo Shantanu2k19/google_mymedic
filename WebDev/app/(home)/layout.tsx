@@ -10,6 +10,8 @@ import Bottombar from '@/components/shared/Bottombar'
 import { AuthProvider } from "../_app";
 import Head from 'next/head';
 import "@/styles/globals.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -36,6 +38,14 @@ export default function RootLayout ({
 
             <section className="main-container">
               <div className="w-full">
+                <ToastContainer
+                  position="top-center"
+                  pauseOnFocusLoss={false}
+                  pauseOnHover={false}
+                  limit={3}
+                  theme="dark"
+                  // className="custom-toast-container"
+                />
                 {children}
               </div>
             </section>

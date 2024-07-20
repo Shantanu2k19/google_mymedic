@@ -6,7 +6,7 @@ import { history } from "@/types/history";
 import { useState, useEffect, useRef, FormEvent } from 'react'
 import axios from 'axios';
 
-import { fetchHistory } from '@/lib/actions/historyAction';
+import { fetchHistory } from '@/app/api/actions/historyAction';
 
 
 async function CollapsibleList (){

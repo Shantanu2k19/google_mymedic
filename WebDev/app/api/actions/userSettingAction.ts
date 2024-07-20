@@ -1,9 +1,9 @@
 "use server";
 
-import { connectMongodb } from "@/lib/mongodb";
+import { connectMongodb } from "@/app/api/mongodb";
 import { User_info } from "@/types/user";
 import User, { IUser } from "@/models/user";
-import { formatDate } from "@/lib/utils"
+import { formatDate } from "@/app/api/utils"
 
 export const fetchUserInfo = async (usrEmail: string) => {
   try {

@@ -5,7 +5,10 @@ import { useState } from "react";
 import { useEffect } from 'react';
 import SettingsEditor from "@/components/home/settingsedit"
 import { User_info } from "@/types/user"
-import { fetchUserInfo } from "@/lib/actions/userSettingAction"
+// import { fetchUserInfo } from "@/lib/actions/userSettingAction"
+import { fetchUserInfo } from "@/app/api/actions/userSettingAction"
+import { useTheme } from "next-themes";
+import { toast } from 'react-toastify';
 
 const Settings = () => {
   const { data: session, status } = useSession();
@@ -29,6 +32,41 @@ const Settings = () => {
       fetchData(session.user.email);
   },[status]);
 
+  function showAlert(mssg: string, mode:number) {
+      console.log("alert", mssg, mode)
+  
+      if (mode == 1) {
+        toast.success(mssg, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else if (mode == 2) {
+        toast.info(mssg, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        toast.error(mssg, {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+  }
 
   return (
     <section className="text text-white">
@@ -38,6 +76,7 @@ const Settings = () => {
             prop = {user_info}
             setEdit = {setEdit}
             edit = {edit}
+            showAlert = {showAlert}
           />
 
           <SettingsEditor

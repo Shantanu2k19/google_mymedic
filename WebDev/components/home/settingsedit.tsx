@@ -1,18 +1,18 @@
 import { User_info } from '@/types/user';
 import React from 'react';
 import Modal from "@/components/shared/modal"
+
 interface Props {
     prop: User_info;
     edit: boolean;
 }
 
 function SettingsEditor({ prop, edit }: Props) {
-
+   
     const { name, username, email, image, age, gender, created} = prop;
 
     const [newname, setNewname] = React.useState(name);
     const [newusernm, setNewusrnm] = React.useState(username);
-    const [newemail, setNewemail] = React.useState(email);
     const [newgender, setNewgender] = React.useState(gender);
     const [neage, setNewage] = React.useState<number | undefined>(undefined);
 
@@ -82,9 +82,8 @@ function SettingsEditor({ prop, edit }: Props) {
                     <input
                     type="text"
                     placeholder= {email}
-                    className={`setInp border ${edit ? "border-light-5 bg-dark-4" : "border-gray-2 bg-dark-2"}`}
-                    disabled = {!edit}
-                    onChange={(e) => setNewemail(e.target.value)}
+                    className={`setInp border border-gray-2 bg-dark-2`}
+                    disabled
                     />
                 </>
 
