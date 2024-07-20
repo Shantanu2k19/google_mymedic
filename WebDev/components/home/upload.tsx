@@ -5,6 +5,7 @@ import Image from 'next/image'
 import React from "react";
 import { PrescriptionsData, Prescription } from "@/types/medicine";
 import { DNA } from 'react-loader-spinner'
+import { SERVER_URL } from "@/constants"
 
 interface UploadComponentProps {
     setData: React.Dispatch<React.SetStateAction<PrescriptionsData | null>>;
@@ -23,7 +24,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         const fetchCsrfToken = async () => {
           console.log("fetching csrf token");
           try {
-            const response = await axios.get('http://localhost:8000/csrf/',{
+            const response = await axios.get(`${SERVER_URL}/csrf/`,{
               withCredentials: true,
               params: {
                 username: 'your_username_here',
@@ -87,7 +88,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         formData.append('file', selectedFileLocal);
     
         try {
-          const response = await axios.post('http://localhost:8000/upload/', formData, {
+          const response = await axios.post(`${SERVER_URL}/upload/`, formData, {
             headers: {
               'Content-Type': 'multipart/form-data',
               'X-CSRFToken': csrfToken,
@@ -143,7 +144,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     // setIsFetching(true);
     event.preventDefault();
     try {
-      const response = await axios.get('http://localhost:8000/sampleData/', {
+      const response = await axios.get(`${SERVER_URL}/sampleData/`, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'X-APIKEY': 'api_key',
@@ -180,9 +181,9 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
 
     return (
       <div className='flex flex-col justify-between items-center'>
-        {/* <button onClick={getSampleData} className='p-4 m-5 text-white border border-white'>
+        <button onClick={getSampleData} className='p-4 m-5 text-white border border-white'>
           getdata
-        </button> */}
+        </button>
 
         <form
             onClick={handleFormClick} 

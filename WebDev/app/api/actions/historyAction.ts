@@ -1,13 +1,15 @@
 import axios from 'axios';
+import { SERVER_URL } from "@/constants"
 
 const apiClient = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
+  baseURL: SERVER_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 export const fetchHistory = async (username: string) => {
+  console.log("trying with usernameeee:",username)
   try {
     const options = {
       method: 'GET',
