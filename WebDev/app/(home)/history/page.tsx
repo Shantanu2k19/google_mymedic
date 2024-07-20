@@ -1,16 +1,16 @@
 "use client"
 import { useCollapse } from 'react-collapsed'
-import Image from 'next/image'
 import { FaCaretDown,FaCaretUp } from "react-icons/fa";
-import sampleHistory from "./sampleHistory";
-import { history } from "@/types/history";
 import { useState, useEffect, useRef, FormEvent } from 'react'
 
 import { fetchHistory } from '@/lib/actions/historyAction';
-import { PrescriptionsData, Prescription } from "@/types/medicine";
+import { PrescriptionsData } from "@/types/medicine";
 import { ApiResponse } from "@/types/history";
 import Show from "@/components/home/show"
 import { PiRectangleFill } from "react-icons/pi";
+
+// import sampleHistory from "./sampleHistory";
+// import { history } from "@/types/history";
 
 const CollapsibleList  = () => {
 
@@ -49,14 +49,17 @@ const CollapsibleList  = () => {
 
   return (
     <>
-      {data && data.map((item) => (
-        <>
-          <CollapseData prop={item}/>
-        </>
-      ))}
+     {data ? (
+        data.map((item, index) => (
+          <>
+            <CollapseData key={index} prop={item}/>
+          </>
+        ))
+      ) : (
+        <p>Loading user information...</p>
+      )}
     </>
   );
-  
 };
 
 

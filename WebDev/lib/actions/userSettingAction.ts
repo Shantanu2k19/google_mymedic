@@ -1,7 +1,11 @@
-import { connectMongodb } from "@/lib/mongodb";
-import User from "@/models/user";
+"use server";
 
-export const fetchUserInfo = async (usrName: string)=> {
+import { connectMongodb } from "@/lib/mongodb";
+import { User_info } from "@/types/user";
+import User, { IUser } from "@/models/user";
+import { formatDate } from "@/lib/utils"
+
+export const fetchUserInfo = async (usrEmail: string) => {
   try {
     await connectMongodb();
   } catch (error) {
@@ -9,15 +13,27 @@ export const fetchUserInfo = async (usrName: string)=> {
     throw new Error("Error connecting to the database at the moment!");
   }
 
+  console.log("fetching details of : ",usrEmail)
+
   try {
-    const usr = await User.findOne({ username: usrName }).lean();
+    const usr = await User.findOne({ email: usrEmail }).lean<IUser>();
 
     if (!usr) {
       console.error("User not found");
       throw new Error("User not found");
     }
 
-    return usr;
+    const userInfo: User_info = {
+        name: usr.name,
+        username: usr.username,
+        email: usr.email,
+        image: usr.image,
+        age: usr.age,
+        gender: usr.gender,
+        created: formatDate(usr.createdAt),
+      };
+
+    return userInfo;
 
   } catch (error: any) {
     if (error.response) {
@@ -29,6 +45,6 @@ export const fetchUserInfo = async (usrName: string)=> {
     } else {
       console.error('Error message:', error.message);
     }
-    throw new Error("An error occurred while fetching the user information");
+    throw new Error(`An error occurred while fetching the user information: ${error.message}`);
   }
 };

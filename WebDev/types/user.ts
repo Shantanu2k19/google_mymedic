@@ -1,9 +1,10 @@
 export type User_info = {
-    name: String,
-    username: String,
-    email: String,
-    image: String,
+    name: string,
+    username: string,
+    email: string,
+    image: string,
     age: Number,
-    gender: String,
+    gender: string,
+    created: string,
   };
   

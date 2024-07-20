@@ -2,7 +2,7 @@ import { connectMongodb } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import User from "@/models/user";
-import generateUniqueUsername from "@/lib/utils"
+import { generateUniqueUsername } from "@/lib/utils"
 
 export async function POST(req) {
     console.log("POST register");

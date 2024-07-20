@@ -1,30 +1,21 @@
+import { User_info } from '@/types/user';
 import React from 'react';
 import { useEffect } from 'react';
 
 interface Props {
-    name: string;
-    username: string;
-    email: string;
-    age: string;
-    gender: string;
+    prop: User_info;
     edit: boolean;
-  }
-  
+}
 
-function SettingsEditor({
-    name,
-    username,
-    email,
-    gender,
-    edit,
-    age,
-  }: Props) {
+function SettingsEditor({ prop, edit }: Props) {
+
+    const { name, username, email, image, age, gender, created} = prop;
 
     const [newname, setNewname] = React.useState(name);
     const [newusernm, setNewusrnm] = React.useState(username);
     const [newemail, setNewemail] = React.useState(email);
     const [newgender, setNewgender] = React.useState(gender);
-    const [neage, setNewage] = React.useState(age);
+    const [neage, setNewage] = React.useState<number | undefined>(undefined);
 
     return (
         <>
@@ -74,10 +65,13 @@ function SettingsEditor({
 
                         <input
                         type="number"
-                        placeholder= {age}
+                        placeholder= {age !== undefined ? age.toString() : ''}
                         className={`setInp border ${edit ? "border-light-5 bg-dark-4" : "border-gray-2 bg-dark-2"}`}
                         disabled = {!edit}
-                        onChange={(e) => setNewage(e.target.value)}
+                        onChange={(e) => {
+                            const value = e.target.value ? Number(e.target.value) : undefined;
+                            setNewage(value);
+                        }}
                         />
                     </div>
                     
@@ -89,9 +83,10 @@ function SettingsEditor({
                         className={`setInp border ${edit ? "border-light-5 bg-dark-4" : "border-gray-2 bg-dark-2"}`}
                         disabled = {!edit}
                         onChange={(e) => setNewgender(e.target.value)}
+                        value={newgender}
                         >
-                            <option value="Male" selected={gender === "male"}>Male</option>
-                            <option value="Female" selected={gender === "female"}>Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ import User from "@/models/user";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import GoogleProvider from "next-auth/providers/google";
-import generateUniqueUsername from "@/lib/utils"
+import { generateUniqueUsername } from "@/lib/utils"
 
 const authOptions = {
   providers: [
