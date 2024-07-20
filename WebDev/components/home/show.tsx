@@ -136,16 +136,27 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
 
               <br/>
               <br/>
-              <hr/>
+              <hr className="border-t-2 border-dark-1"/>
               <br/>
 
               The details provided by AI are verified by a certified doctor. Use the information after verification for medical purposes.
               <br/>
               Color codes : 
-              <div className="flex flex-row">
-                <PiRectangleFill  className="text-yellow-cs w-6 h-6"/> InProgress    
-                <PiRectangleFill  className="text-green-cs w-6 h-6"/> Completed    
-                <PiRectangleFill  className="text-red-cs w-6 h-6"/> Completed with comments    
+              <div className="flex flex-row justify-between align-center">
+                <span className="flex items-center">
+                <PiRectangleFill className="text-yellow-cs w-6 h-6" />
+                <span className="ml-2">InProgress</span>
+                </span> 
+
+                <span className="flex items-center">
+                <PiRectangleFill className="text-green-cs w-6 h-6" />
+                <span className="ml-2">Completed</span>
+                </span> 
+
+                <span className="flex items-center">
+                <PiRectangleFill className="text-red-cs w-6 h-6" />
+                <span className="ml-2">Completed with comments</span>
+                </span> 
               </div>
             </div>
             
