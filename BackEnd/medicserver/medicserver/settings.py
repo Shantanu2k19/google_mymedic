@@ -27,7 +27,8 @@ class SUPPORTED_MODELS(Enum):
 
 MODEL=SUPPORTED_MODELS.GEMINI
 
-BASE_URL="https://mymedicserver.pythonanywhere.com/media/"
+# BASE_URL="https://mymedicserver.pythonanywhere.com/media/"
+BASE_URL="http://127.0.0.1:8000/"
 
 
 # LOGGING = {
@@ -76,6 +77,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'mymedicserver.pythonanywhere.com',
+    '127.0.0.1:8000/',
+    '127.0.0.1'
 ]
 
 

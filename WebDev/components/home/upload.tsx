@@ -3,9 +3,11 @@ import { MdCloudUpload, MdDelete, MdFileUpload } from 'react-icons/md'
 import axios from 'axios';
 import Image from 'next/image'
 import React from "react";
-import { PrescriptionsData, Prescription } from "@/types/medicine";
+import { PrescriptionsData } from "@/types/medicine";
 import { DNA } from 'react-loader-spinner'
 import { SERVER_URL } from "@/constants"
+import { fetchSampleData } from "@/app/api/actions/uploadAction"
+import { ErrorResponse } from "@/types/response"
 
 interface UploadComponentProps {
     setData: React.Dispatch<React.SetStateAction<PrescriptionsData | null>>;
@@ -20,24 +22,31 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     const [isFetching, setIsFetching] = useState(false);
     const [fetchStage, setFetchStage] = useState("Uploading...");
 
+    //save csrf token
     useEffect(() => {
-        const fetchCsrfToken = async () => {
-          console.log("fetching csrf token");
-          try {
-            const response = await axios.get(`${SERVER_URL}/csrf/`,{
-              withCredentials: true,
-              params: {
-                username: 'your_username_here',
-              },
-            });
-            console.log("got token");
-            setCsrfToken(response.data.csrfToken);
-          } catch (error) {
-            console.error('Error fetching CSRF token:', error);
-          }
-        };
-    
-        fetchCsrfToken();
+      const initializeCsrfToken = async () => {
+        const csrfToken = sessionStorage.getItem('csrfToken');
+        if (!csrfToken) {
+            console.log('CSRF token not found, fetching');
+            try {
+                const response = await axios.get(`${SERVER_URL}/csrf/`,{
+                  withCredentials: true,
+                  params: {
+                    username: 'upload_tok_get',
+                  },
+                });
+                console.log("got token");
+                sessionStorage.setItem('csrfToken', response.data.csrfToken);
+                setCsrfToken(response.data.csrfToken);
+            } catch (error) {
+                console.error('Error fetching CSRF token:', error);
+            } finally{
+              return;
+            }
+        }
+        console.log("token already there")
+      };
+      initializeCsrfToken();
     }, []);
     
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -137,51 +146,34 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         }
     };
 
+  const getSampleData = async () => {
 
+    try{
+      const response = await fetchSampleData();
+      
+      if(!response){
+        console.error("No response from server");
+        return null;
+      }
 
-  const getSampleData = async (event: React.FormEvent) => {
+      if ((response as ErrorResponse).error) {
+        console.error("Error occurred:", (response as ErrorResponse).error);
+        return null;
+      }
 
-    // setIsFetching(true);
-    event.preventDefault();
-    try {
-      const response = await axios.get(`${SERVER_URL}/sampleData/`, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'X-APIKEY': 'api_key',
-          'X-username': 'user123'
-        },
-        withCredentials: true,
-      });
-      console.log('Response Init:', response.data);
-        const lol: PrescriptionsData = {
-            prescriptions: response.data.ret.data.medData,
-            extra_info: response.data.ret.data.extraInfo,
-            image_url: response.data.ret.file_url,
-            upload_date: response.data.ret.upload_date,
-            verification: response.data.ret.verification,
-            verification_doc_name: response.data.ret.verification_doc_name,
-            verification_date: response.data.ret.verification_date,
-            verification_comment: response.data.ret.verification_comment,
-        };
-
-      console.log('Total data:', response.data);
-      setData(lol)
-
-    } catch (error: any) {
-      if (error.response) {
-        console.error('Error response data:', error.response.data);
-        console.error('Error response status:', error.response.status);
-        console.error('Error response headers:', error.response.headers);
-      } else if (error.request) {
-        console.error('Error request data:', error.request);
-      } 
-      console.error('Error message:', error.message);
+      setData(response as PrescriptionsData);
+    }
+    catch (error: any) {
+      console.log("Error fetching sampleData",error);
     }
 };
 
     return (
       <div className='flex flex-col justify-between items-center'>
-        <button onClick={getSampleData} className='p-4 m-5 text-white border border-white'>
+        
+        <button 
+          type="button"
+          onClick={getSampleData} className='p-4 m-5 text-white border border-white'>
           getdata
         </button>
 

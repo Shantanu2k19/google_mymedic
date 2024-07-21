@@ -9,7 +9,6 @@ import { ApiResponse } from "@/types/history";
 import Show from "@/components/home/show"
 import { PiRectangleFill } from "react-icons/pi";
 
-// import sampleHistory from "./sampleHistory";
 // import { history } from "@/types/history";
 
 const CollapsibleList  = () => {
@@ -49,14 +48,14 @@ const CollapsibleList  = () => {
 
   return (
     <>
-     {data ? (
+     {data.length > 0 ? (
         data.map((item, index) => (
           <>
             <CollapseData key={index} prop={item}/>
           </>
         ))
       ) : (
-        <p>Loading user information...</p>
+        <p className='text-white'>Loading user's information...</p>
       )}
     </>
   );

@@ -88,7 +88,7 @@ const Settings = () => {
         </>
 
       ) : (
-        <p>Loading user information...</p>
+        <p>Loading user's information...</p>
       )}
     </section>
   );

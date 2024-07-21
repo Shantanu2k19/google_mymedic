@@ -16,7 +16,7 @@ import json
 from django.utils import timezone
 from app.models import UserDetails, FileDetails
 from django.conf import settings
-
+from time import sleep
 #utility functions
 from .utils.file_processing import processFile
 
@@ -144,7 +144,7 @@ def sampleData(request):
             "status": 200,
             "mssg": "success",
             "data": x,
-            "file_url": settings.BASE_URL+"user1_max.j_17_07_2024_14_03_02.jpg",
+            "file_url": settings.BASE_URL+"/media/user1_max.j_18_07_2024_16_27_18.jpg",
             "upload_date": "21/04/2001(21:21)",
             "verification": 0,
             "verification_doc_name": "abhishek kumar",
@@ -155,7 +155,7 @@ def sampleData(request):
 
 
 def get_history(request):
-  print("get shotory...")
+  print("get History...")
   api_key = request.headers.get('X-APIKEY')
   load_dotenv()
   SECRET_KEY = os.getenv('SECRET_KEY')

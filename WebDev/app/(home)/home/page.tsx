@@ -6,7 +6,7 @@ import { PrescriptionsData } from "@/types/medicine";
 
 const Home = () => {
   const [medsdata, setData ] = React.useState<PrescriptionsData | null>(null);
-  console.log("changed;;--", medsdata)
+  
   return (
       <>
         <div>
