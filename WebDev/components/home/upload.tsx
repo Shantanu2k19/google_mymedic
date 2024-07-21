@@ -8,6 +8,7 @@ import { DNA } from 'react-loader-spinner'
 import { SERVER_URL } from "@/constants"
 import { fetchSampleData } from "@/app/api/actions/uploadAction"
 import { ErrorResponse } from "@/types/response"
+import { useSession } from "next-auth/react";
 
 interface UploadComponentProps {
     setData: React.Dispatch<React.SetStateAction<PrescriptionsData | null>>;
@@ -22,6 +23,16 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     const [isFetching, setIsFetching] = useState(false);
     const [fetchStage, setFetchStage] = useState("Uploading...");
 
+    const { data: session, status } = useSession();
+    const [username, setUsername] = useState('');
+    
+    //for username
+    useEffect(() => {
+        if (session && session.user) {
+          setUsername(session.user.name || '');
+        }
+    }, [status]);
+
     //save csrf token
     useEffect(() => {
       const initializeCsrfToken = async () => {
@@ -32,7 +43,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
                 const response = await axios.get(`${SERVER_URL}/csrf/`,{
                   withCredentials: true,
                   params: {
-                    username: 'upload_tok_get',
+                    username: username,
                   },
                 });
                 console.log("got token");
@@ -49,6 +60,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
       initializeCsrfToken();
     }, []);
     
+    //button press/submit handling 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -82,70 +94,67 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-        console.log("trying to submit ")
+      event.preventDefault();
+      console.log("trying to submit ");
+  
+      setIsFetching(true);
+      setFetchStage('Uploading image...');
+  
+      if (!selectedFileLocal) {
+        setUploadStatus('No file selected.');
+        return;
+      }
 
-        setIsFetching(true);
-        setFetchStage('Uploading image...');
-
-        if (!selectedFileLocal) {
-          setUploadStatus('No file selected.');
+      setUploadStatus('');
+  
+      const formData = new FormData();
+      formData.append('file', selectedFileLocal);
+  
+      try {
+        const response = await axios.post('/api/uploadPresc', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-CSRFToken': csrfToken,
+            'X-APIKEY': 'api_key',
+            'X-username': username,
+          },
+          withCredentials: true,
+        });
+  
+        console.log('Response:', response.data);
+  
+        const dataReceived: PrescriptionsData = {
+          prescriptions: response.data.ret.data.medData.prescriptions,
+          extra_info: response.data.ret.data.medData.extra_info,
+          image_url: response.data.ret.file_url,
+          upload_date: response.data.ret.upload_date,
+          verification: response.data.ret.verification,
+          verification_doc_name: response.data.ret.verification_doc_name,
+          verification_date: response.data.ret.verification_date,
+          verification_comment: response.data.ret.verification_comment,
+        };
+  
+        console.log("after upload,", dataReceived);
+  
+        if (!dataReceived) {
+          setUploadStatus('Error uploading file...');
           return;
         }
-    
-        const formData = new FormData();
-        formData.append('file', selectedFileLocal);
-    
-        try {
-          const response = await axios.post(`${SERVER_URL}/upload/`, formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'X-CSRFToken': csrfToken,
-              'X-APIKEY': 'api_key',
-              'X-username': 'user123'
-            },
-            withCredentials: true,
-          });
-          console.log('Response:', response.data);
-          setUploadStatus('File uploaded successfully!');
-          
-          const dataReceived: PrescriptionsData = {
-            prescriptions: response.data.ret.data.medData.prescriptions,
-            extra_info: response.data.ret.data.medData.extra_info,
-            image_url: response.data.ret.data.file_url,
-            upload_date: response.data.ret.data.upload_date,
-            verification: response.data.ret.data.verification,
-            verification_doc_name: response.data.ret.data.verification_doc_name,
-            verification_date: response.data.ret.data.verification_date,
-            verification_comment: response.data.ret.data.verification_comment,
-          };
-          
-          console.log("after upload,",dataReceived);
-
-          if(!dataReceived)
-          {
-            setUploadStatus('Error uploading file...');
-            return;
-          }
-
-          setData(dataReceived)
-
-          setIsFetching(false);
-        } catch (error: any) {
-          setIsFetching(false);
-          if (error.response) {
-            console.error('Error response data:', error.response.data);
-            console.error('Error response status:', error.response.status);
-            console.error('Error response headers:', error.response.headers);
-          } else if (error.request) {
-            console.error('Error request data:', error.request);
-          } 
-          console.error('Error message:', error.message);
-          
-          setUploadStatus('Error uploading file.');
+  
+        setData(dataReceived);
+  
+        setIsFetching(false);
+      } catch (error: any) {
+        setIsFetching(false);
+        if (error.request) {
+          console.error('Error request data:', error.request);
         }
-    };
-
+        console.error('Error message:', error.message);
+  
+        setUploadStatus('Error uploading file.');
+      }
+  };
+  
   const getSampleData = async () => {
 
     try{
@@ -166,7 +175,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     catch (error: any) {
       console.log("Error fetching sampleData",error);
     }
-};
+  };
 
     return (
       <div className='flex flex-col justify-between items-center'>

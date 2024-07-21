@@ -28,9 +28,11 @@ interface verification_vals{
 
 const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) => {
 
-  console.log("data to show-",medsData)
-
-  if(medsData==null) return;
+  if(medsData==null)
+  {
+    setData(null);
+    return;
+  }
 
   let receivedData: PrescriptionsData = {
       prescriptions: medsData.prescriptions,
@@ -42,8 +44,14 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
       verification_date: medsData.verification_date,
       verification_comment: medsData.verification_comment,
   };
-  
-  console.log("hot extradatq----",receivedData.extra_info);
+
+  if(!receivedData.prescriptions)
+  {
+    console.log("no prescription data found");
+    setData(null);
+    return;
+  }
+
   return (
       <>
         <div className="flex flex-col justify-center items-center">
@@ -61,9 +69,9 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
 
           <div className={`border-2 bg-gray-100 m-4 p-2 rounded-lg w-full bg-opacity-90
             ${
-              receivedData.verification === 0 ? 'border-yellow-cs' :
               receivedData.verification === 1 ? 'border-green-cs' :
-              'border-red-cs'
+              receivedData.verification === 2 ? 'border-red-cs' :
+              'border-yellow-cs'
             }`}>
             <div className="text-black text-heading3-bold py-4 text-center">Extracted Data</div>
             { receivedData && receivedData.prescriptions.map(item=>(
@@ -91,9 +99,9 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
 
           <div className={`border border-white-1 m-4 p-2 rounded-lg w-full bg-opacity-20
             ${
-              receivedData.verification === 0 ? 'border-yellow-cs bg-yellow-cs' :
+              receivedData.verification === 2 ? 'border-red-cs bg-red-cs' :
               receivedData.verification === 1 ? 'border-green-cs bg-green-cs' :
-              'border-red-cs bg-red-cs'
+              'border-yellow-cs bg-yellow-cs'
             }`}>  
           <div className='border rounded-lg bg-light-2 m-3'>
             <div className="text-prim-dark text-body-normal p-2 m-3
@@ -234,7 +242,7 @@ const VerificationDetails: React.FC<verification_vals> = ({
       <div className="grid grid-cols-3 gap-3">
         <span className="text-base1-semibold col-span-1">Verification Progress</span>
         <span className="text-body-semibold text-primary-500 col-span-2">
-          {verified === 0 ? "InProgress" : verified === 1 ? "Verification success" : "Verification with comments"}
+          {verified === 2 ? "Verification with comments" : verified === 1 ? "Verification success" : "InProgress"}
         </span>
     
         <span className="text-base1-semibold col-span-1">Doctor's Name</span>
