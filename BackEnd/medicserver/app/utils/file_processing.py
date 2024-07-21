@@ -93,7 +93,7 @@ def processFile(uploaded_image_file, username, ret):
     os.remove(temp_file.name)
 
     # file_name = default_storage.save(fileName, ContentFile(file.read()))
-    file_url = os.path.join('/media/', saved_file_name)
+    file_url = os.path.join('media/', saved_file_name)
 
     print("url is "+str(file_url))
     print("name is "+fileName)

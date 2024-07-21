@@ -164,3 +164,83 @@ error: Expecting property name enclosed in double quotes: line 63 column 41 (cha
   }
 }
 ```
+
+
+
+
+```json
+{
+  "prescriptions": [
+    {
+      "name": "ISOTROIN 20 MG",
+      "use": "Treats severe acne",
+      "dosage": "1 tablet daily after meals",
+      "sideeffects": "Dry skin, itching, nosebleeds, muscle aches, joint pain, elevated liver enzymes, mood changes, depression",
+      "working": "Isotretinoin is a retinoid, meaning it’s related to vitamin A. It reduces the amount of oil released by oil glands in your skin, and helps your skin renew itself more quickly. This reduces inflammation and the formation of acne."
+    },
+    {
+      "name": "Acne UV gel spf 30",
+      "use": "Protects skin from sun damage and helps control acne",
+      "dosage": "Apply liberally to exposed skin 15 minutes before sun exposure and reapply every 2 hours.",
+      "sideeffects": "Possible mild skin irritation or allergic reactions",
+      "working": "Provides broad-spectrum sun protection, preventing UV damage that can worsen acne. May contain additional acne-fighting ingredients."
+    },
+    {
+      "name": "Clindamycin Lotion",
+      "use": "Treats acne",
+      "dosage": "Apply once daily at night",
+      "sideeffects": "Dryness, itching, burning, redness, or peeling of the skin",
+      "working": "Clindamycin is an antibiotic. It works by stopping the growth of bacteria that can cause acne." 
+    },
+    {
+      "name": "[Unspecified] gel",
+      "use": "Likely for acne treatment",
+      "dosage": "Apply once daily at night, wash off after 4 hours",
+      "sideeffects": "Unknown (depends on specific ingredients)",
+      "working": "Unknown (depends on specific ingredients)"
+    },
+    {
+      "name": "[Unspecified] spray",
+      "use": "Likely for acne treatment",
+      "dosage": "Apply twice daily",
+      "sideeffects": "Unknown (depends on specific ingredients)",
+      "working": "Unknown (depends on specific ingredients)"
+    },
+    {
+      "name": "FASHX 7 MG",
+      "use": "Unknown",
+      "dosage": "Unknown",
+      "sideeffects": "Unknown",
+      "working": "Unknown" 
+    },
+    {
+      "name": "Lt AD SHAMPOO",
+      "use": "Likely for scalp condition related to acne or seborrheic dermatitis",
+      "dosage": "Use every alternate day",
+      "sideeffects": "Possible dryness or irritation of the scalp",
+      "working": "Unknown (depends on specific ingredients), but likely contains anti-inflammatory or antifungal agents"
+    },
+    {
+      "name": "IDERM LOTION",
+      "use": "Likely for moisturizing and managing dry or irritated skin",
+      "dosage": "Apply once daily",
+      "sideeffects": "Possible mild skin irritation",
+      "working": "Provides hydration and may contain ingredients that soothe and protect the skin barrier"
+    }
+  ],
+  "extra_info": {
+    "doctor_speciality": "Allergy",
+    "provisional_diagnosis": "Acne",
+    "review_after": "14 days",
+    "hospital": "Max Super Speciality Hospital",
+    "hospital_address": "FE50 C D Block Shalimar Bagh Delhi 110 088"
+  }
+}
+``` 
+
+**Important Notes:**
+
+* **This information is extracted from a prescription and is NOT a substitute for professional medical advice.** 
+* **The specific uses, dosages, side effects, and working mechanisms of medications can vary. Always follow your doctor's instructions and consult with them or a pharmacist if you have any questions.**
+* Some medications in the prescription lack detailed information. It's crucial to clarify these details with the prescribing doctor or pharmacist to ensure safe and appropriate use.
+* The "FASHX 7 MG" medication could not be identified. It is essential to verify this medication with the doctor. 
