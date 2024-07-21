@@ -16,7 +16,7 @@ import json
 from django.utils import timezone
 from app.models import UserDetails, FileDetails
 from django.conf import settings
-from time import sleep
+
 #utility functions
 from .utils.file_processing import processFile
 
