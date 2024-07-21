@@ -104,6 +104,8 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         setUploadStatus('No file selected.');
         return;
       }
+
+      setUploadStatus('');
   
       const formData = new FormData();
       formData.append('file', selectedFileLocal);
@@ -120,7 +122,6 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         });
   
         console.log('Response:', response.data);
-        setUploadStatus('File uploaded successfully!');
   
         const dataReceived: PrescriptionsData = {
           prescriptions: response.data.ret.data.medData.prescriptions,
@@ -145,11 +146,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         setIsFetching(false);
       } catch (error: any) {
         setIsFetching(false);
-        if (error.response) {
-          // console.error('Error response data:', error.response.data);
-          // console.error('Error response status:', error.response.status);
-          // console.error('Error response headers:', error.response.headers);
-        } else if (error.request) {
+        if (error.request) {
           console.error('Error request data:', error.request);
         }
         console.error('Error message:', error.message);
