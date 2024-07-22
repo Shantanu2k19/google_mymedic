@@ -3,40 +3,6 @@ import axios from 'axios';
 import { SERVER_URL } from "@/constants"
 import { PrescriptionsData } from "@/types/medicine";
 import { ErrorResponse } from "@/types/response"
-import type { NextApiRequest, NextApiResponse } from 'next';
-import FormData from 'form-data';
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  try {
-    const form = new FormData();
-    form.append('file', req.body.file, { filename: 'file' });
-
-    const response = await axios.post(`${SERVER_URL}/upload/`, form, {
-      headers: {
-        ...form.getHeaders(),
-        'Content-Type': 'multipart/form-data',
-        'X-CSRFToken': req.headers['x-csrf-token'] as string,
-        'X-APIKEY': 'api_key',
-        'X-username': req.headers['x-username'] as string,
-      },
-      withCredentials: true,
-    });
-
-    res.status(response.status).json(response.data);
-  } catch (error:any) {
-    if (error.response) {
-      res.status(error.response.status).json(error.response.data);
-    } else {
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  }
-}
-
-
 
 const apiClient = axios.create({
   baseURL: SERVER_URL,
@@ -50,7 +16,7 @@ export const fetchSampleData = async  (): Promise<PrescriptionsData | ErrorRespo
 
     if (process.env.API_KEY == null) 
     { 
-        return { error: "API key not found" };
+      return { error: "API key not found" };
     }
 
     try{

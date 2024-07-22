@@ -65,18 +65,7 @@ def processFile(uploaded_image_file, username, ret):
     print("\n\n\n\n\nafter----\n")
     print(result)
     print(type(result))
-
-    try:
-        json_data = json.dumps(ret["data"])
-    except (TypeError, ValueError, json.JSONDecodeError) as e:
-        print(f"######\nJSON conversion failed\n{e}\n######### ")
-        ret["status"] = 401
-        ret["mssg"] = "JSON conversion failed for data from LLM"
-    except Exception as e:
-        print(f"######\nAn unexpected error occurred\n{e}\n######### ")
-        ret["status"] = 500
-        ret["mssg"] = "An unexpected error occurred"
-
+    
     print("extraction success, saving file")
 
     new_np_image = cv2.cvtColor(new_np_image, cv2.COLOR_BGR2RGB)

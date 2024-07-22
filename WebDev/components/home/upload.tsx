@@ -6,7 +6,7 @@ import React from "react";
 import { PrescriptionsData } from "@/types/medicine";
 import { DNA } from 'react-loader-spinner'
 import { SERVER_URL } from "@/constants"
-import { fetchSampleData } from "@/app/api/actions/uploadAction"
+import { fetchSampleData } from "@/app/api/actions/sampleDataAction"
 import { ErrorResponse } from "@/types/response"
 import { useSession } from "next-auth/react";
 
@@ -36,17 +36,25 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     //save csrf token
     useEffect(() => {
       const initializeCsrfToken = async () => {
-        const csrfToken = sessionStorage.getItem('csrfToken');
-        if (!csrfToken) {
+        const saved_token = sessionStorage.getItem('csrfToken');
+        if (!saved_token) {
             console.log('CSRF token not found, fetching');
             try {
-                const response = await axios.get(`${SERVER_URL}/csrf/`,{
+                const response = await axios.get(`${SERVER_URL}csrf/`,{
                   withCredentials: true,
                   params: {
                     username: username,
                   },
                 });
                 console.log("got token");
+
+                const csrf_token = response.data.csrfToken;
+                if(csrf_token === null)
+                {
+                  console.error('Error fetching CSRF token');
+                  return;
+                }
+
                 sessionStorage.setItem('csrfToken', response.data.csrfToken);
                 setCsrfToken(response.data.csrfToken);
             } catch (error) {
@@ -56,6 +64,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
             }
         }
         console.log("token already there")
+        setCsrfToken(saved_token);
       };
       initializeCsrfToken();
     }, []);
@@ -93,6 +102,8 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         }
     };
 
+
+    //upload file handling 
     const handleSubmit = async (event: React.FormEvent) => {
       event.preventDefault();
       console.log("trying to submit ");
@@ -115,7 +126,6 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
           headers: {
             'Content-Type': 'multipart/form-data',
             'X-CSRFToken': csrfToken,
-            'X-APIKEY': 'api_key',
             'X-username': username,
           },
           withCredentials: true,
@@ -155,6 +165,8 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
       }
   };
   
+
+  //sample data get 
   const getSampleData = async () => {
 
     try{
@@ -180,11 +192,11 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     return (
       <div className='flex flex-col justify-between items-center'>
         
-        <button 
+        {/* <button 
           type="button"
           onClick={getSampleData} className='p-4 m-5 text-white border border-white'>
           getdata
-        </button>
+        </button> */}
 
         <form
             onClick={handleFormClick} 
