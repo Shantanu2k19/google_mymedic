@@ -18,7 +18,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     const [image, setImage] = useState<string | null>(null)
     const [selectedFileLocal, setSelectedFileLocal] = useState<File | null>(null);
     const [csrfToken, setCsrfToken] = useState<string>('');
-    const [uploadStatus, setUploadStatus] = useState<string>('No files selected');
+    const [uploadStatus, setUploadStatus] = useState<string | null>('No files selected');
 
     const [isFetching, setIsFetching] = useState(false);
     const [fetchStage, setFetchStage] = useState("Uploading...");
@@ -108,7 +108,6 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
       event.preventDefault();
       console.log("trying to submit ");
   
-      setIsFetching(true);
       setFetchStage('Uploading image...');
   
       if (!selectedFileLocal) {
@@ -116,10 +115,12 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         return;
       }
 
-      setUploadStatus('');
+      setUploadStatus(null);
   
       const formData = new FormData();
       formData.append('file', selectedFileLocal);
+      
+      setIsFetching(true);
   
       try {
         const response = await axios.post('/api/uploadPresc', formData, {
@@ -130,6 +131,14 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
           },
           withCredentials: true,
         });
+        
+        setIsFetching(false);
+
+        if(response.data.error &&  response.data.error=== "NO_DATA"){
+          setUploadStatus('No Prescription data found in uploaded file!!');
+          return;
+        }
+    
   
         console.log('Response:', response.data);
   
@@ -150,18 +159,23 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
           setUploadStatus('Error uploading file...');
           return;
         }
+
+        if(dataReceived.prescriptions.length <=0 ){
+          setUploadStatus('No data found in file');
+          return;
+        }
   
         setData(dataReceived);
-  
-        setIsFetching(false);
       } catch (error: any) {
-        setIsFetching(false);
         if (error.request) {
           console.error('Error request data:', error.request);
         }
         console.error('Error message:', error.message);
   
         setUploadStatus('Error uploading file.');
+      }
+      finally {
+        setIsFetching(false);
       }
   };
   
@@ -234,7 +248,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
             {image ?
               <Image
                 src={image}
-                alt={uploadStatus}
+                alt="selected image"
                 layout="fill" 
                 objectFit="contain"
                 />
@@ -248,7 +262,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
           }
         </form>
 
-        <div className="mt-4 flex justify-between items-center p-4 rounded-lg text-base font-medium text-white "> 
+        <div className="mt-4 flex justify-between items-center p-4 rounded-lg text-base font-medium text-white bg-dark-2 "> 
         {uploadStatus} 
         </div>
 

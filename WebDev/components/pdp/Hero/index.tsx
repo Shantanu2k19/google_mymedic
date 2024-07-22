@@ -55,8 +55,8 @@ const Hero = () => {
     showAlert("Signing in!",2);
     try {
       const res = await signIn("credentials", {
-        email:"123@gmail.com",
-        password:"123",
+        email:"demo@gmail.com",
+        password:"demo_user",
         redirect: false,
       });
       console.log(res);

@@ -52,6 +52,12 @@ def processFile(uploaded_image_file, username, ret):
     if(ret["status"]!=200):
         print("status not zero")
         return
+
+    print(len(ret['data']))
+    if(ret['data']=="NO_DATA." or len(ret['data'])<100):
+        ret["status"] = 203
+        ret["mssg"] = "NO_DATA"
+        return
     
     success, result = processJson(ret['data'])
     
