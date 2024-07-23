@@ -10,14 +10,14 @@ const apiClient = axios.create({
 });
 
 export const fetchHistory = async (username: string) => {
-  console.log("trying with usernameeee:",username)
+  console.log("fetchHistory with username:",username)
   try {
     const options = {
       method: 'GET',
       url: '/get_history',
       headers: {
         'X-username': username,
-        'X-APIKEY': 'api_key',
+        'X-APIKEY': process.env.API_KEY,
       },
       withCredentials: true, 
     };
@@ -28,10 +28,11 @@ export const fetchHistory = async (username: string) => {
     if (error.response) {
       console.error('Error response data:', error.response.data);
       console.error('Error response status:', error.response.status);
-      console.error('Error response headers:', error.response.headers);
+      if(error.response.status === 405)
+      {
+        return null;
+      }
     } else if (error.request) {
-      console.error('Error request data:', error.request);
-    } else {
       console.error('Error message:', error.message);
     }
   }

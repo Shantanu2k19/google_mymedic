@@ -8,21 +8,34 @@ import { PrescriptionsData } from "@/types/medicine";
 import { ApiResponse } from "@/types/history";
 import Show from "@/components/home/show"
 import { PiRectangleFill } from "react-icons/pi";
+import { useSession } from "next-auth/react";
 
 // import { history } from "@/types/history";
 
 const CollapsibleList  = () => {
-
+  const { data: session, status } = useSession();
   const [data, setData] = useState<PrescriptionsData[]>([]);
+  const [defaultMessage, setDefaultMessage] = useState("Loading user's information...");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (usrName: string) => {
       try {
-        const response = await fetchHistory('user123');
-        console.log(response);
+        const response = await fetchHistory(usrName);
+        // console.log(response);
+
+        if(response == null)
+        {
+          setDefaultMessage("No History Found of User")
+          return;
+        }
 
         const responseJson = JSON.parse(response.ret);
         console.log('response-->', responseJson);
+        if(responseJson.length===0)
+        {
+          setDefaultMessage("No History Found of User");
+          return;
+        }
 
         let tempData: PrescriptionsData[] = responseJson.map((item: ApiResponse) => ({
           prescriptions: item.data_from_llm.medData.prescriptions,
@@ -37,14 +50,19 @@ const CollapsibleList  = () => {
 
         setData(tempData);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        setDefaultMessage("No History Found of User")
       }
     };
 
-    fetchData();
-  }, []);
+    if (status === 'authenticated') {
+      if (session.user && session.user.name) {
+        fetchData(session.user.name);
+      }
+    }
+          
+  }, [status]);
 
-  console.log('data-->', data);
+  // console.log('data-->', data);
 
   return (
     <>
@@ -55,7 +73,7 @@ const CollapsibleList  = () => {
           </>
         ))
       ) : (
-        <p className='text-white'>Loading user's information...</p>
+        <p className='text-white'>{defaultMessage}</p>
       )}
     </>
   );

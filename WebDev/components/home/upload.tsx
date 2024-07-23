@@ -6,7 +6,7 @@ import React from "react";
 import { PrescriptionsData } from "@/types/medicine";
 import { DNA } from 'react-loader-spinner'
 import { SERVER_URL } from "@/constants"
-import { fetchSampleData } from "@/app/api/actions/uploadAction"
+import { fetchSampleData } from "@/app/api/actions/sampleDataAction"
 import { ErrorResponse } from "@/types/response"
 import { useSession } from "next-auth/react";
 
@@ -18,7 +18,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     const [image, setImage] = useState<string | null>(null)
     const [selectedFileLocal, setSelectedFileLocal] = useState<File | null>(null);
     const [csrfToken, setCsrfToken] = useState<string>('');
-    const [uploadStatus, setUploadStatus] = useState<string>('No files selected');
+    const [uploadStatus, setUploadStatus] = useState<string | null>('No files selected');
 
     const [isFetching, setIsFetching] = useState(false);
     const [fetchStage, setFetchStage] = useState("Uploading...");
@@ -36,17 +36,25 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     //save csrf token
     useEffect(() => {
       const initializeCsrfToken = async () => {
-        const csrfToken = sessionStorage.getItem('csrfToken');
-        if (!csrfToken) {
+        const saved_token = sessionStorage.getItem('csrfToken');
+        if (!saved_token) {
             console.log('CSRF token not found, fetching');
             try {
-                const response = await axios.get(`${SERVER_URL}/csrf/`,{
+                const response = await axios.get(`${SERVER_URL}csrf/`,{
                   withCredentials: true,
                   params: {
                     username: username,
                   },
                 });
                 console.log("got token");
+
+                const csrf_token = response.data.csrfToken;
+                if(csrf_token === null)
+                {
+                  console.error('Error fetching CSRF token');
+                  return;
+                }
+
                 sessionStorage.setItem('csrfToken', response.data.csrfToken);
                 setCsrfToken(response.data.csrfToken);
             } catch (error) {
@@ -56,6 +64,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
             }
         }
         console.log("token already there")
+        setCsrfToken(saved_token);
       };
       initializeCsrfToken();
     }, []);
@@ -93,11 +102,12 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         }
     };
 
+
+    //upload file handling 
     const handleSubmit = async (event: React.FormEvent) => {
       event.preventDefault();
       console.log("trying to submit ");
   
-      setIsFetching(true);
       setFetchStage('Uploading image...');
   
       if (!selectedFileLocal) {
@@ -105,21 +115,30 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         return;
       }
 
-      setUploadStatus('');
+      setUploadStatus(null);
   
       const formData = new FormData();
       formData.append('file', selectedFileLocal);
+      
+      setIsFetching(true);
   
       try {
         const response = await axios.post('/api/uploadPresc', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             'X-CSRFToken': csrfToken,
-            'X-APIKEY': 'api_key',
             'X-username': username,
           },
           withCredentials: true,
         });
+        
+        setIsFetching(false);
+
+        if(response.data.error &&  response.data.error=== "NO_DATA"){
+          setUploadStatus('No Prescription data found in uploaded file!!');
+          return;
+        }
+    
   
         console.log('Response:', response.data);
   
@@ -140,12 +159,14 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
           setUploadStatus('Error uploading file...');
           return;
         }
+
+        if(dataReceived.prescriptions.length <=0 ){
+          setUploadStatus('No data found in file');
+          return;
+        }
   
         setData(dataReceived);
-  
-        setIsFetching(false);
       } catch (error: any) {
-        setIsFetching(false);
         if (error.request) {
           console.error('Error request data:', error.request);
         }
@@ -153,8 +174,13 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
   
         setUploadStatus('Error uploading file.');
       }
+      finally {
+        setIsFetching(false);
+      }
   };
   
+
+  //sample data get 
   const getSampleData = async () => {
 
     try{
@@ -180,11 +206,11 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     return (
       <div className='flex flex-col justify-between items-center'>
         
-        <button 
+        {/* <button 
           type="button"
           onClick={getSampleData} className='p-4 m-5 text-white border border-white'>
           getdata
-        </button>
+        </button> */}
 
         <form
             onClick={handleFormClick} 
@@ -222,7 +248,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
             {image ?
               <Image
                 src={image}
-                alt={uploadStatus}
+                alt="selected image"
                 layout="fill" 
                 objectFit="contain"
                 />
@@ -236,7 +262,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
           }
         </form>
 
-        <div className="mt-4 flex justify-between items-center p-4 rounded-lg text-base font-medium text-white "> 
+        <div className="mt-4 flex justify-between items-center p-4 rounded-lg text-base font-medium text-white bg-dark-2 "> 
         {uploadStatus} 
         </div>
 

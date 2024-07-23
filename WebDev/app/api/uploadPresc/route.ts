@@ -5,7 +5,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 
 export async function POST(req: Request) {
-    console.log("Request for prescription upload");
+  console.log("Request for prescription upload");
   try {
     const formData = await req.formData();
     const file = formData.get('file') as File;
@@ -23,11 +23,17 @@ export async function POST(req: Request) {
     axiosFormData.append('file', buffer, file.name);
 
     console.log("requesting Django");
+    const csrf_tok = req.headers.get('X-CSRFToken')
+    if(csrf_tok===null)
+    {
+      console.log("token not found")
+      return NextResponse.json({ error: 'Token not found' }, { status: 500 });
+    }
 
-    const response = await axios.post(`${SERVER_URL}/upload/`, axiosFormData, {
+    const response = await axios.post(`${SERVER_URL}upload/`, axiosFormData, {
       headers: {
         ...axiosFormData.getHeaders(),
-        'X-CSRFToken': req.headers.get('x-csrf-token') || '',
+        'X-CSRFToken': req.headers.get('X-CSRFToken') || '',
         'X-APIKEY': process.env.API_KEY,
         'X-username': req.headers.get('x-username') || '',
       },
