@@ -33,8 +33,6 @@ export const fetchHistory = async (username: string) => {
         return null;
       }
     } else if (error.request) {
-      console.error('Error request data:', error.request);
-    } else {
       console.error('Error message:', error.message);
     }
   }

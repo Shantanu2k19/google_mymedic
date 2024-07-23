@@ -1,9 +1,12 @@
-import { User_info } from '@/types/user';
 import React from 'react';
 import Modal from "@/components/shared/modal"
 import { useEffect } from 'react';
-import { updateUserDetails } from "@/app/api/actions/userSettingAction"
+
+import { User_info } from '@/types/user';
 import { UserUpdate } from "@/models/user";
+import { FetchUserInfoResponse } from '@/types/response';
+
+import { updateUserDetails } from "@/app/api/actions/userSettingAction"
 
 interface Props {
     prop: User_info;
@@ -13,15 +16,26 @@ interface Props {
 }
 
 function SettingsEditor({ prop, edit, setEdit, showAlert }: Props) {
-   
-    const { name, username, email, image, age, gender, created} = prop;
 
-    const [newname, setNewname] = React.useState(name);
-    const [newusernm, setNewusrnm] = React.useState(username);
-    const [newgender, setNewgender] = React.useState(gender);
-    const [newage, setNewage] = React.useState<Number>();
+    const [formData, setFormData] = React.useState({
+        name: prop.name,
+        username: prop.username,
+        email: prop.email,
+        age: prop.age,
+        gender: prop.gender,
+    });
+
+    useEffect(() => {
+        updateFormValues(formData.name, formData.username, formData.gender, formData.age);
+    },[edit]);
+
+    const [newname, setNewname] = React.useState(formData.name);
+    const [newusernm, setNewusrnm] = React.useState(formData.username);
+    const [newgender, setNewgender] = React.useState(formData.gender);
+    const [newage, setNewage] = React.useState<Number>(formData.age);
 
     const updateFormValues = (m_name:string, m_usrname:string, m_gender:string, m_age:Number) =>{
+        console.log("update form values")
         setNewname(m_name);
         setNewusrnm(m_usrname);
         setNewgender(m_gender);
@@ -40,7 +54,7 @@ function SettingsEditor({ prop, edit, setEdit, showAlert }: Props) {
 
     const cancelUpdate = () => {
         setEdit(prevState => !prevState);
-        updateFormValues(name, username, gender, age);
+        updateFormValues(formData.name, formData.username, formData.gender, formData.age);
     }
 
     const updateDetails = async () => {
@@ -51,22 +65,32 @@ function SettingsEditor({ prop, edit, setEdit, showAlert }: Props) {
             age: newage,
             gender: newgender,
           };
-      
-          const updatedUser = await updateUserDetails(email, newData);
-          console.log('User updated successfully:', updatedUser);
+
           setEdit(false);
-          showAlert("Details Updated",1);
+          const result:FetchUserInfoResponse = await updateUserDetails(formData.email, newData);
+         
+
+          if (result.success) {
+            showAlert("Details Updated Successfully",1);
+          } else {
+            showAlert(result.message || "Some Error occured!",3);
+          }
+
+          if(result.data){
+            formData.name = result.data.name;
+            formData.username = result.data.username;
+            formData.age = result.data.age;
+            formData.gender = result.data.gender
+
+            updateFormValues(result.data?.name, result.data?.username, result.data?.gender, result.data?.age);
+          }
+          
         } catch (error) {
           console.error('Error updating user:', error);
           alert('There was an error updating the user. Please try again.');
           setEdit(false);
         }
       };
-      
-
-    useEffect(() => {
-        updateFormValues(name, username, gender, age);
-    }, [])
 
     return (
         <>
@@ -124,7 +148,7 @@ function SettingsEditor({ prop, edit, setEdit, showAlert }: Props) {
 
                     <input
                     type="text"
-                    placeholder= {email}
+                    placeholder= {formData.email}
                     className={`setInp border border-gray-2 bg-dark-2 text-gray-3`}
                     disabled
                     />
@@ -141,7 +165,7 @@ function SettingsEditor({ prop, edit, setEdit, showAlert }: Props) {
                         disabled = {!edit}
                         onChange={(e) => {
                             const value = e.target.value ? Number(e.target.value) : undefined;
-                            setNewage(value);
+                            setNewage(value || 0);
                         }}
                         value={newage !== undefined ? newage.toString() : ''}
                         />
@@ -159,14 +183,14 @@ function SettingsEditor({ prop, edit, setEdit, showAlert }: Props) {
                         >
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
-                            <option value="Female">Others</option>
+                            <option value="Others">Others</option>
                         </select>
                     </div>
                 </div>
 
                 <div className='flex flex-row w-full justify-around items-center'>
                     <button 
-                        // type="button"
+                        type="button"
                         className={`button-custom2 w-32 font-bold text-light-3 ${ edit ? "bg-primary-500 text-white" : "bg-prim-hov pointer-events-none" }`}
                         disabled = {!edit}
                         onClick={updateDetails}

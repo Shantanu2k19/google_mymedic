@@ -1,13 +1,11 @@
 "use client"
 import ProfileHeader from "@/components/home/ProfileHeader";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
-import { useEffect } from 'react';
+import { useState, useEffect } from "react";
 import SettingsEditor from "@/components/home/settingsedit"
 import { User_info } from "@/types/user"
-// import { fetchUserInfo } from "@/lib/actions/userSettingAction"
+import { FetchUserInfoResponse } from "@/types/response"
 import { fetchUserInfo } from "@/app/api/actions/userSettingAction"
-import { useTheme } from "next-themes";
 import { toast } from 'react-toastify';
 
 const Settings = () => {
@@ -19,12 +17,17 @@ const Settings = () => {
     const fetchData = async (email:string) => {
       console.log("fetching setData")
       try {
-        const response: User_info = await fetchUserInfo(email);
-        console.log(response);
-        setUserInfo(response);
+        const response:FetchUserInfoResponse = await fetchUserInfo(email);
+
+        if (response.success) {
+          setUserInfo(response.data);
+        } else {
+          showAlert(response.message || "Error fetching details", 3);
+        }
+        return;
         
       } catch (error) {
-        console.error('Error fetching data:', error);
+        showAlert("Error fetching details", 3);
       }
     };
 

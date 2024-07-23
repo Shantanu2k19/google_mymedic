@@ -31,6 +31,11 @@ const CollapsibleList  = () => {
 
         const responseJson = JSON.parse(response.ret);
         console.log('response-->', responseJson);
+        if(responseJson.length===0)
+        {
+          setDefaultMessage("No History Found of User");
+          return;
+        }
 
         let tempData: PrescriptionsData[] = responseJson.map((item: ApiResponse) => ({
           prescriptions: item.data_from_llm.medData.prescriptions,
