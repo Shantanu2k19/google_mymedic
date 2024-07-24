@@ -34,7 +34,7 @@ function Topbar () {
       console.log("redirecting to home")
       router.push('/');
     }
-  }, [status, router]);
+  }, [status, router, session]);
 
   const HandleLogout = () => {
     console.log('logging out');

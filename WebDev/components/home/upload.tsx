@@ -46,7 +46,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         if (session && session.user) {
           setEmail(session.user.email || '');
         }
-    }, [status]);
+    }, [status, session?.user?.email]);
 
     //save csrf token
     useEffect(() => {

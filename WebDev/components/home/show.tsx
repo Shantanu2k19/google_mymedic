@@ -245,7 +245,7 @@ const VerificationDetails: React.FC<verification_vals> = ({
           {verified === 2 ? "Verification with comments" : verified === 1 ? "Verification success" : "InProgress"}
         </span>
     
-        <span className="text-base1-semibold col-span-1">Doctor's Name</span>
+        <span className="text-base1-semibold col-span-1">Doctor&apos;s Name</span>
         <span className="col-span-2">{verification_doc_name}</span>
     
         <span className="text-base1-semibold col-span-1">Verification Date</span>
