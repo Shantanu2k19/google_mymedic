@@ -155,7 +155,7 @@ def get_history(request):
         print(f"file for {file_entry} not found!\n[[{e}]")
   except Exception as e:
     print(f"user not found [{e}]")
-    return JsonResponse({'message': 'User not found'}, status=404)
+    return JsonResponse({'message': 'User not found'}, status=203)
 
   print(data)
   try:

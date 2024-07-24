@@ -1,6 +1,7 @@
 "use server"
 import axios from 'axios';
 import { SERVER_URL } from "@/constants"
+import { FetchUserHistory } from "@/types/response"
 
 const apiClient = axios.create({
   baseURL: SERVER_URL,
@@ -9,8 +10,9 @@ const apiClient = axios.create({
   },
 });
 
-export const fetchHistory = async (usrEmail: string) => {
+export const fetchHistory = async (usrEmail: string): Promise<FetchUserHistory> => {
   console.log("fetchHistory with usrEmail:",usrEmail)
+
   try {
     const options = {
       method: 'GET',
@@ -23,17 +25,24 @@ export const fetchHistory = async (usrEmail: string) => {
     };
 
     const response = await apiClient.request(options);
-    return response.data;
+
+    if(response.status === 200){
+      return { success: true, data:response.data.ret };
+    }
+
+    if(response.status === 203){
+      return { success: true,  message: "Unable to fetch history!", data:"" };
+    }
+
+    console.log(response);
+    return { success: false, message: "Unable to fetch history!" };
   } catch (error: any) {
     if (error.response) {
       console.error('Error response data:', error.response.data);
       console.error('Error response status:', error.response.status);
-      if(error.response.status === 405)
-      {
-        return null;
-      }
     } else if (error.request) {
       console.error('Error message:', error.message);
     }
+    return { success: false, message: "Unable to fetch history!" };
   }
 };
