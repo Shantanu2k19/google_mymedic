@@ -7,6 +7,7 @@
 - improve upload api with type handling like fetchSampleData
 - handle when image is not prescription
 - page not found page 
+- combine all alert functions
 
 TW
 // mobile: default
