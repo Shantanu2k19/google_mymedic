@@ -17,7 +17,7 @@ Additionally, include any extra information you were able to retrieve from the t
 If the text does not provide specific details, include general recommended information.
 
 Here's the template for the JSON structure:
-
+```json
 {
   "prescriptions": [
     {
@@ -34,7 +34,7 @@ Here's the template for the JSON structure:
     "key2": "value2"
   }
 }
-
+```
 If there is no text or text provided does not seems to be medical information, return this exact string:NO_DATA.
 
 prescription text:

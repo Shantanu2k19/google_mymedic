@@ -46,7 +46,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         if (session && session.user) {
           setEmail(session.user.email || '');
         }
-    }, [status]);
+    }, [status, session?.user?.email]);
 
     //save csrf token
     useEffect(() => {
@@ -123,7 +123,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
       event.preventDefault();
       console.log("trying to submit ");
   
-      setFetchStage('Uploading image...');
+      setFetchStage('Uploading image! Takes time depending on image size.');
   
       if (!selectedFileLocal) {
         setUploadStatus('No file selected.');

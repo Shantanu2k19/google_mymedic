@@ -1,6 +1,4 @@
-import Link from "next/link";
 import Image from "next/image";
-import { FaRegEdit } from "react-icons/fa";
 import { User_info } from "@/types/user"
 
 interface Props {

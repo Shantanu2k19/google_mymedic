@@ -91,7 +91,7 @@ const Settings = () => {
         </>
 
       ) : (
-        <p>Loading user's information...</p>
+        <p>Loading user&apos;s information...</p>
       )}
     </section>
   );

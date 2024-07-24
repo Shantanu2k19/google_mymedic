@@ -7,6 +7,7 @@ import { FaCartShopping } from "react-icons/fa6";
 import { TbInfoSquare } from "react-icons/tb";
 import { MdOutlineDomainVerification } from "react-icons/md";
 import { PiRectangleFill } from "react-icons/pi";
+import { toast } from 'react-toastify';
 
 interface ChildComponentProps {
   medsData: PrescriptionsData | null;
@@ -177,6 +178,24 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
 const Showmeds = ({prop}: {prop:Prescription}) => {
 
     const { name, use, dosage, sideeffects, working} = prop;
+
+    function showAlert(mssg: string, mode:number) {
+      console.log("alert", mssg, mode)
+  
+      toast.info(mssg, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
+    const shopMedicine = () => {
+      showAlert("Coming soon", 1);
+    }
     
     return (
         <div className='border rounded-lg bg-white m-3'>
@@ -186,7 +205,10 @@ const Showmeds = ({prop}: {prop:Prescription}) => {
                 <GiMedicines  className="w-6 h-6"/>      
                 &nbsp; <u>{name}</u>
               </div>
-              <div className="border border-black-1 rounded-lg bg-light-1 px-4 py-1 cursor-pointer">  
+              <div 
+                className="border border-black-1 rounded-lg bg-light-1 px-4 py-1 cursor-pointer" 
+                onClick={shopMedicine}
+              >  
                 <FaCartShopping className="w-6 h-6"/>
               </div>
             </div>
@@ -245,7 +267,7 @@ const VerificationDetails: React.FC<verification_vals> = ({
           {verified === 2 ? "Verification with comments" : verified === 1 ? "Verification success" : "InProgress"}
         </span>
     
-        <span className="text-base1-semibold col-span-1">Doctor's Name</span>
+        <span className="text-base1-semibold col-span-1">Doctor&apos;s Name</span>
         <span className="col-span-2">{verification_doc_name}</span>
     
         <span className="text-base1-semibold col-span-1">Verification Date</span>
