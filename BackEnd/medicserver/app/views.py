@@ -24,9 +24,8 @@ from app.utils.text_processing import processJson
 
 #get csrf token
 def get_csrf_token(request):
-    logging.info("get_csrf_token____")
-    username = request.GET.get('username')
-    logging.info('user [%s]',username)
+    email = request.GET.get('email')
+    logging.info("get_csrf_token for :", email)
     return JsonResponse({'csrfToken': get_token(request)})
 
 
@@ -45,11 +44,11 @@ def upload_image(request):
         if api_key != SECRET_KEY:
             return JsonResponse({'error': 'Invalid API Key'}, status=401)
 
-        username = request.headers.get('X-USERNAME')
-        if not username:
-            return JsonResponse({'error': 'Username not found'}, status=401)
+        usrEmail = request.headers.get('X-EMAIL')
+        if not usrEmail:
+            return JsonResponse({'error': 'Email not found'}, status=401)
 
-        print("request from :"+username)
+        print("request from :"+usrEmail)
         
         uploaded_image_file = request.FILES['file']
         ret = {
@@ -63,7 +62,7 @@ def upload_image(request):
             "verification_date": "",
             "verification_comment": "",
         }
-        processFile(uploaded_image_file, username, ret)
+        processFile(uploaded_image_file, usrEmail, ret)
         print("processing done")
 
         if(ret["status"]!=200):
@@ -119,14 +118,14 @@ def get_history(request):
   if api_key != SECRET_KEY:
     return JsonResponse({'error': 'Invalid API Key'}, status=401)
 
-  username = request.headers.get('X-USERNAME')
-  if not username:
-    return JsonResponse({'error': 'Username not found'}, status=401)
+  usrEmail = request.headers.get('X-USEREMAIL')
+  if not usrEmail:
+    return JsonResponse({'error': 'usrEmail not found'}, status=401)
 
-  print("request from :"+username)
+  print("request from :"+usrEmail)
   
   try:
-    user = UserDetails.objects.get(username=username)
+    user = UserDetails.objects.get(usrEmail=usrEmail)
 
     data = []
 
@@ -156,7 +155,7 @@ def get_history(request):
         print(f"file for {file_entry} not found!\n[[{e}]")
   except Exception as e:
     print(f"user not found [{e}]")
-    return JsonResponse({'message': 'User not found'}, status=404)
+    return JsonResponse({'message': 'User not found'}, status=203)
 
   print(data)
   try:

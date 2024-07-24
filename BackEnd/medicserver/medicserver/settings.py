@@ -118,6 +118,7 @@ CORS_ALLOW_HEADERS = [
     'content-type',
     'x-csrftoken',
     'x-username',
+    'x-usremail',
     'x-APIKEY',
 ]
 

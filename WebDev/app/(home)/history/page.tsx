@@ -5,6 +5,7 @@ import { useState, useEffect, useRef, FormEvent } from 'react'
 
 import { fetchHistory } from '@/app/api/actions/historyAction';
 import { PrescriptionsData } from "@/types/medicine";
+import { FetchUserHistory } from "@/types/response"
 import { ApiResponse } from "@/types/history";
 import Show from "@/components/home/show"
 import { PiRectangleFill } from "react-icons/pi";
@@ -18,18 +19,21 @@ const CollapsibleList  = () => {
   const [defaultMessage, setDefaultMessage] = useState("Loading user's information...");
 
   useEffect(() => {
-    const fetchData = async (usrName: string) => {
+    const fetchData = async (usrEmail: string) => {
       try {
-        const response = await fetchHistory(usrName);
-        // console.log(response);
+        const result:FetchUserHistory = await fetchHistory(usrEmail);
 
-        if(response == null)
-        {
-          setDefaultMessage("No History Found of User")
+        if (!result.success || result.data === undefined) {
+          setDefaultMessage("Unable to fetch history");
+          return;
+        } 
+
+        if(result.data.length === 0){
+          setDefaultMessage("No History found!");
           return;
         }
-
-        const responseJson = JSON.parse(response.ret);
+        
+        const responseJson = JSON.parse(result.data);
         console.log('response-->', responseJson);
         if(responseJson.length===0)
         {
@@ -49,14 +53,15 @@ const CollapsibleList  = () => {
         }));
 
         setData(tempData);
+        
       } catch (error) {
         setDefaultMessage("No History Found of User")
       }
     };
 
     if (status === 'authenticated') {
-      if (session.user && session.user.name) {
-        fetchData(session.user.name);
+      if (session.user && session.user.email) {
+        fetchData(session.user.email);
       }
     }
           
