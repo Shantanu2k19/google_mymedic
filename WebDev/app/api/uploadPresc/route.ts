@@ -30,12 +30,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Token not found' }, { status: 500 });
     }
 
+    const usrEmail = req.headers.get('x-email') 
+    if(usrEmail===null)
+    {
+      console.log("email not found")
+      return NextResponse.json({ error: 'Email not found' }, { status: 500 });
+    }
+
     const response = await axios.post(`${SERVER_URL}upload/`, axiosFormData, {
       headers: {
         ...axiosFormData.getHeaders(),
-        'X-CSRFToken': req.headers.get('X-CSRFToken') || '',
+        'X-CSRFToken': csrf_tok || '',
         'X-APIKEY': process.env.API_KEY,
-        'X-username': req.headers.get('x-username') || '',
+        'X-email': usrEmail || '',
       },
       withCredentials: true,
     });

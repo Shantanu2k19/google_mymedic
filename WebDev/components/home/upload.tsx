@@ -9,6 +9,7 @@ import { SERVER_URL } from "@/constants"
 import { fetchSampleData } from "@/app/api/actions/sampleDataAction"
 import { ErrorResponse } from "@/types/response"
 import { useSession } from "next-auth/react";
+import { toast } from 'react-toastify';
 
 interface UploadComponentProps {
     setData: React.Dispatch<React.SetStateAction<PrescriptionsData | null>>;
@@ -24,12 +25,26 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     const [fetchStage, setFetchStage] = useState("Uploading...");
 
     const { data: session, status } = useSession();
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+
+    function showAlert(mssg: string) {
+      console.log("alert", mssg)
+
+      toast.info(mssg, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
     
-    //for username
+    //for usrEmail
     useEffect(() => {
         if (session && session.user) {
-          setUsername(session.user.name || '');
+          setEmail(session.user.email || '');
         }
     }, [status]);
 
@@ -43,7 +58,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
                 const response = await axios.get(`${SERVER_URL}csrf/`,{
                   withCredentials: true,
                   params: {
-                    username: username,
+                    email: email,
                   },
                 });
                 console.log("got token");
@@ -120,14 +135,17 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
       const formData = new FormData();
       formData.append('file', selectedFileLocal);
       
-      setIsFetching(true);
+      setIsFetching(true);          
+      if(email === "demo@gmail.com"){
+        showAlert("No files will be saved for Demo User!")
+      }
   
       try {
         const response = await axios.post('/api/uploadPresc', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             'X-CSRFToken': csrfToken,
-            'X-username': username,
+            'X-email': email,
           },
           withCredentials: true,
         });

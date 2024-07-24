@@ -16,13 +16,13 @@ import numpy as np
 import tempfile
 import json
 
-def processFile(uploaded_image_file, username, ret):
+def processFile(uploaded_image_file, usrEmail, ret):
     print("processing file")
 
     current_datetime = datetime.now()
     file_uuid = current_datetime.strftime("%d_%m_%Y_%H_%M_%S")
     fname, file_extension = os.path.splitext(uploaded_image_file.name)
-    fileName = username[0:5]+"_"+uploaded_image_file.name[0:5]+"_"+str(file_uuid)+file_extension
+    fileName = usrEmail[0:5]+"_"+uploaded_image_file.name[0:5]+"_"+str(file_uuid)+file_extension
     
     #extension handling 
     if(
@@ -98,7 +98,7 @@ def processFile(uploaded_image_file, username, ret):
     print("name is "+fileName)
     
     try:
-        user_files, _ = UserDetails.objects.get_or_create(username=username)
+        user_files, _ = UserDetails.objects.get_or_create(usrEmail=usrEmail)
         user_files.files_list.append(str(fileName))
         user_files.save()
         

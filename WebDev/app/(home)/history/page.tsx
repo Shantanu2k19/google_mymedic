@@ -18,9 +18,9 @@ const CollapsibleList  = () => {
   const [defaultMessage, setDefaultMessage] = useState("Loading user's information...");
 
   useEffect(() => {
-    const fetchData = async (usrName: string) => {
+    const fetchData = async (usrEmail: string) => {
       try {
-        const response = await fetchHistory(usrName);
+        const response = await fetchHistory(usrEmail);
         // console.log(response);
 
         if(response == null)
@@ -55,8 +55,8 @@ const CollapsibleList  = () => {
     };
 
     if (status === 'authenticated') {
-      if (session.user && session.user.name) {
-        fetchData(session.user.name);
+      if (session.user && session.user.email) {
+        fetchData(session.user.email);
       }
     }
           

@@ -9,14 +9,14 @@ const apiClient = axios.create({
   },
 });
 
-export const fetchHistory = async (username: string) => {
-  console.log("fetchHistory with username:",username)
+export const fetchHistory = async (usrEmail: string) => {
+  console.log("fetchHistory with usrEmail:",usrEmail)
   try {
     const options = {
       method: 'GET',
       url: '/get_history',
       headers: {
-        'X-username': username,
+        'X-USEREMAIL': usrEmail,
         'X-APIKEY': process.env.API_KEY,
       },
       withCredentials: true, 
