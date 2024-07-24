@@ -1,3 +1,5 @@
+Issues : 
+
 -text from gemini validation for json
 - add date and name instead of expand collapse in history 
 - hangle when backend is not working
@@ -8,7 +10,10 @@
 - handle when image is not prescription
 - page not found page 
 - combine all alert functions
-
+- unsupported file extension handling 
+- compress file before uploading 
+- use Tesseract.js: instead, client side processing
+- warning for history and list 
 TW
 // mobile: default
 // sm:split screne Laptop
