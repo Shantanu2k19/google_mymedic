@@ -6,6 +6,7 @@ import React from "react";
 import { useTheme } from "next-themes"; 
 import { toast } from 'react-toastify';
 import { useRouter } from "next/navigation";
+import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
 
 const Hero = () => {
 
@@ -113,6 +114,22 @@ const Hero = () => {
                 >
                   Try Demo 🔥
                 </div>
+
+                
+                <ScrollLink
+                  to="sectionSignupLogin"
+                  spy={true}
+                  smooth={true}
+                  offset={-70} 
+                  duration={500}
+                >
+                  <div
+                    className="inline-block rounded-sm bg-black px-8 py-4 text-base font-semibold text-white duration-300 ease-in-out hover:bg-black/90 dark:bg-white/10 dark:text-white dark:hover:bg-white/5 cursor-pointer md:hidden"
+                  >
+                    Login / SignUp
+                  </div>
+                </ScrollLink> 
+
               </div>
             </div>
           </div>
