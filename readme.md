@@ -14,6 +14,9 @@ Issues :
 - compress file before uploading 
 - use Tesseract.js: instead, client side processing
 - warning for history and list 
+- text instead of color on history 
+- make the text on login red 
+
 TW
 // mobile: default
 // sm:split screne Laptop

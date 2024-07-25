@@ -22,7 +22,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     const [uploadStatus, setUploadStatus] = useState<string | null>('No files selected');
 
     const [isFetching, setIsFetching] = useState(false);
-    const [fetchStage, setFetchStage] = useState("Uploading...");
+    const [fetchStage, setFetchStage] = useState("Processing image! Takes time depending on image size.");
 
     const { data: session, status } = useSession();
     const [email, setEmail] = useState('');
@@ -123,7 +123,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
       event.preventDefault();
       console.log("trying to submit ");
   
-      setFetchStage('Uploading image! Takes time depending on image size.');
+      setFetchStage('Processing image! Takes time depending on image size.');
   
       if (!selectedFileLocal) {
         setUploadStatus('No file selected.');
@@ -239,7 +239,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
             onSubmit={handleSubmit}
         >
           {isFetching ? 
-            <div>
+            <div className='flex flex-col justify-center items-center'>
               <DNA
                 visible={true}
                 height="200"
