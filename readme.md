@@ -5,11 +5,10 @@ Issues :
 - page not found page 
 - combine all alert functions
 - unsupported file extension handling 
-- compress file before uploading 
+- compress file before uploading git 
 - use Tesseract.js: instead, client side processing
 - warning for history and list 
 - text instead of color on history 
-- make the text on login red 
 
 TW
 // mobile: default

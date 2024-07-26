@@ -164,8 +164,8 @@ export default function LoginForm({ toggleComponent }: ChildProps) {
           </button>
           {error && (
             <div
-              className="bg-red-500 text-white w-fit text-sm
-                px-3 py-1 rounded-md mt-2"
+              className="flex flex-col items-center justify-center w-full text-sm
+                px-3 py-1 mt-2 text-red-cs "
             >
               {error}
             </div>
