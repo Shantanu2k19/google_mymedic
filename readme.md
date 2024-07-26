@@ -1,13 +1,7 @@
 Issues : 
 
--text from gemini validation for json
-- add date and name instead of expand collapse in history 
-- hangle when backend is not working
-- show fetching when history fetchng
+- text from gemini validation for json
 - update log tags, only userful on erequired
-- demo user adding
-- improve upload api with type handling like fetchSampleData
-- handle when image is not prescription
 - page not found page 
 - combine all alert functions
 - unsupported file extension handling 
