@@ -248,7 +248,7 @@ const Footer = () => {
             <p className="text-center text-base text-body-color dark:text-white">
               MyMedic is open source. &nbsp;
               <a
-                href="https://github.com/Shantanu2k19/meTube"
+                href="https://github.com/Shantanu2k19/google_mymedic"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary underline"
