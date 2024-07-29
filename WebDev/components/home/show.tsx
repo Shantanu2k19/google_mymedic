@@ -268,7 +268,7 @@ const VerificationDetails: React.FC<verification_vals> = ({
         </span>
     
         <span className="text-base1-semibold col-span-1">Doctor&apos;s Name</span>
-        <span className="col-span-2">{verification_doc_name}</span>
+        <span className="col-span-2 text-primary-500 underline cursor-pointer">{verification_doc_name}</span>
     
         <span className="text-base1-semibold col-span-1">Verification Date</span>
         <span className="col-span-2">{verification_date}</span>

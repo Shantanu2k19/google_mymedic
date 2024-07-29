@@ -93,6 +93,7 @@ const CollapseData = ({prop}: {prop:PrescriptionsData}) => {
   }
 
   const { getCollapseProps, getToggleProps, isExpanded} = useCollapse(config);
+  const verificaition_text = prop.verification===0? "Verification Inprogress": prop.verification===1? "Verification Complete":"Verified With Comments";
 
   return (
     <div className='bg-gray-200 mb-2 border rounded-md'>
@@ -102,7 +103,9 @@ const CollapseData = ({prop}: {prop:PrescriptionsData}) => {
       >
         {/* <span>{isExpanded ? 'Collapse' : 'Expand'}</span>  */}
         <div className='flex flex-row items-center'>Extract-{prop.upload_date} &nbsp; <PiRectangleFill className={`${prop.verification===0? "text-yellow-cs": prop.verification===1? "text-green-cs":"text-red-cs"}`} /></div> 
-        {isExpanded ? <FaCaretUp className="w-6 h-6 text-primary-500" /> : <FaCaretDown className="w-6 h-6 text-primary-500" />}
+        {isExpanded ? <div className='flex flex-row'>{verificaition_text}<FaCaretUp className="w-6 h-6 text-primary-500" /></div> 
+          : <div className='flex flex-row'> {verificaition_text}<FaCaretDown className="w-6 h-6 text-primary-500" /></div>
+        }
       </div>
 
       <div
