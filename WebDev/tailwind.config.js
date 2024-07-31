@@ -244,6 +244,7 @@ module.exports = {
       },
       colors: {
         "primary-500": "#877EFF",
+        "primary-doc": "#FF2424",
         "prim-hov": '#6862C0',
         "prim-dark": "#6D62FF",
         "secondary-500": "#FFB620",
