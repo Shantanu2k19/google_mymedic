@@ -1,10 +1,19 @@
 "use client"
 import { Triangle } from 'react-loader-spinner'
+import Image from "next/image";
+import ChatImage from "@/components/home/chatimage";
 
 export default function hello(){
 
     return (
-        <div className='flex flex-col justify-center items-center text-white'>
+        <>
+        <ChatImage />
+        </>
+    )
+}
+
+/*
+ <div className='flex flex-col justify-center items-center text-white'>
             <Triangle
                 visible={true}
                 height="200"
@@ -19,5 +28,4 @@ export default function hello(){
                 Coming soon...
             </span>
         </div>
-    )
-}
+*/
