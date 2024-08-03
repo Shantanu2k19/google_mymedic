@@ -109,7 +109,7 @@ const authOptions = {
         if (usr) {
           console.log("User found");
           return true;
-          return { email: usr.email, name: usr.name, image: usr.image, isDoctor: usr.isDoctor };
+          //return { email: usr.email, name: usr.name, image: usr.image, isDoctor: usr.isDoctor };
         }
 
         console.log("need to signup")
