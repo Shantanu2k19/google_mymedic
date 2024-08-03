@@ -19,10 +19,6 @@ export default function LoginForm({ toggleComponent }: ChildProps) {
 
   const router = useRouter();
 
-  const { data: session, status } = useSession();
-  console.log("session:", session);
-  console.log("status:",status);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

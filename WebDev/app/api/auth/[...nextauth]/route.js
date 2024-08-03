@@ -109,6 +109,7 @@ const authOptions = {
         if (usr) {
           console.log("User found");
           return true;
+          return { email: usr.email, name: usr.name, image: usr.image, isDoctor: usr.isDoctor };
         }
 
         console.log("need to signup")
@@ -122,6 +123,7 @@ const authOptions = {
         }
         console.log("creating user success")
         return true;
+        //return { email: usr.email, name: usr.name, image: usr.image, isDoctor: usr.isDoctor };
       } catch (error) {
         console.log("error: " + error);
         return false;
@@ -131,14 +133,20 @@ const authOptions = {
     //   return baseUrl;
     // },
 
-    // async jwt(token, user, account) {
+    // async jwt({ token, user }) {
     //   console.log("-----jwt callback-----");
+
+    //   if (user) {
+    //     token.isDoctor = user.isDoctor;
+    //   }
     //   return token;
-    // },
-    // async session(session, token) {
+    //   },
+    // async session({ session, token }) {
     //   console.log("-----session callback-----");
-    //   // console.log("no session user", session)
-    //   // console.log("tok", token);
+
+    //   if(token){
+    //     session.user.isDoctor = token.isDoctor;
+    //   }
     //   return session;
     // },
   },
