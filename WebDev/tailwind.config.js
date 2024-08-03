@@ -247,7 +247,7 @@ module.exports = {
         "accent": "#11A9C0", //3052C1, 1974E2
         "prim-hov": '#007A8D',
         "prim-dark": "#0DCBE8",
-        "accent-sub": "##EB7A86",
+        "accent-sub": "#EB7A86",
 
         "accent-doc": "#37D190", //"#149525",
         "accent-older": "#877EFF",
