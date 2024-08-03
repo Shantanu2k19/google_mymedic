@@ -236,7 +236,8 @@ module.exports = {
         'screen-80': '80vh',
       },
       padding: {
-        '7': '1.75rem', // Adding custom padding value
+        '7': '1.75rem', // custom padding value
+        '26': '6.5rem', 
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

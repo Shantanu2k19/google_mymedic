@@ -1,8 +1,13 @@
+import React from 'react';
+import { Triangle } from 'react-loader-spinner'
+import { connectWithDoc } from '@/app/api/actions/chatAction';
+import { connectWithDocRes } from "@/types/response"
+
 interface MessageLightProps {
   prop: number;
 }
 
-const ChatImage = () => {
+export const ChatImage = () => {
   return (
     <div className="rounded-lg relative flex flex-col bg-dark-3 w-full overflow-hidden justify-between text-white h-full">
       
@@ -107,4 +112,58 @@ const MessageDark: React.FC<MessageLightProps> = ({ prop }) => {
   );
 };
 
-export default ChatImage;
+
+export const HandleChat = () => {
+  const [isConnecting, setIsConnecting] = React.useState(false);
+  const [response, setResponse] = React.useState("");
+
+  const handleConnectChat = async() =>{
+    setResponse("Connecting...");
+    setIsConnecting(true);
+
+    try {
+      const result:connectWithDocRes = await connectWithDoc();
+
+      if (!result.success || result.name === undefined) {
+        setResponse("No physicians are available right now. We have received your appointment and will contact you soon.");
+        setIsConnecting(false);
+      } 
+    }
+    catch (e:any){
+      setResponse("Please try again later");
+      setIsConnecting(false);
+    }
+    return;
+  }
+
+
+  return(
+    <div className="flex flex-col h-full w-full items-center justify-center">
+      <p className="text-center text-body-semibold">Reach out to our physicians for help with prescriptions, 
+        <br/>medication, or health and nutrition questions.</p>
+
+        <br/>
+      
+      { !isConnecting ? <button className="button-custom w-64 border border-white" onClick={handleConnectChat}>Connect Now</button>
+      : 
+      <div className='flex flex-col justify-center items-center text-white'>
+        <Triangle
+            visible={true}
+            height="200"
+            width="200"
+            color="#877EFF"
+            ariaLabel="triangle-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+        />
+        </div>
+      }
+      <p className="text-center text-body-medium px-10">
+        <br/>
+        <br/>
+
+        {response}
+      </p>
+    </div>
+  )
+}
