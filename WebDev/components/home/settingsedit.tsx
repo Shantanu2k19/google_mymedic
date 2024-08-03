@@ -191,7 +191,7 @@ function SettingsEditor({ prop, edit, setEdit, showAlert }: Props) {
                 <div className='flex flex-row w-full justify-around items-center'>
                     <button 
                         type="button"
-                        className={`button-custom2 w-32 font-bold text-light-3 ${ edit ? "bg-primary-500 text-white" : "bg-prim-hov pointer-events-none" }`}
+                        className={`button-custom2 w-32 font-bold text-light-3 ${ edit ? "bg-accent text-white" : "bg-prim-hov pointer-events-none" }`}
                         disabled = {!edit}
                         onClick={updateDetails}
                     >
@@ -200,7 +200,7 @@ function SettingsEditor({ prop, edit, setEdit, showAlert }: Props) {
 
                     <button 
                         type="button"
-                        className={`button-custom2 w-32 font-bold text-light-3 ${ edit ? "bg-primary-500 text-white" : "bg-prim-hov pointer-events-none" }`}
+                        className={`button-custom2 w-32 font-bold text-light-3 ${ edit ? "bg-accent text-white" : "bg-prim-hov pointer-events-none" }`}
                         onClick={cancelUpdate}
                         >
                         Cancel

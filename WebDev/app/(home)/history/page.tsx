@@ -103,8 +103,8 @@ const CollapseData = ({prop}: {prop:PrescriptionsData}) => {
       >
         {/* <span>{isExpanded ? 'Collapse' : 'Expand'}</span>  */}
         <div className='flex flex-row items-center'>Extract-{prop.upload_date} &nbsp; <PiRectangleFill className={`${prop.verification===0? "text-yellow-cs": prop.verification===1? "text-green-cs":"text-red-cs"}`} /></div> 
-        {isExpanded ? <div className='flex flex-row'>{verificaition_text}<FaCaretUp className="w-6 h-6 text-primary-500" /></div> 
-          : <div className='flex flex-row'> {verificaition_text}<FaCaretDown className="w-6 h-6 text-primary-500" /></div>
+        {isExpanded ? <div className='flex flex-row'>{verificaition_text}<FaCaretUp className="w-6 h-6 text-accent" /></div> 
+          : <div className='flex flex-row'> {verificaition_text}<FaCaretDown className="w-6 h-6 text-accent" /></div>
         }
       </div>
 

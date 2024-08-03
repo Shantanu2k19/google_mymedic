@@ -16,4 +16,4 @@ md: medium, sidebar half
 sm: smallest, sidebar none 
 default: too small
 
-bg-yellow-cs sm:bg-green-cs md:bg-red-cs lg:bg-primary-500
+bg-yellow-cs sm:bg-green-cs md:bg-red-cs lg:bg-accent

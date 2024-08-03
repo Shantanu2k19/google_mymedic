@@ -232,7 +232,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
 
         <form
             onClick={handleFormClick} 
-            className={`flex flex-col justify-center items-center border-2 border-dashed border-primary-500 w-full cursor-pointer 
+            className={`flex flex-col justify-center items-center border-2 border-dashed border-accent w-full cursor-pointer 
             rounded-lg p-5 text-white h-screen-50 max-h-screen-50 sm:h-screen-25 md:h-screen-50 sm:max-h-screen-25 md:max-h-screen-50 relative 
             ${image && 'bg-dark-4'} ${isFetching ? 'pointer-events-none' : ''}`}
             ref={formRef}
@@ -272,7 +272,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
                 />
               : 
               <>
-              <MdCloudUpload className="text-primary-500 w-20 h-20" />
+              <MdCloudUpload className="text-accent w-20 h-20" />
               <p>Upload a prescription to get started</p>
               </>
             }
@@ -289,7 +289,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
             <button 
               disabled = { image? false:true }
               type="button"
-              className={`flex flex-row rounded-lg bg-primary-500 px-9 py-4 text-base font-medium text-white shadow-submit duration-300 
+              className={`flex flex-row rounded-lg bg-accent px-9 py-4 text-base font-medium text-white shadow-submit duration-300 
                 hover:bg-prim-hov dark:shadow-submit-dark ${image ? '' : 'opacity-50 pointer-events-none bg-prim-hov'} `}
                 onClick={handleButtonClick}
             >
@@ -298,7 +298,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
 
             <button 
                 disabled = { image? false:true }
-                className={`flex flex-row rounded-lg bg-primary-500 px-9 py-4 text-base font-medium text-white shadow-submit duration-300 
+                className={`flex flex-row rounded-lg bg-accent px-9 py-4 text-base font-medium text-white shadow-submit duration-300 
                   hover:bg-prim-hov dark:shadow-submit-dark ${image ? '' : 'opacity-50 pointer-events-none bg-prim-hov'}`}
                   onClick={(event) => {
                     event.preventDefault();

@@ -24,7 +24,7 @@ function ProfileHeader({
               src={prop.image}
               alt='image'
               fill
-              className='rounded-full object-cover shadow-2xl border-2 border-primary-500 p-2 cursor-pointer'
+              className='rounded-full object-cover shadow-2xl border-2 border-accent p-2 cursor-pointer'
               onClick={() => showAlert("Cannot edit currently.", 2)}
             />
           </div>
@@ -37,7 +37,7 @@ function ProfileHeader({
           </div>
         </div>
 
-        <div className={`flex cursor-pointer gap-3 rounded-lg px-4 py-2 border border-primary-500 ${edit ? "bg-dark-4": "bg-dark-3"}`}
+        <div className={`flex cursor-pointer gap-3 rounded-lg px-4 py-2 border border-accent ${edit ? "bg-dark-4": "bg-dark-3"}`}
         onClick={()=> setEdit(prevState => !prevState)}
         >
           <Image

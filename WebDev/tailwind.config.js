@@ -244,10 +244,16 @@ module.exports = {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        "primary-500": "#877EFF",
-        "primary-doc": "#FF2424",
-        "prim-hov": '#6862C0',
-        "prim-dark": "#6D62FF",
+        "accent": "#11A9C0", //3052C1, 1974E2
+        "prim-hov": '#007A8D',
+        "prim-dark": "#0DCBE8",
+        "accent-sub": "##EB7A86",
+
+        "accent-doc": "#37D190", //"#149525",
+        "accent-older": "#877EFF",
+
+        "prim-hov-older": '#6862C0',
+        "prim-dark-older": "#6D62FF",
         "secondary-500": "#FFB620",
         "blue-1": "#0095F6",
         "logout-btn": "#FF5A5A",
@@ -259,7 +265,7 @@ module.exports = {
         "dark-5": "#818183",
         "light-1": "#FFFFFF",
         "light-2": "#EFEFEF",
-        "light-3": "#7878A3",
+        "light-3": "#414141",
         "light-4": "#5C5C7B",
         "light-5": "#E8E8E8",
         "light-6": "#CDCBCB",
@@ -276,7 +282,8 @@ module.exports = {
         white: "#FFFFFF",
         black: "#121723",
         dark: "#1D2430",
-        primary: "#4A6CF7",
+        // primary: "11A9C0",
+        primary: "#11A9C0",
         yellow: "#FBB040",
         "bg-color-dark": "#171C28",
         "body-color": {

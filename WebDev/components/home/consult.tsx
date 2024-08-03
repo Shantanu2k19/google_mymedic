@@ -42,7 +42,7 @@ export const ChatImage = () => {
 
           <div className="flex space-x-4">
             <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
-            <div className="bg-primary-500 text-white p-4 rounded-lg w-3/5">
+            <div className="bg-accent text-white p-4 rounded-lg w-3/5">
               <MessageLight prop={0.9} />
             </div>
           </div>
@@ -57,7 +57,7 @@ export const ChatImage = () => {
 
           <div className="flex space-x-4">
             <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
-            <div className="bg-primary-500 text-white p-4 rounded-lg w-[50%]">
+            <div className="bg-accent text-white p-4 rounded-lg w-[50%]">
               <MessageLight prop={0.9} />
               <MessageLight prop={0.3} />
             </div>
@@ -74,7 +74,7 @@ export const ChatImage = () => {
           {/* Uncomment if needed */}
           {/* <div className="flex space-x-4 sm:hidden md:hidden lg:flex">
             <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
-            <div className="bg-primary-500 text-white p-4 rounded-lg w-[70%]">
+            <div className="bg-accent text-white p-4 rounded-lg w-[70%]">
               <MessageLight prop={0.9} />
               <MessageLight prop={0.9} />
               <MessageLight prop={0.3} />
@@ -92,7 +92,7 @@ export const ChatImage = () => {
           className="flex-1 p-2 bg-dark-4 text-white rounded-lg"
           disabled
         />
-        <button className="ml-4 p-2 bg-primary-500 text-white rounded-full" disabled>
+        <button className="ml-4 p-2 bg-accent text-white rounded-full" disabled>
           Send
         </button>
       </div>

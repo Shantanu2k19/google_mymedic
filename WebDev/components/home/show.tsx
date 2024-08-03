@@ -57,7 +57,7 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
       <>
         <div className="flex flex-col justify-center items-center">
 
-          <div className={`w-full h-screen-80 border-2 border-primary-500 relative rounded-lg bg-light-4 bg-opacity-40 m-4 p-2`}>
+          <div className={`w-full h-screen-80 border-2 border-accent relative rounded-lg bg-light-4 bg-opacity-40 m-4 p-2`}>
               <Image
               src={receivedData.image_url || "/assets/sample"}
               alt="extracted image"
@@ -129,7 +129,7 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
             <br/>
 
             <button 
-                className="button-custom2 w-64 bg-primary-500"
+                className="button-custom2 w-64 bg-accent"
                 onClick={() => {setData(null)}}
             >
               Extract Another
@@ -216,7 +216,7 @@ const Showmeds = ({prop}: {prop:Prescription}) => {
              <div className="px-4 m-2">
               <div className="grid grid-cols-3 gap-3">
                 <span className="text-base1-semibold col-span-1">Usage</span>
-                <span className="text-body-semibold text-primary-500 col-span-2">{use}</span>
+                <span className="text-body-semibold text-accent col-span-2">{use}</span>
                 
                 <span className="text-base1-semibold col-span-1">Dosage</span>
                 <span className="col-span-2">{dosage}</span>
@@ -263,12 +263,12 @@ const VerificationDetails: React.FC<verification_vals> = ({
     <div className="px-4 m-2">
       <div className="grid grid-cols-3 gap-3">
         <span className="text-base1-semibold col-span-1">Verification Progress</span>
-        <span className="text-body-semibold text-primary-500 col-span-2">
+        <span className="text-body-semibold text-accent col-span-2">
           {verified === 2 ? "Verification with comments" : verified === 1 ? "Verification success" : "InProgress"}
         </span>
     
         <span className="text-base1-semibold col-span-1">Doctor&apos;s Name</span>
-        <span className="col-span-2 text-primary-500 underline cursor-pointer">{verification_doc_name}</span>
+        <span className="col-span-2 text-accent underline cursor-pointer">{verification_doc_name}</span>
     
         <span className="text-base1-semibold col-span-1">Verification Date</span>
         <span className="col-span-2">{verification_date}</span>
