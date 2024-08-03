@@ -139,31 +139,33 @@ export const HandleChat = () => {
 
   return(
     <div className="flex flex-col h-full w-full items-center justify-center">
-      <p className="text-center text-body-semibold">Reach out to our physicians for help with prescriptions, 
-        <br/>medication, or health and nutrition questions.</p>
-
-        <br/>
+      <div className='flex flex-col h-[40%] text-center text-body-semibold justify-end pb-20'>
+        Reach out to our physicians for help with prescriptions, 
+        <br/>medication, or health and nutrition questions
+      </div>
       
-      { !isConnecting ? <button className="button-custom w-64 border border-white" onClick={handleConnectChat}>Connect Now</button>
-      : 
-      <div className='flex flex-col justify-center items-center text-white'>
-        <Triangle
-            visible={true}
-            height="200"
-            width="200"
-            color="#877EFF"
-            ariaLabel="triangle-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-        />
-        </div>
-      }
-      <p className="text-center text-body-medium px-10">
-        <br/>
-        <br/>
+      <div className='flex flex-col h-[50%] w-[80%] items-center'>
+        { !isConnecting ? <button className="button-custom w-64 border border-white" onClick={handleConnectChat}>Connect Now</button>
+        : 
+        <div className='flex flex-col justify-center items-center text-white'>
+          <Triangle
+              visible={true}
+              height="150"
+              width="150"
+              color="#FFFFFF"
+              ariaLabel="triangle-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+          />
+          </div>
+        }
+        <div className="text-center text-body-medium w-full">
+          <br/>
+          <br/>
 
-        {response}
-      </p>
+          {response}
+        </div>
+      </div>
     </div>
   )
 }
