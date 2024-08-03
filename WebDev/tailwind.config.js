@@ -236,7 +236,8 @@ module.exports = {
         'screen-80': '80vh',
       },
       padding: {
-        '7': '1.75rem', // Adding custom padding value
+        '7': '1.75rem', // custom padding value
+        '26': '6.5rem', 
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -244,6 +245,7 @@ module.exports = {
       },
       colors: {
         "primary-500": "#877EFF",
+        "primary-doc": "#FF2424",
         "prim-hov": '#6862C0',
         "prim-dark": "#6D62FF",
         "secondary-500": "#FFB620",
@@ -254,11 +256,13 @@ module.exports = {
         "dark-2": "#121417",
         "dark-3": "#101012",
         "dark-4": "#1F1F22",
+        "dark-5": "#818183",
         "light-1": "#FFFFFF",
         "light-2": "#EFEFEF",
         "light-3": "#7878A3",
         "light-4": "#5C5C7B",
         "light-5": "#E8E8E8",
+        "light-6": "#CDCBCB",
         "gray-1": "#697C89",
         "gray-2": "#363636",
         "gray-3": "#6F6F6F",

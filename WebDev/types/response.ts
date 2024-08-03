@@ -16,3 +16,8 @@ export interface FetchUserHistory{
     data?: string;
     message?: string;
 }
+
+export interface connectWithDocRes{
+    success: boolean, 
+    name?: string,
+}

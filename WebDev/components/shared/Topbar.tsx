@@ -57,7 +57,7 @@ function Topbar () {
                         <Popup trigger=
                         {
                             <div
-                            className="flex items-center text-white bg-white bg-opacity-10 rounded-full p-2 px-4 mr-5" >
+                            className="flex items-center text-white bg-white bg-opacity-10 rounded-full p-2 px-4" >
                             <Image src={image}
                                 alt="logout"
                                 width={20}
