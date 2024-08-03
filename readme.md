@@ -11,8 +11,9 @@ Issues :
 - text instead of color on history 
 
 TW
-// mobile: default
-// sm:split screne Laptop
-// md: full screnn Laptop
-// lg:
-// sm:text-dark-1 md:text-white lg:text-primary-500 
+lg: largest, full screen, sidebar full
+md: medium, sidebar half
+sm: smallest, sidebar none 
+default: too small
+
+bg-yellow-cs sm:bg-green-cs md:bg-red-cs lg:bg-primary-500
