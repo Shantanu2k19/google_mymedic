@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 from django.middleware.csrf import get_token
 import json
 from django.utils import timezone
-from app.models import UserDetails, FileDetails
+from app.models import UserDetails, FileDetails, Doctors
 from django.conf import settings
 
 #utility functions
@@ -171,6 +171,40 @@ def get_history(request):
     return JsonResponse({'message': 'JSON conversion failed'}, status=401)
 
   return JsonResponse({'message': 'History get success', 'ret': data}, status=200)
+
+
+
+
+def doc_info(request):
+  print("get History...")
+  api_key = request.headers.get('X-APIKEY')
+  load_dotenv()
+  SECRET_KEY = os.getenv('SECRET_KEY')
+
+  if SECRET_KEY is None:
+    return JsonResponse({'error': 'Cannot load API Key'}, status=401)
+
+  if api_key != SECRET_KEY:
+    return JsonResponse({'error': 'Invalid API Key'}, status=401)
+
+  usrEmail = request.headers.get('X-USEREMAIL')
+  if not usrEmail:
+    return JsonResponse({'error': 'usrEmail not found'}, status=401)
+
+  print("request from :"+usrEmail)
+  
+  try:
+    user = Doctors.objects.get(doc_email=usrEmail)
+    print(user)
+    doc_data = {
+       "name": user.doc_name,
+       "qualifaction":user.doc_qualifications
+    }
+    return JsonResponse({'ret': doc_data}, status=200)
+
+  except Exception as e:
+    print(f"user not found [{e}]")
+    return JsonResponse({'message': 'User not found'}, status=203)
 
 # logging.debug("This is a debug message")
 # logging.info("This is an info message")

@@ -72,6 +72,10 @@
     @apply flex items-center justify-between gap-3 xs:gap-5;
   }
 
+  .bottombar_container-doc {
+    @apply flex items-center justify-around gap-3 xs:gap-5;
+  }
+
   .bottombar_link {
     @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
   }
@@ -181,4 +185,8 @@
 
 .button-custom2{
   @apply cursor-pointer px-6 py-3 rounded-md hover:bg-prim-hov m-4
+}
+
+.button-custom-doc{
+  @apply text-white font-bold cursor-pointer px-6 py-3 rounded-md hover:bg-accent-doc/90 m-4 bg-accent-doc
 }

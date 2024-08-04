@@ -8,3 +8,7 @@ export type User_info = {
     created: string,
   };
   
+export type Doc_info = {
+  name: string,
+  qualification: string,
+}

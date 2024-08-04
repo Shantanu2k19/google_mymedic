@@ -6,6 +6,7 @@ Issues :
 <li> unsupported file extension handling 
 <li> remove openai icon from home
 <li> email check for doc not available to signup
+<li> indent improvement in all the files 
 
 <h3>Optional development</h3> 
 <li> compress file before uploading git 

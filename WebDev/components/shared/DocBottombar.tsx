@@ -12,7 +12,7 @@ function Bottombar () {
     
     return (
         <section className="bottombar">
-            <div className="bottombar_container">
+            <div className="bottombar_container-doc">
             {docSidebarLinks.map((link) => {
                 // if link is connectly active
                 const isActive =
