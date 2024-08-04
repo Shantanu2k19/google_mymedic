@@ -27,6 +27,11 @@ function Topbar () {
         if (session.user) {
             setName(session.user.name || '');
             setImage(session.user.image || '');
+            const email = (session.user as any).email; // Type assertion
+            if(email.split('@')[1] === "mymedicdoc.com"){
+                console.log("doctor")
+                router.push('/consultdoc');
+            }
         }
     }
 

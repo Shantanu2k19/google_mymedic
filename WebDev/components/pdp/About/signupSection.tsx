@@ -76,7 +76,12 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent }) => {
             return;
           }
 
-          router.replace("/home");
+          const domain = email.split('@')[1];
+          if(domain==="mymedicdoc.com")
+            router.replace("/consultdoc");
+          else
+           router.replace("/home");
+          
           console.log("success..");
         } catch (error) {
           console.log("error loging in :" + error);

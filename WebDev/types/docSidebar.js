@@ -1,7 +1,7 @@
 export const docSidebarLinks = [
     {
       imgURL: '/assets/doc.png',
-      route: '/docConsult',
+      route: '/consultdoc',
       label: 'Consultations'
     },
     {

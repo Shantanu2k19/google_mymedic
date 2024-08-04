@@ -43,7 +43,11 @@ export default function LoginForm({ toggleComponent }: ChildProps) {
       setError("Login success");
       console.log(res);
 
-      router.replace("/home");
+      const domain = email.split('@')[1];
+      if(domain==="mymedicdoc.com")
+        router.replace("/consultdoc");
+      else
+        router.replace("/home");
     } catch (error) {
       setError(error+"");
     }
