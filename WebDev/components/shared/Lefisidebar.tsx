@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { signOut } from "next-auth/react"
 import { useEffect } from 'react';
+import { useSession } from "next-auth/react";
 
 function LeftSidebar () {
   const pathname = usePathname()
@@ -15,6 +16,32 @@ function LeftSidebar () {
     console.log('logging out');
     signOut({ callbackUrl: '/' });
   } 
+
+  const { data: session, status } = useSession();
+  const router = useRouter()
+
+  useEffect(() => {
+    if (status === 'loading') {
+        console.log('loading...');
+        return;
+      }
+  
+    if (status === 'authenticated') {
+      if (session.user) {
+          const email = (session.user as any).email; // Type assertion
+          if(email.split('@')[1] === "mymedicdoc.com"){
+            console.log("doctor")
+            router.push('/consultdoc');
+          }
+      }
+    }
+
+    if (status === 'unauthenticated') {
+      console.log("redirecting to home")
+      router.push('/');
+    }
+  }, [status, router, session]);
+
 
   return (
     <section className="custom-scrollbar leftsidebar">

@@ -27,11 +27,6 @@ function Topbar () {
         if (session.user) {
             setName(session.user.name || '');
             setImage(session.user.image || '');
-            const email = (session.user as any).email; // Type assertion
-            if(email.split('@')[1] === "mymedicdoc.com"){
-                console.log("doctor")
-                router.push('/consultdoc');
-            }
         }
     }
 
@@ -58,7 +53,7 @@ function Topbar () {
         <div className="flex items-center gap-1">
             <div className="block">
                 <div className="flex cursor-pointer">
-                    {session?.user?.name && (
+                    {name && (
                         <Popup trigger=
                         {
                             <div
@@ -68,7 +63,7 @@ function Topbar () {
                                 width={20}
                                 height={20}
                             ></Image>
-                            <span className="pl-3">{session.user.name}</span>
+                            <span className="pl-3">{name}</span>
                             </div>
                         }
                         position="bottom center">

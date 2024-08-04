@@ -24,7 +24,7 @@ function Bottombar () {
                     href={link.route}
                     key={link.label}
                     className=
-                    {`bottombar_link ${isActive && 'bg-accent-doc'}`}
+                    {`bottombar_link-doc ${isActive && 'bg-accent-doc'}`}
                 >
                     <Image
                         src={link.imgURL}

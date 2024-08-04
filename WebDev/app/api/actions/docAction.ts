@@ -3,6 +3,7 @@ import axios from 'axios';
 import { SERVER_URL } from "@/constants"
 import { Doc_info } from "@/types/user"
 import { ErrorResponse } from "@/types/response"
+import { FetchVerifyList } from "@/types/response"
 
 const apiClient = axios.create({
   baseURL: SERVER_URL,
@@ -52,4 +53,39 @@ export const fetchDocInfo = async(email:string): Promise<Doc_info | ErrorRespons
         }
         return { error: "API failed!!" };
     }
+};
+
+
+export const fetchVerificationList = async (usrEmail: string): Promise<FetchVerifyList> => {
+  console.log("verify list for :",usrEmail)
+
+  try {
+    const options = {
+      method: 'GET',
+      url: '/get_verify_list',
+      headers: {
+        'X-USEREMAIL': usrEmail,
+        'X-APIKEY': process.env.API_KEY,
+      },
+      withCredentials: true, 
+    };
+
+    const response = await apiClient.request(options);
+
+    if(response.status === 200){
+      return { success: true, data:response.data.ret };
+    }
+
+    if(response.status === 203){
+      return { success: true,  message: "Unable to fetch history!", data:"" };
+    }
+
+    console.log(response);
+    return { success: false, message: "Unable to fetch history!" };
+  } catch (error: any) {
+    if (error.response) {
+      console.error('Error response data:', error.response.data);
+    }
+    return { success: false, message: "Unable to fetch history!" };
+  }
 };

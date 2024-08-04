@@ -1,5 +1,6 @@
 "use client"
 import { useCollapse } from 'react-collapsed'
+import { PiRectangleFill } from "react-icons/pi";
 import { FaCaretDown,FaCaretUp } from "react-icons/fa";
 import { useState, useEffect, useRef, FormEvent } from 'react'
 
@@ -8,7 +9,6 @@ import { PrescriptionsData } from "@/types/medicine";
 import { FetchUserHistory } from "@/types/response"
 import { ApiResponse } from "@/types/history";
 import Show from "@/components/home/show"
-import { PiRectangleFill } from "react-icons/pi";
 import { useSession } from "next-auth/react";
 
 // import { history } from "@/types/history";
@@ -96,7 +96,7 @@ const CollapseData = ({prop}: {prop:PrescriptionsData}) => {
   const verificaition_text = prop.verification===0? "Verification Inprogress": prop.verification===1? "Verification Complete":"Verified With Comments";
 
   return (
-    <div className='bg-gray-200 mb-2 border rounded-md'>
+    <div className={`bg-gray-200 mb-2 border rounded-md ${isExpanded && "mb-14" }`}>
       <div 
         className={`header flex justify-between items-center p-4 bg-gray-200 text-base1-semibold text-black-1 select-none border-dark-1 shadow-up rounded-md`}
         {...getToggleProps()}

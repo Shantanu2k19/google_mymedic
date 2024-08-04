@@ -3,7 +3,7 @@ import React from 'react';
 import { useSession } from "next-auth/react";
 import { Doc_info } from "@/types/user"
 import { Consult } from "@/components/home/doc/consult"
-import { fetchDocInfo } from "@/app/api/actions/docConsultAction"
+import { fetchDocInfo } from "@/app/api/actions/docAction"
 import { ErrorResponse } from "@/types/response"
 import { useState, useEffect } from "react";
 
