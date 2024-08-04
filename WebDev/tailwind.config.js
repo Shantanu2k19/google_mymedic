@@ -239,6 +239,9 @@ module.exports = {
         '7': '1.75rem', // custom padding value
         '26': '6.5rem', 
       },
+      margin :{
+        'small':'4rem',
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",

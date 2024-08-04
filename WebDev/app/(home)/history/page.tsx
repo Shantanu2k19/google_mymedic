@@ -96,7 +96,7 @@ const CollapseData = ({prop}: {prop:PrescriptionsData}) => {
   const verificaition_text = prop.verification===0? "Verification Inprogress": prop.verification===1? "Verification Complete":"Verified With Comments";
 
   return (
-    <div className={`bg-gray-200 mb-2 border rounded-md ${isExpanded && "mb-14" }`}>
+    <div className={`bg-gray-200 mb-2 border rounded-md ${isExpanded && "mb-small" }`}>
       <div 
         className={`header flex justify-between items-center p-4 bg-gray-200 text-base1-semibold text-black-1 select-none border-dark-1 shadow-up rounded-md`}
         {...getToggleProps()}

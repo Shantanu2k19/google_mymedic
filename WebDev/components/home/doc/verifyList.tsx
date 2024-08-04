@@ -33,6 +33,9 @@ const VerifyList: React.FC<ChildComponentProps> = ({ medsData, setData }) => {
       image_url : medsData.image_url,
       upload_date: medsData.upload_date,
       file_name :  medsData.file_name,
+      verification: medsData.verification,
+      verification_date: medsData.verification_date,
+      verification_comment: medsData.verification_comment,
   };
 
   if(!receivedData.prescriptions)
@@ -82,8 +85,9 @@ const VerifyList: React.FC<ChildComponentProps> = ({ medsData, setData }) => {
 
             </div>
           </div>
-
-          <div className="border border-white-1 rounded-lg w-full bg-opacity-20 border-accent-doc">  
+        
+        { receivedData.verification === 0 ? (
+        <div className="border border-white-1 rounded-lg w-full bg-opacity-20 border-accent-doc">  
           <div className='border rounded-lg bg-light-2'>
             <div className="text-prim-dark text-body-normal p-2 m-3
             flex justify-between items-center ">
@@ -95,7 +99,23 @@ const VerifyList: React.FC<ChildComponentProps> = ({ medsData, setData }) => {
             <Verify file_name={receivedData.file_name}/>
             </div>
           </div>
-          
+        ) : 
+        (<div className="border border-white-1 rounded-lg w-full bg-opacity-20 border-accent-doc">  
+          <div className='border rounded-lg bg-light-2'>
+            <div className="text-prim-dark text-body-normal p-2 m-3
+            flex justify-between items-center ">
+              <div className="flex items-center uppercase">
+                <MdOutlineDomainVerification  className="w-6 h-6"/>      
+                &nbsp; <u>Verification Comment</u>
+              </div>
+            </div>
+            
+            <p className='text-black text-black min-h-[64px] p-3 bg-light-1 m-2 rounded-lg bg-opacity-80'>
+            {receivedData.verification_comment ? receivedData.verification_comment : "No comment"}
+            </p>
+            </div>
+          </div>
+        )}
 
         </div>
       </>

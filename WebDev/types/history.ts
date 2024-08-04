@@ -30,4 +30,7 @@ export interface ApiResponseVerifyList {
   img_url: string;
   upload_date: string;
   file_name: string;
+  verification: number;
+  verification_date: string;
+  verification_comment: string;
 }

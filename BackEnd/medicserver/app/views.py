@@ -230,16 +230,19 @@ def get_verify_list(request):
     files = FileDetails.objects.all()
 
     for file in files:
-      if(file.isVerified and file.verification_doc==doc):
-        print("verified by doc")
-      elif (file.isVerified):
-        continue
-      else:
+      if(file.isVerified == False or file.verification_doc==doc):
         file_info = {}
         file_info["data_from_llm"] = file.data_from_llm
         file_info["img_url"] = settings.BASE_URL+file.file_url
         file_info['upload_date'] = file.upload_date.strftime('%d/%m/%Y (%H:%M)')
         file_info["file_name"] = file.file_name
+
+        file_info['verification'] = file.isVerified
+        if file.verification_date is not None:
+            file_info['verification_date'] = file.verification_date.strftime('%d/%m/%Y (%H:%M)')
+        else:
+            file_info['verification_date'] = "" 
+        file_info['verification_comment'] = file.verification_comment             
         data.append(file_info)
 
   except Exception as e:

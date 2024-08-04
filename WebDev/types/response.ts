@@ -34,5 +34,8 @@ export interface VerifyListData {
     extra_info: ExtraInfoProps;
     image_url: string,
     upload_date: string;
-    file_name: string
+    file_name: string;
+    verification: number;
+    verification_date: string;
+    verification_comment: string;
 }

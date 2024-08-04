@@ -75,12 +75,7 @@ export const fetchVerificationList = async (usrEmail: string): Promise<FetchVeri
     if(response.status === 200){
       return { success: true, data:response.data.ret };
     }
-
-    if(response.status === 203){
-      return { success: true,  message: "Unable to fetch history!", data:"" };
-    }
-
-    console.log(response);
+    
     return { success: false, message: "Unable to fetch history!" };
   } catch (error: any) {
     if (error.response) {
