@@ -1,18 +1,17 @@
 "use client";
-import React from "react";
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import Image from 'next/image'
-import { PrescriptionsData, Prescription, ExtraInfoProps } from "@/types/medicine";
+import { Prescription } from "@/types/medicine";
 import { GiMedicines } from "react-icons/gi";
 import { FaCartShopping } from "react-icons/fa6";
 import { TbInfoSquare } from "react-icons/tb";
 import { MdOutlineDomainVerification } from "react-icons/md";
-import { PiRectangleFill } from "react-icons/pi";
 import { toast } from 'react-toastify';
+import { VerifyListData } from "@/types/response"
 
 interface ChildComponentProps {
-  medsData: PrescriptionsData | null;
-  setData: React.Dispatch<React.SetStateAction<PrescriptionsData | null>>;
-  isHistory: boolean,
+  medsData: VerifyListData | null;
+  setData: React.Dispatch<React.SetStateAction<VerifyListData | null>>;
 }
 
 interface extraInfo_vals{
@@ -20,14 +19,7 @@ interface extraInfo_vals{
   value: string
 }
 
-interface verification_vals{
-  verified: number,
-  verification_doc_name: string,
-  verification_date: string,
-  verification_comment: string,
-}
-
-const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) => {
+const VerifyList: React.FC<ChildComponentProps> = ({ medsData, setData }) => {
 
   if(medsData==null)
   {
@@ -35,13 +27,13 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
     return;
   }
 
-  let receivedData: PrescriptionsData = {
+  let receivedData: VerifyListData = {
       prescriptions: medsData.prescriptions,
       extra_info : medsData.extra_info,
       image_url : medsData.image_url,
       upload_date: medsData.upload_date,
+      file_name :  medsData.file_name,
       verification: medsData.verification,
-      verification_doc_name: medsData.verification_doc_name,
       verification_date: medsData.verification_date,
       verification_comment: medsData.verification_comment,
   };
@@ -57,7 +49,7 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
       <>
         <div className="flex flex-col justify-center items-center">
 
-          <div className={`w-full h-screen-80 border-2 border-accent relative rounded-lg bg-light-4 bg-opacity-40 m-4 p-2`}>
+          <div className={`w-full h-screen-80 border-2 border-accent relative rounded bg-light-4 bg-opacity-40 m-4 p-2`}>
               <Image
               src={receivedData.image_url || "/assets/sample"}
               alt="extracted image"
@@ -68,12 +60,7 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
 
           <br/>
 
-          <div className={`border-2 bg-gray-100 m-4 p-2 rounded-lg w-full bg-opacity-90
-            ${
-              receivedData.verification === 1 ? 'border-green-cs' :
-              receivedData.verification === 2 ? 'border-red-cs' :
-              'border-yellow-cs'
-            }`}>
+          <div className="border-2 bg-gray-100 m-4 p-2 rounded-lg w-full bg-opacity-90">
             <div className="text-black text-heading3-bold py-4 text-center">Extracted Data</div>
             { receivedData && receivedData.prescriptions.map(item=>(
                 <Showmeds key={item.name} prop={item} />
@@ -82,7 +69,8 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
 
 
           <div className="border border-white-1 bg-gray-100 m-4 p-2 border rounded-lg w-full bg-opactiy-50 bg-opacity-90">
-          <div className='border rounded-lg bg-glassmorphism2 m-3'>
+          <div className='border rounded-lg bg-glassmorphism2 my-3'>
+          
             <div className="text-prim-dark text-body-normal p-2 m-3
             flex justify-between items-center ">
               <div className="flex items-center uppercase">
@@ -97,79 +85,38 @@ const Show: React.FC<ChildComponentProps> = ({ medsData, setData, isHistory }) =
 
             </div>
           </div>
-
-          <div className={`border border-white-1 m-4 p-2 rounded-lg w-full bg-opacity-20
-            ${
-              receivedData.verification === 2 ? 'border-red-cs bg-red-cs' :
-              receivedData.verification === 1 ? 'border-green-cs bg-green-cs' :
-              'border-yellow-cs bg-yellow-cs'
-            }`}>  
-          <div className='border rounded-lg bg-light-2 m-3'>
+        
+        { receivedData.verification === 0 ? (
+        <div className="border border-white-1 rounded-lg w-full bg-opacity-20 border-accent-doc">  
+          <div className='border rounded-lg bg-light-2'>
             <div className="text-prim-dark text-body-normal p-2 m-3
             flex justify-between items-center ">
               <div className="flex items-center uppercase">
                 <MdOutlineDomainVerification  className="w-6 h-6"/>      
-                &nbsp; <u>Verification details</u>
+                &nbsp; <u>Verify This Document</u>
               </div>
             </div>
-
-              { receivedData && 
-                <VerificationDetails 
-                  verified={receivedData.verification}
-                  verification_doc_name={receivedData.verification_doc_name}
-                  verification_date={receivedData.verification_date}
-                  verification_comment={receivedData.verification_comment}
-                />
-              }
-              
+            <Verify file_name={receivedData.file_name}/>
             </div>
           </div>
-
-          {!isHistory && <>
-            <br/>
-
-            <button 
-                className="button-custom2 w-64 bg-accent"
-                onClick={() => {setData(null)}}
-            >
-              Extract Another
-            </button>
-
-            <br/>
-            <br/>
-
-            <div className="text-white bg-dark-4 p-4 m-2 rounded-lg">
-              Disclaimer: The medication information generated by AI is intended for informational purposes. 
-              It complements, but does not substitute, professional medical advice from healthcare providers. 
-              Users are encouraged to consult doctors or pharmacists for personalized guidance.
-
-              <br/>
-              <br/>
-              <hr className="border-t-2 border-dark-1"/>
-              <br/>
-
-              The details provided by AI are verified by a certified doctor. Use the information after verification for medical purposes.
-              <br/>
-              Color codes : 
-              <div className="flex flex-row justify-between align-center">
-                <span className="flex items-center">
-                <PiRectangleFill className="text-yellow-cs w-6 h-6" />
-                <span className="ml-2">InProgress</span>
-                </span> 
-
-                <span className="flex items-center">
-                <PiRectangleFill className="text-green-cs w-6 h-6" />
-                <span className="ml-2">Completed</span>
-                </span> 
-
-                <span className="flex items-center">
-                <PiRectangleFill className="text-red-cs w-6 h-6" />
-                <span className="ml-2">Completed with comments</span>
-                </span> 
+        ) : 
+        (<div className="border border-white-1 rounded-lg w-full bg-opacity-20 border-accent-doc">  
+          <div className='border rounded-lg bg-light-2'>
+            <div className="text-prim-dark text-body-normal p-2 m-3
+            flex justify-between items-center ">
+              <div className="flex items-center uppercase">
+                <MdOutlineDomainVerification  className="w-6 h-6"/>      
+                &nbsp; <u>Verification Comment</u>
               </div>
             </div>
             
-          </>}
+            <p className='text-black text-black min-h-[64px] p-3 bg-light-1 m-2 rounded-lg bg-opacity-80'>
+            {receivedData.verification_comment ? receivedData.verification_comment : "No comment"}
+            </p>
+            </div>
+          </div>
+        )}
+
         </div>
       </>
   )
@@ -198,7 +145,7 @@ const Showmeds = ({prop}: {prop:Prescription}) => {
     }
     
     return (
-        <div className='border rounded-lg bg-white m-3'>
+        <div className='border rounded-lg bg-white my-3'>
             <div className="text-prim-dark text-body-normal p-2 m-3
             flex justify-between items-center ">
               <div className="flex items-center uppercase">
@@ -252,33 +199,31 @@ const ShowExtraInfo : React.FC<extraInfo_vals> = ({item, value}) => {
   )
 }  
 
-const VerificationDetails: React.FC<verification_vals> = ({
-  verified,
-  verification_doc_name,
-  verification_date,
-  verification_comment,
-}) => {
+const Verify : React.FC<{file_name : string}> = ({ file_name }) => {
 
-  return (
-    <div className="px-4 m-2">
-      <div className="grid grid-cols-3 gap-3">
-        <span className="text-base1-semibold col-span-1">Verification Progress</span>
-        <span className="text-body-semibold text-accent col-span-2">
-          {verified === 2 ? "Verification with comments" : verified === 1 ? "Verification success" : "InProgress"}
-        </span>
-    
-        <span className="text-base1-semibold col-span-1">Doctor&apos;s Name</span>
-        <span className="col-span-2 text-accent underline cursor-pointer">{verification_doc_name}</span>
-    
-        <span className="text-base1-semibold col-span-1">Verification Date</span>
-        <span className="col-span-2">{verification_date}</span>
-    
-        <span className="text-base1-semibold col-span-1">Verification Comments</span>
-        <span className="col-span-2">{verification_comment}</span>
-      </div>
-    </div>
-  )
-}  
+    const [inputValue, setInputValue] = useState('');
 
+    const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+      setInputValue(event.target.value);
+    };
+  
+    const handleSubmit = (event: FormEvent) => {
+      event.preventDefault();
+      alert(`Form submitted with input: ${file_name}`);
+    };
 
-export default Show;
+    return (
+        <form onSubmit={handleSubmit} className="flex flex-col items-center p-3">
+            <textarea
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="No Issue Observed. Extraction is good."
+                className="p-2 border rounded h-64 w-full"
+            />
+            <button type="submit" className="button-custom-doc w-64">
+                Submit Verification
+            </button>
+        </form>
+    )
+}
+export default VerifyList;

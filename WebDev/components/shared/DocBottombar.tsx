@@ -1,7 +1,7 @@
 'use client'
-import React, { useMemo } from 'react'
+import React from 'react'
 
-import { sidebarLinks } from '@/types/sidebarLinks'
+import { docSidebarLinks } from '@/types/docSidebar'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
@@ -12,8 +12,8 @@ function Bottombar () {
     
     return (
         <section className="bottombar">
-            <div className="bottombar_container">
-            {sidebarLinks.map((link) => {
+            <div className="bottombar_container-doc">
+            {docSidebarLinks.map((link) => {
                 // if link is connectly active
                 const isActive =
                 (pathname.includes(link.route) && link.route.length > 1) ||
@@ -24,7 +24,7 @@ function Bottombar () {
                     href={link.route}
                     key={link.label}
                     className=
-                    {`bottombar_link ${isActive && 'bg-accent'}`}
+                    {`bottombar_link-doc ${isActive && 'bg-accent-doc'}`}
                 >
                     <Image
                         src={link.imgURL}

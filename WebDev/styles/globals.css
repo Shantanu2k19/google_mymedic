@@ -31,7 +31,7 @@
   }
 
   .community-card_btn {
-    @apply rounded-lg bg-primary-500 px-5 py-1.5 text-small-regular !text-light-1 !important;
+    @apply rounded-lg bg-accent px-5 py-1.5 text-small-regular !text-light-1 !important;
   }
 
   /* thread card  */
@@ -49,7 +49,7 @@
   }
 
   .user-card_btn {
-    @apply h-auto min-w-[74px] rounded-lg bg-primary-500 text-[12px] text-light-1 !important;
+    @apply h-auto min-w-[74px] rounded-lg bg-accent text-[12px] text-light-1 !important;
   }
 
   .searchbar {
@@ -72,8 +72,16 @@
     @apply flex items-center justify-between gap-3 xs:gap-5;
   }
 
+  .bottombar_container-doc {
+    @apply flex items-center justify-around gap-3 xs:gap-5;
+  }
+
   .bottombar_link {
     @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
+  }
+
+  .bottombar_link-doc {
+    @apply relative flex flex-col items-center gap-2 p-2 rounded-lg px-6 sm:flex-1 sm:px-2 sm:py-2.5;
   }
 
   .leftsidebar {
@@ -159,7 +167,7 @@
 }
 
 .comment-form_btn {
-  @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
+  @apply rounded-3xl bg-accent px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
 }
 
 .shadow-up {
@@ -176,9 +184,13 @@
 }
 
 .button-custom{
-  @apply text-white font-bold cursor-pointer px-6 py-3 rounded-md hover:bg-prim-hov m-4 bg-primary-500
+  @apply text-white font-bold cursor-pointer px-6 py-3 rounded-md hover:bg-prim-hov m-4 bg-accent
 }
 
 .button-custom2{
   @apply cursor-pointer px-6 py-3 rounded-md hover:bg-prim-hov m-4
+}
+
+.button-custom-doc{
+  @apply text-white font-bold cursor-pointer px-6 py-3 rounded-md hover:bg-accent-dim m-4 bg-accent-doc
 }

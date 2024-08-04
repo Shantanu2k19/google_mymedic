@@ -76,7 +76,12 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent }) => {
             return;
           }
 
-          router.replace("/home");
+          const domain = email.split('@')[1];
+          if(domain==="mymedicdoc.com")
+            router.replace("/consultdoc");
+          else
+           router.replace("/home");
+          
           console.log("success..");
         } catch (error) {
           console.log("error loging in :" + error);
@@ -178,11 +183,11 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent }) => {
           <button 
             disabled={!password || !email || !name}
             className={`shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm bg-primary px-9 py-4 text-base font-medium 
-              text-white duration-300 hover:bg-primary/90"
+              text-white duration-300"
               ${
                 !password || !email || !name
                   ? "opacity-50 cursor-not-allowed px-6 py-2 rounded-md"
-                  : ""
+                  : "hover:bg-primary/90"
               }`}
           >
             Sign up

@@ -19,10 +19,6 @@ export default function LoginForm({ toggleComponent }: ChildProps) {
 
   const router = useRouter();
 
-  const { data: session, status } = useSession();
-  console.log("session:", session);
-  console.log("status:",status);
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -47,7 +43,11 @@ export default function LoginForm({ toggleComponent }: ChildProps) {
       setError("Login success");
       console.log(res);
 
-      router.replace("/home");
+      const domain = email.split('@')[1];
+      if(domain==="mymedicdoc.com")
+        router.replace("/consultdoc");
+      else
+        router.replace("/home");
     } catch (error) {
       setError(error+"");
     }
@@ -152,11 +152,11 @@ export default function LoginForm({ toggleComponent }: ChildProps) {
         <div className="mb-6">
           <button 
             className={`shadow-submit dark:shadow-submit-dark flex w-full items-center justify-center rounded-sm 
-            bg-primary px-9 py-4 text-base font-medium text-white duration-300 hover:bg-primary/90"
+            bg-primary px-9 py-4 text-base font-medium text-white duration-300"
             ${
               !password || !email
                 ? "opacity-50 cursor-not-allowed px-6 py-2 rounded-md"
-                : ""
+                : "hover:bg-primary/90"
             }`}
             disabled={!password || !email}
           >

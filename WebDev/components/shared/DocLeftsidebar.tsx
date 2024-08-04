@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 
-import { sidebarLinks } from '@/types/sidebarLinks'
+import { docSidebarLinks } from '@/types/docSidebar'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
@@ -29,9 +29,9 @@ function LeftSidebar () {
     if (status === 'authenticated') {
       if (session.user) {
           const email = (session.user as any).email; // Type assertion
-          if(email.split('@')[1] === "mymedicdoc.com"){
-            console.log("doctor")
-            router.push('/consultdoc');
+          if(email.split('@')[1] != "mymedicdoc.com"){
+            console.log("patient")
+            router.push('/home');
           }
       }
     }
@@ -42,12 +42,11 @@ function LeftSidebar () {
     }
   }, [status, router, session]);
 
-
   return (
     <section className="custom-scrollbar leftsidebar">
         <div className="flex w-full flex-1
         flex-col gap-6 px-6">
-            {sidebarLinks.map((link) => {
+            {docSidebarLinks.map((link) => {
               // if link is active
               const isActive =
                 (pathname.includes(link.route) && link.route.length > 1) ||
@@ -58,7 +57,7 @@ function LeftSidebar () {
                     href={link.route}
                     key={link.label}
                     className=
-                    {`leftsidebar_link ${isActive && 'bg-accent'}`}
+                    {`leftsidebar_link ${isActive && 'bg-accent-doc'}`}
                 >
                     <Image
                         src={link.imgURL}

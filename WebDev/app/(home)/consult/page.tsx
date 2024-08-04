@@ -27,8 +27,7 @@ export default function Chat(){
                     </div>
                     
                     {/* Middle div */}
-                    <div className="absolute inset-0 z-20 backdrop-blur">
-                    </div>
+                    <div className="absolute inset-0 z-20 backdrop-blur-md"></div>
                     
                     {/* Top div */}
                     <div className="absolute inset-0 bg-opacity-0 z-30 text-white">

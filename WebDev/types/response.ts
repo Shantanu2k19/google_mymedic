@@ -1,5 +1,6 @@
 import { User_info } from "@/types/user"
-import { PrescriptionsData } from "@/types/medicine";
+import { Prescription } from "@/types/medicine";
+import { ExtraInfoProps } from "@/types/medicine";
 
 export interface ErrorResponse {
     error: string;
@@ -20,4 +21,21 @@ export interface FetchUserHistory{
 export interface connectWithDocRes{
     success: boolean, 
     name?: string,
+}
+
+export interface FetchVerifyList {
+    success: boolean,
+    data?: string,
+    message?: string
+}
+
+export interface VerifyListData {
+    prescriptions: Prescription[];
+    extra_info: ExtraInfoProps;
+    image_url: string,
+    upload_date: string;
+    file_name: string;
+    verification: number;
+    verification_date: string;
+    verification_comment: string;
 }
