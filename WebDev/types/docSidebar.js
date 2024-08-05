@@ -5,7 +5,7 @@ export const docSidebarLinks = [
       label: 'Consultations'
     },
     {
-      imgURL: '/assets/history2.png',
+      imgURL: '/assets/verify.svg',
       route: '/verify',
       label: 'Verify'
     }
