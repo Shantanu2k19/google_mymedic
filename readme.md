@@ -7,7 +7,7 @@ Issues :
 <li> remove openai icon from home
 <li> email check for doc not available to signup
 <li> indent improvement in all the files
-<li> home pdp icon alt change, not loading check
+<li> home pdp icon alt change, not loading check, compress all images 
 
 <h3>Optional development</h3> 
 <li> compress file before uploading git 
