@@ -7,7 +7,9 @@ import { FaCartShopping } from "react-icons/fa6";
 import { TbInfoSquare } from "react-icons/tb";
 import { MdOutlineDomainVerification } from "react-icons/md";
 import { toast } from 'react-toastify';
-import { VerifyListData } from "@/types/response"
+import { VerifyListData, Response } from "@/types/response"
+import { VerifyWithComment } from "@/app/api/actions/docAction";
+import { getSession } from 'next-auth/react';
 
 interface ChildComponentProps {
   medsData: VerifyListData | null;
@@ -201,16 +203,77 @@ const ShowExtraInfo : React.FC<extraInfo_vals> = ({item, value}) => {
 
 const Verify : React.FC<{file_name : string}> = ({ file_name }) => {
 
+  function showAlert(mssg: string, mode:number) {
+    console.log("alert", mssg, mode)
+
+    if (mode == 1) {
+      toast.success(mssg, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    else {
+      toast.error(mssg, {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }
+
+
     const [inputValue, setInputValue] = useState('');
 
     const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
       setInputValue(event.target.value);
     };
   
-    const handleSubmit = (event: FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => {
       event.preventDefault();
-      alert(`Form submitted with input: ${file_name}`);
-    };
+      const session = await getSession();
+      let docEmail;
+      if (session && session.user && session.user.email) 
+        docEmail = session.user.email;
+      else 
+      {
+        console.log("email not found");
+        showAlert("Something went wrong, Please try again later!", 2);
+        return;
+      }
+
+      console.log("fetching setData")
+      try{
+        const response = await VerifyWithComment(docEmail, file_name, inputValue);
+        
+        console.log("data", response)
+        
+        if ((response as Response).code != 200) {
+          showAlert("Something went wrong, Please try again later!", 2);
+          console.log("Error, Unable to fetch data!");
+          return;
+        }
+
+        console.log("update success")
+        showAlert("Updated successfully!", 1);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+        return;
+      }
+      catch (error: any) {
+        console.log("Error fetching data",error);
+        showAlert("Something went wrong, Please try again later!", 2);
+      }
+    }
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col items-center p-3">

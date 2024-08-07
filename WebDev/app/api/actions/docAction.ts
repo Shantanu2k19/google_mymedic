@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { SERVER_URL } from "@/constants"
 import { Doc_info } from "@/types/user"
-import { ErrorResponse } from "@/types/response"
+import { ErrorResponse, Response } from "@/types/response"
 import { FetchVerifyList } from "@/types/response"
 
 const apiClient = axios.create({
@@ -84,3 +84,43 @@ export const fetchVerificationList = async (usrEmail: string): Promise<FetchVeri
     return { success: false, message: "Unable to fetch history!" };
   }
 };
+
+export const VerifyWithComment = async (usrEmail: string, file_name:string, comment:string): Promise<Response> => {
+  console.log("verifying with email :", usrEmail)
+
+    if (process.env.API_KEY == null) 
+    { 
+      return { code:404, error: "API key not found" };
+    }
+
+    try{
+      const options = {
+          method: 'GET',
+          url: '/verify_file',
+          headers: {
+            'X-USEREMAIL': usrEmail,
+            'X-APIKEY': process.env.API_KEY,
+          },
+          params: {
+            'doc_comment':comment,
+            'verified_file':file_name,
+          },
+          withCredentials: true, 
+        };
+    
+        const response = await apiClient.request(options);
+
+        if(response.status != 200){
+          console.log(response.data)
+          return { code:response.status, error: "API failed!!" };
+        }
+
+        console.log("Api success");
+        return { code:200, error: "API success" };
+    }catch (error: any) {
+        if (error.response) {
+            console.error('Error response data:', error.response.data.error);
+        }
+        return { code:401, error: "API failed!!" };
+    }
+}

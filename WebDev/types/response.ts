@@ -6,6 +6,11 @@ export interface ErrorResponse {
     error: string;
 }
 
+export interface Response {
+    code: number;
+    error: string;
+}
+
 export interface FetchUserInfoResponse {
     success: boolean;
     data?: User_info;
