@@ -1,6 +1,6 @@
 {
     "functions": {
-      "api/uploadPresc.js": {
+      "app/api/uploadPresc/route.ts": {
         "maxDuration": 60
       }
     }

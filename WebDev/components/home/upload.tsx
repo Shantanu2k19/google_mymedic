@@ -185,12 +185,17 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
   
         setData(dataReceived);
       } catch (error: any) {
-        if (error.request) {
-          console.error('Error request data:', error.request);
+        if(error.response && error.response.status==506){
+          setUploadStatus('Server timed out, Please upload smalelr image!');
         }
-        console.error('Error message:', error.message);
-  
-        setUploadStatus('Error uploading file.');
+        else if (error.request) {
+          console.error('Error request data:', error.request);
+          setUploadStatus('Error uploading file.');
+        }
+        else{
+          setUploadStatus('Error uploading file.');
+          console.error('Error message =>', error.message);
+        }
       }
       finally {
         setIsFetching(false);
