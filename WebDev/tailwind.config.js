@@ -252,8 +252,9 @@ module.exports = {
         "prim-dark": "#0DCBE8",
         "accent-sub": "#EB7A86",
 
-        "accent-doc": "#37D190", //"#149525",
-        "accent-dim": "#27A874",
+        "accent-doc": "#00970A", //37D190, //"#149525",
+        "accent-dim": "#007007",
+
         "accent-older": "#877EFF",
 
         "prim-hov-older": '#6862C0',

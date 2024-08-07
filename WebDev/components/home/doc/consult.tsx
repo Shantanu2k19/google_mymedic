@@ -67,10 +67,10 @@ export const Consult: React.FC<ConsultProps> = ({ doc_info }) => {
       
       <div className='flex flex-col items-center w-full p-4'>
 
-        { !isConnecting ? <button className="button-custom-doc w-64" onClick={handleConnectChat}>Connect Now</button>
+        { !isConnecting ? <button className="button-custom-doc w-64 h-12" onClick={handleConnectChat}>Connect Now</button>
         : 
         <div className='flex flex-col justify-center items-center text-white'>
-          <button className="button-custom-doc w-64" onClick={handleConnectChat}>Cancel</button>
+          <button className="button-custom-doc w-64 h-12" onClick={handleConnectChat}>Cancel</button>
           <Triangle
               visible={true}
               height="150"
