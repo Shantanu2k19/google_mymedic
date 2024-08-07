@@ -40,7 +40,7 @@ export default function LoginForm({ toggleComponent }: ChildProps) {
         return;
       }
 
-      setError("Login success");
+      console.log("Login success");
       console.log(res);
 
       const domain = email.split('@')[1];

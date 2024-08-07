@@ -25,6 +25,12 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent }) => {
     e.preventDefault();
 
     console.log("form submit")
+    const domain = email.split('@')[1];
+    if(domain==="mymedicdoc.com")
+    {
+      setError("Cant use this email!");
+      return;
+    }
 
     try {
       const resUserExist = await fetch("api/userExists", {
@@ -75,12 +81,7 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent }) => {
             setError("Invalid creds");
             return;
           }
-
-          const domain = email.split('@')[1];
-          if(domain==="mymedicdoc.com")
-            router.replace("/consultdoc");
-          else
-           router.replace("/home");
+          router.replace("/home");
           
           console.log("success..");
         } catch (error) {
@@ -194,8 +195,8 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent }) => {
           </button>
           {error && (
             <div
-              className="bg-red-500 text-white w-fit text-sm
-                px-3 py-1 rounded-md mt-2"
+              className="flex flex-col items-center justify-center w-full text-sm
+                px-3 py-1 mt-2 text-red-cs "
             >
               {error}
             </div>
