@@ -2,6 +2,8 @@ Issues :
 
 <h3>Need to Do, Important</h3>
 <li> pdf handling
+<li> change time from utc to ist
+<li> sort history date wise
 <li>update log tags, only useful or required logs
 <li> page not found page handling
 <li> unsupported file extension handling 

@@ -186,15 +186,18 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         setData(dataReceived);
       } catch (error: any) {
         if(error.response && error.response.status==506){
-          setUploadStatus('Server timed out, Please upload smalelr image!');
+          setUploadStatus('Server timed out, Please upload smaller image!');
         }
         else if (error.request) {
-          console.error('Error request data:', error.request);
-          setUploadStatus('Error uploading file.');
+          console.log('Error request data:', error.request.response);
+          if(error.response.status===415)
+            setUploadStatus('Unsupported file type. (supported files are: .png, .jpeg, .bmp, .webp, .pdf)');
+          else 
+            setUploadStatus('Error uploading file.');
         }
         else{
           setUploadStatus('Error uploading file.');
-          console.error('Error message =>', error.message);
+          console.log('Error message =>', error.message);
         }
       }
       finally {
