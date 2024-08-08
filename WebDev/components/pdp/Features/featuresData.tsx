@@ -7,7 +7,7 @@ const featuresData: Feature[] = [
     icon: (
       <Image
         src="/icons/ai3.png"
-        alt="logout"
+        alt="ai"
         width={50}
         height={50}
       />
@@ -21,7 +21,7 @@ const featuresData: Feature[] = [
     icon: (
       <Image
         src="/icons/pres1.png"
-        alt="logout"
+        alt="medicene"
         width={50}
         height={50}
       />
@@ -35,7 +35,7 @@ const featuresData: Feature[] = [
     icon: (
       <Image
         src="/icons/history.png"
-        alt="logout"
+        alt="info"
         width={50}
         height={50}
       />
@@ -49,7 +49,7 @@ const featuresData: Feature[] = [
     icon: (
       <Image
       src="/icons/shopping.png"
-      alt="logout"
+      alt="shop"
       width={50}
       height={50}
     />
@@ -63,7 +63,7 @@ const featuresData: Feature[] = [
     icon: (
       <Image
       src="/icons/consult.png"
-      alt="logout"
+      alt="convenient"
       width={50}
       height={50}
     />
@@ -77,7 +77,7 @@ const featuresData: Feature[] = [
     icon: (
       <Image
         src="/icons/article.png"
-        alt="logout"
+        alt="article"
         width={50}
         height={50}
       />

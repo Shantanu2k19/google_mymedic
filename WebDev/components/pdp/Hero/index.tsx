@@ -139,7 +139,7 @@ const Hero = () => {
             <div className="h-full flex flex-col items-center justify-center">
               <Image
                 src="/images/mainImg/nogen5.svg"
-                alt="logout"
+                alt="ai pharmacist"
                 width={500}
                 height={500}
                 className="image-container"

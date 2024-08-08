@@ -1,16 +1,12 @@
 Issues : 
 
 <h3>Need to Do, Important</h3>
-<li> pdf handling
 <li> change time from utc to ist
-<li> sort history date wise
 <li>update log tags, only useful or required logs
 <li> page not found page handling
-<li> unsupported file extension handling 
 <li> remove openai icon from home
-<li> email check for doc not available to signup
 <li> indent improvement in all the files
-<li> home pdp icon alt change, not loading check, compress all images 
+<li> not loading check, compress all images 
 
 <h3>Optional development</h3> 
 <li> compress file before uploading git 
