@@ -17,6 +17,7 @@ interface UploadComponentProps {
 
 const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
     const [image, setImage] = useState<string | null>(null)
+    const [isPreSup, setisPreSup] = useState(false);
     const [selectedFileLocal, setSelectedFileLocal] = useState<File | null>(null);
     const [csrfToken, setCsrfToken] = useState<string>('');
     const [uploadStatus, setUploadStatus] = useState<string | null>('No files selected');
@@ -109,7 +110,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
             // onFileUpload(event.target.files[0]);
             const reader = new FileReader();
             reader.onloadend = () => {
-              setImage(reader.result as string);
+                setImage(reader.result as string);
             };
             reader.readAsDataURL(event.target.files[0]);
 
@@ -274,9 +275,13 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
             {image ?
               <Image
                 src={image}
-                alt="selected image"
+                alt="File selected"
                 layout="fill" 
                 objectFit="contain"
+                onError={(e) => {
+                  const image = e.currentTarget as HTMLImageElement;
+                  image.src = '/assets/file.svg'; 
+                }}
                 />
               : 
               <>
