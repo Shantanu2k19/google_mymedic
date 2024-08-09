@@ -36,7 +36,7 @@ const SingleTech = ({ tech }: { tech: Tech }) => {
         href={href}
         target="_blank"
         rel="nofollow noreferrer"
-        className="relative h-12 w-full transition opacity-60 hover:opacity-100 dark:opacity-60 dark:hover:opacity-100"
+        className="relative h-14 w-[80%] transition opacity-60 hover:opacity-100 dark:opacity-60 dark:hover:opacity-100"
       >
         {/* <Image src={imageLight} alt={name} fill className="hidden dark:block" />
         <Image src={image} alt={name} fill className="block dark:hidden" /> */}
