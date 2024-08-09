@@ -131,7 +131,7 @@ const Upload: React.FC<UploadComponentProps> = ({ setData }) => {
         return;
       }
 
-      setUploadStatus(null);
+      setUploadStatus("extracting...");
   
       const formData = new FormData();
       formData.append('file', selectedFileLocal);
