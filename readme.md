@@ -4,6 +4,7 @@ Issues :
 <li> update log tags, only useful or required logs only
 <li> indent improvement in all the files
 <li> Image not loading check, compress all images to save space
+<li> notification styling change for mobile 
 
 <h3>Optional development</h3> 
 <li> compress file before uploading git 
@@ -14,8 +15,10 @@ Issues :
 <li> use Tesseract.js: instead, client side processing
 <li> page to view doctors information to everyone
 
-
-
+<h3>FInal touches</h3>
+<li> make tagline darker
+<li> asterisks for coming soon features on pdp page
+  
 <h4>EXTRAS</h4>
 lg: largest, full screen, sidebar full
 md: medium, sidebar half
