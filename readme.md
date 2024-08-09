@@ -1,16 +1,12 @@
 Issues : 
 
 <h3>Need to Do, Important</h3>
-<li> change time from utc to ist
-<li>update log tags, only useful or required logs
-<li> page not found page handling
-<li> remove openai icon from home
+<li> update log tags, only useful or required logs only
 <li> indent improvement in all the files
-<li> not loading check, compress all images 
+<li> Image not loading check, compress all images to save space
 
 <h3>Optional development</h3> 
 <li> compress file before uploading git 
-<li> text from gemini validation for json
 <li> combine all alert functions
 
 
