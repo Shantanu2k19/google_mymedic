@@ -6,8 +6,9 @@ import { signIn } from "next-auth/react";
 
 interface ChildProps {
     toggleComponent: () => void;
+    showAlert: (mssg: string, mode: number) => void;
   }
-const SignupForm : React.FC<ChildProps> = ({ toggleComponent }) => {
+const SignupForm : React.FC<ChildProps> = ({ toggleComponent, showAlert }) => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,6 +24,7 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // showAlert("Signing up",2);
 
     console.log("form submit")
     const domain = email.split('@')[1];
@@ -63,6 +65,8 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent }) => {
       if (res.ok) {
         const form = e.target;
         console.log("created user success!!");
+        showAlert("Signing successful",1);
+
         // form.reset();
 
         try {

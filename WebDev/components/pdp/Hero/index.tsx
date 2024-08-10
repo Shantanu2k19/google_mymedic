@@ -50,7 +50,7 @@ const Hero = () => {
         theme: theme,
       });
     }
-    }
+  }
 
   const demoLogin = async () => {
     showAlert("Signing in!",2);

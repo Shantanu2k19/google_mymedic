@@ -9,9 +9,10 @@ import { getServerSession } from "next-auth";
 
 interface ChildProps {
     toggleComponent: () => void;
+    showAlert: (mssg: string, mode: number) => void;
   }
 
-export default function LoginForm({ toggleComponent }: ChildProps) {
+export default function LoginForm({ toggleComponent, showAlert }: ChildProps) {
 // const LoginForm : React.FC<ChildProps> = ({ toggleComponent }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +22,8 @@ export default function LoginForm({ toggleComponent }: ChildProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // showAlert("Logging in",2);
 
     try {
       const res = await signIn("credentials", {
@@ -42,6 +45,8 @@ export default function LoginForm({ toggleComponent }: ChildProps) {
 
       console.log("Login success");
       console.log(res);
+
+      showAlert("Login success",1);
 
       const domain = email.split('@')[1];
       if(domain==="mymedicdoc.com")
