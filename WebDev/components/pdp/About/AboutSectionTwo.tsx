@@ -6,9 +6,51 @@ import { useState } from "react";
 import LoginForm from "./loginSection"
 import SignupForm from "./signupSection"
 import "@/styles/bounce.css";
+import { toast } from 'react-toastify';
+import { useTheme } from "next-themes"; 
 
 const AboutSectionTwo = () => {
   const [isSignin, toggleSignin] = useState(true);
+
+  const { theme, setTheme } = useTheme();
+  function showAlert(mssg: string, mode:number) { console.log(theme)
+    console.log("toast-", mssg)
+    toast.dismiss();
+    if (mode == 1) {
+      toast.success(mssg, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme
+      });
+    } else if (mode == 2) {
+      toast.info(mssg, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+    } else {
+      toast.error(mssg, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+    }
+  }
 
   const toggleComponent = () => {
     toggleSignin(!isSignin);
@@ -50,9 +92,9 @@ const AboutSectionTwo = () => {
             </div> */}
 
             {isSignin ? (
-                <LoginForm toggleComponent={toggleComponent}/> 
+                <LoginForm toggleComponent={toggleComponent} showAlert={showAlert}/> 
             ) : (
-                <SignupForm toggleComponent={toggleComponent}/>
+                <SignupForm toggleComponent={toggleComponent}  showAlert={showAlert}/>
             )}
           </div>
           

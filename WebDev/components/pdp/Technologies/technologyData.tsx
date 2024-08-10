@@ -3,10 +3,10 @@ import { Tech } from "@/types/Tech"
 const Technologies: Tech[] = [
   {
     id: 6,
-    name: "Google Bard",
+    name: "Google Gemini",
     href: "https://gemini.google.com/",
-    image: "/images/brands/bard.png",
-    imageLight: "/images/brands/bard.png",
+    image: "/images/brands/gemini.png",
+    imageLight: "/images/brands/gemini.png",
   },
   // {
   //   id: 1,
