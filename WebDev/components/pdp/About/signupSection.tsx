@@ -26,7 +26,7 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent, showAlert }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // showAlert("Signing up",2);
-    setInfo("Signing up");
+    setInfo("Signing up...");
 
     console.log("form submit")
     const domain = email.split('@')[1];
@@ -213,7 +213,7 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent, showAlert }) => {
           {info && (
             <div
               className="flex flex-col items-center justify-center w-full text-sm
-                px-3 py-1 mt-2 text-red-cs "
+                px-3 py-1 mt-2 text-white "
             >
               {info}
             </div>

@@ -23,7 +23,7 @@ export default function LoginForm({ toggleComponent, showAlert }: ChildProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setInfo("Logging in");
+    setInfo("Logging in...");
     // showAlert("Logging in",2);
 
     try {
