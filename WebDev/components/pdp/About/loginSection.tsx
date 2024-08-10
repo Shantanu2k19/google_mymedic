@@ -17,12 +17,13 @@ export default function LoginForm({ toggleComponent, showAlert }: ChildProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [info, setInfo] = useState<null | string>(null);
 
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setInfo("Logging in");
     // showAlert("Logging in",2);
 
     try {
@@ -32,6 +33,7 @@ export default function LoginForm({ toggleComponent, showAlert }: ChildProps) {
         redirect: false,
       });
       console.log(res); //test
+      setInfo(null);
 
       if (!res) {
         setError("Sign in failed");
@@ -173,6 +175,14 @@ export default function LoginForm({ toggleComponent, showAlert }: ChildProps) {
                 px-3 py-1 mt-2 text-red-cs "
             >
               {error}
+            </div>
+          )}
+          {info && (
+            <div
+              className="flex flex-col items-center justify-center w-full text-sm
+                px-3 py-1 mt-2 text-white "
+            >
+              {info}
             </div>
           )}
         </div>

@@ -14,6 +14,7 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent, showAlert }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [info, setInfo] = useState<null | string>(null);
 
   const router = useRouter();
 
@@ -25,11 +26,13 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent, showAlert }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // showAlert("Signing up",2);
+    setInfo("Signing up");
 
     console.log("form submit")
     const domain = email.split('@')[1];
     if(domain==="mymedicdoc.com")
     {
+      setInfo(null);
       setError("Cant use this email!");
       return;
     }
@@ -42,8 +45,10 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent, showAlert }) => {
         },
         body: JSON.stringify({ email }),
       });
+
       const { user } = await resUserExist.json();
       if (user) {
+        setInfo(null);
         setError("User already exist with this email, Please sign in!");
         return;
       }
@@ -61,7 +66,7 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent, showAlert }) => {
       });
 
       console.log("api returned with: " + res.status);
-
+      setInfo(null);
       if (res.ok) {
         const form = e.target;
         console.log("created user success!!");
@@ -203,6 +208,14 @@ const SignupForm : React.FC<ChildProps> = ({ toggleComponent, showAlert }) => {
                 px-3 py-1 mt-2 text-red-cs "
             >
               {error}
+            </div>
+          )}
+          {info && (
+            <div
+              className="flex flex-col items-center justify-center w-full text-sm
+                px-3 py-1 mt-2 text-red-cs "
+            >
+              {info}
             </div>
           )}
         </div>
